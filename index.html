@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ball Game</title>
+  <link rel="stylesheet" type="text/css" href="stylee.css">
+</head>
+
+<body id="fidrat-home">
+  <div id="device-block">
+    <h1>🚫 Desktop Only</h1>
+    <p>This game is designed for PC / Laptop only.<br>
+      Please open it on a desktop browser.</p>
+  </div>
+
+  <div id="focus-block">
+    <h2>⚠️ Game Paused</h2>
+    <p>Please return to the game window to continue.</p>
+  </div>
+
+
+
+
+  <div class="header">
+
+    <!-- Audio On/Off Toggle -->
+    <div class="container1">
+      <label class="switch">
+        <input type="checkbox" class="hidden" id="audio_setting" checked>
+        <div class="slider"></div>
+        <img id="audio_icon_off" class="audio_icon" src="Images\Common_Images\audio_off.png" alt="Audio Off">
+        <img id="audio_icon_on" class="audio_icon" src="Images\Common_Images\audio_on.png" alt="Audio On">
+      </label>
+    </div>
+
+
+  </div>
+  <!--
+  <div id="loggedin">
+    <img src="Images/Common_Images/avtar.png" alt=Avtar">
+    <label id="Name_Log">Name : </label>
+  </div>-->
+
+  <h1 id="game-title">Dream Drop</h1>
+
+  <div class="buttons">
+    <button id="easyBtn">Easy</button>
+    <button id="mediumBtn">Medium</button>
+    <button id="hardBtn">Hard</button>
+  </div>
+
+  <!--<button id="start-button">Start Game</button>-->
+
+
+  <div id="instruction-modal" class="modal">
+    <div class="modal-content1">
+      <p>Click on the balls!</p>
+      <button id="ok">Okay</button>
+    </div>
+  </div>
+
+  <div id="instruction-modal2" class="modal" style="display: none;">
+    <div class="instruction-content">
+      <p>Drag the ball and drop it into the basket</p>
+      <button id="start-level2-button">Start Level 2</button>
+    </div>
+  </div>
+
+
+
+
+  <p id="para">Sri Sathya Sai Vidya Vahini </p>
+  <p id="para1">INCLUSIVE EDUCATION</p>
+
+  <img src="Images\Common_Images\vv.png" id="vv">
+  <img src="Images\Common_Images\ie.png" id="ie">
+  <img src="Images\Common_Images\prem.png" id="prem">
+  <img src="Images\Common_Images\shanti.png" id="shanti">
+
+  <div id="overlay" class="overlay">
+
+  </div>
+
+  <video id="Basketvideo" autoplay loop muted playsinline>
+    <source src="./Videos/Basket.mp4">
+  </video>
+
+  <video id="tryvideo" autoplay loop muted playsinline>
+    <source src="./Videos/tryagain.mp4">
+  </video>
+
+  <div id="gameOver" class="over">
+    <img src="Images\Common_Images\shanti_overlay.png" alt="Left Image" class="left-image">
+    <img src="Images\Common_Images\prem_overlay.png" alt="Right Image" class="right-image">
+    <div class="game">
+      <p id="gameOverMessage">Do you want to restart?</p>
+      <button id="restartBtn">Restart</button>
+      <button id="quitBtn">Quit</button>
+      <button id="next">Next</button>
+    </div>
+  </div>
+
+
+  <div id="game-area"></div>
+  <div id="score">Score: <span id="score-value">0</span></div>
+  <div id="time">Time: <span id="time-value">0</span></div>
+  <div id="basket"><img src="./Images/Dream_Drop/basket.png" alt="basket"></div>
+  <div class="obstacle"></div>
+  <div id="maze"></div>
+
+  <!-- <script src="scriptt.js"></script> -->
+  <script src="scriptt.js"></script>
+</body>
+
+</html>
