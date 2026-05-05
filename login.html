@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Dream Drop — Who's Playing?</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: url('Images/Common_Images/bg2.jpg') no-repeat center center / cover;
+      background-color: #aeedf5;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Header ─────────────────────────────────────────── */
+    #lp-header {
+      text-align: center;
+      padding: clamp(16px,3vh,32px) 0 clamp(8px,1.5vh,18px);
+    }
+    #lp-header h1 {
+      font-size: clamp(1.8rem,5vw,3.2rem);
+      color: brown;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    #lp-header p {
+      font-size: clamp(0.75rem,2vw,1rem);
+      color: #4b2e83;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+    #lp-sub {
+      font-size: clamp(1rem,2.5vw,1.4rem);
+      color: #1a1a2e;
+      font-weight: 800;
+      margin-top: clamp(8px,1.5vh,16px);
+      text-align: center;
+    }
+
+    /* ── Player cards grid ───────────────────────────────── */
+    #players-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: clamp(12px,2vw,24px);
+      padding: clamp(12px,2vh,24px) clamp(16px,4vw,48px);
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* Each saved player card */
+    .player-card {
+      width: clamp(130px,18vw,180px);
+      background: rgba(255,255,255,0.92);
+      border-radius: 18px;
+      padding: 14px 10px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.18s, box-shadow 0.18s;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      position: relative;
+      border: 3px solid transparent;
+    }
+    .player-card:hover  { transform: translateY(-6px) scale(1.04); box-shadow: 0 14px 32px rgba(0,0,0,0.22); }
+    .player-card:active { transform: scale(0.97); }
+
+    /* Jersey frame around photo */
+    .player-frame {
+      width: clamp(80px,12vw,110px);
+      height: clamp(80px,12vw,110px);
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid #fff;
+      position: relative;
+      box-shadow: 0 0 0 4px var(--jersey-color, #e03040);
+    }
+    .player-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Jersey number badge */
+    .jersey-badge {
+      position: absolute;
+      bottom: -4px;
+      right: -4px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--jersey-color, #e03040);
+      color: #fff;
+      font-weight: 900;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    .player-name {
+      font-size: clamp(0.85rem,1.8vw,1.05rem);
+      font-weight: 800;
+      color: #1a1a2e;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .player-stats {
+      font-size: clamp(0.6rem,1.2vw,0.72rem);
+      color: #888;
+    }
+
+    /* Delete button on card */
+    .card-delete {
+      position: absolute;
+      top: 6px; right: 8px;
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      color: #ccc;
+      line-height: 1;
+      padding: 2px;
+      transition: color 0.15s;
+    }
+    .card-delete:hover { color: #e03040; }
+
+    /* Add new player card */
+    #add-card {
+      width: clamp(130px,18vw,180px);
+      min-height: clamp(130px,18vw,180px);
+      background: rgba(255,255,255,0.55);
+      border-radius: 18px;
+      border: 3px dashed rgba(75,46,131,0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.15s;
+    }
+    #add-card:hover  { background: rgba(255,255,255,0.8); transform: translateY(-4px); }
+    #add-card:active { transform: scale(0.97); }
+    #add-card .add-icon { font-size: clamp(2rem,4vw,2.8rem); color: #4b2e83; }
+    #add-card p { font-size: clamp(0.75rem,1.5vw,0.9rem); color: #4b2e83; font-weight: 700; text-align: center; line-height: 1.3; }
+
+    /* ── AVATAR CREATOR OVERLAY ──────────────────────────── */
+    #creator-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 9000;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    #creator-overlay.open { display: flex; }
+
+    #creator-box {
+      background: #fff;
+      border-radius: 20px;
+      width: min(96vw, 560px);
+      max-height: 92vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    }
+
+    #creator-header {
+      padding: 16px 20px 12px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    #creator-header h2 {
+      font-size: clamp(1rem,2.5vw,1.2rem);
+      color: #1a1a2e;
+      font-weight: 800;
+    }
+    #creator-close {
+      background: #f4f4f4;
+      border: none;
+      border-radius: 50%;
+      width: 32px; height: 32px;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #555;
+      transition: background 0.15s;
+      min-height: unset !important;
+    }
+    #creator-close:hover { background: #fee; color: #e03040; }
+
+    #creator-body { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+
+    /* Steps */
+    .creator-step { display: none; flex-direction: column; gap: 14px; }
+    .creator-step.active { display: flex; }
+
+    .step-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Camera / preview area */
+    #cam-wrap {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #111;
+      aspect-ratio: 4/3;
+      width: 100%;
+    }
+    #cam-video, #cam-canvas {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    #cam-canvas { display: none; }
+
+    #cam-btn-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    /* Name input */
+    #name-input {
+      font-size: clamp(1rem,2.5vw,1.2rem);
+      font-weight: 800;
+      border: 2.5px solid #e8eaf0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      width: 100%;
+      text-align: center;
+      color: #1a1a2e;
+      outline: none;
+      font-family: 'Montserrat', Arial, sans-serif;
+      transition: border-color 0.15s;
+    }
+    #name-input:focus { border-color: #4b2e83; }
+
+    /* Jersey colour picker */
+    #jersey-colours {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .jc-swatch {
+      width: clamp(36px,6vw,48px);
+      height: clamp(36px,6vw,48px);
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: transform 0.15s, border-color 0.15s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .jc-swatch:hover   { transform: scale(1.12); }
+    .jc-swatch.picked  { border-color: #1a1a2e; transform: scale(1.15); }
+
+    /* Jersey number picker */
+    #jersey-numbers {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .jn-btn {
+      width: clamp(36px,5.5vw,46px);
+      height: clamp(36px,5.5vw,46px);
+      border-radius: 10px;
+      border: 2px solid #e0e4f0;
+      background: #f8f9ff;
+      font-weight: 800;
+      font-size: clamp(0.8rem,1.6vw,1rem);
+      cursor: pointer;
+      transition: background 0.12s, border-color 0.12s, transform 0.1s;
+      color: #1a1a2e;
+      font-family: 'Montserrat', Arial, sans-serif;
+      min-height: unset !important;
+    }
+    .jn-btn:hover  { background: #e8eaf8; transform: scale(1.08); }
+    .jn-btn.picked { background: #4b2e83; color: #fff; border-color: #4b2e83; }
+
+    /* Preview card in creator */
+    #preview-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 16px;
+      background: #f8f9ff;
+      border-radius: 14px;
+      border: 1.5px solid #e0e4f0;
+    }
+    #preview-frame {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid #fff;
+      position: relative;
+    }
+    #preview-img { width: 100%; height: 100%; object-fit: cover; }
+    #preview-name { font-weight: 800; font-size: 1.1rem; color: #1a1a2e; }
+
+    /* Action buttons inside creator */
+    .creator-btn {
+      border: none;
+      border-radius: 12px;
+      padding: clamp(10px,1.8vh,14px) 24px;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 800;
+      font-size: clamp(0.85rem,1.8vw,1rem);
+      cursor: pointer;
+      transition: transform 0.12s, box-shadow 0.12s;
+      min-height: unset !important;
+    }
+    .creator-btn:hover  { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.15); }
+    .creator-btn:active { transform: scale(0.97); }
+    .btn-primary { background: #4b2e83; color: #fff; }
+    .btn-success { background: #2ecc71; color: #1a4a2e; }
+    .btn-danger  { background: #e03040; color: #fff; }
+    .btn-neutral { background: #f0f0f0; color: #444; }
+
+    /* Step nav row */
+    .step-nav {
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    /* ── No-camera fallback ──────────────────────────────── */
+    #no-cam-msg {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    #cam-placeholder {
+      display: none;
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: 14px;
+      background: #e8e8e8;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+    }
+
+    /* ── Step indicator dots ─────────────────────────────── */
+    #step-dots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      padding: 0 0 4px;
+    }
+    .sdot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #ddd;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .sdot.on { background: #4b2e83; transform: scale(1.25); }
+
+    /* ── Responsive ──────────────────────────────────────── */
+    @media (max-width: 500px) {
+      .player-card, #add-card { width: clamp(110px,40vw,150px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div id="lp-header">
+    <h1>🏀 Dream Drop</h1>
+    <p>Sri Sathya Sai Vidya Vahini — Inclusive Education</p>
+  </div>
+  <p id="lp-sub">Who's playing today?</p>
+
+  <!-- Player cards -->
+  <div id="players-grid">
+    <!-- cards injected by JS -->
+    <div id="add-card" onclick="openCreator()">
+      <div class="add-icon">➕</div>
+      <p>Add New<br>Player</p>
+    </div>
+  </div>
+
+
+  <!-- ── AVATAR CREATOR OVERLAY ── -->
+  <div id="creator-overlay">
+    <div id="creator-box">
+
+      <div id="creator-header">
+        <h2 id="creator-title">Create Your Player</h2>
+        <button id="creator-close" onclick="closeCreator()">✕</button>
+      </div>
+
+      <!-- Step dots -->
+      <div id="step-dots">
+        <div class="sdot on"  id="dot-0"></div>
+        <div class="sdot"     id="dot-1"></div>
+        <div class="sdot"     id="dot-2"></div>
+        <div class="sdot"     id="dot-3"></div>
+      </div>
+
+      <div id="creator-body">
+
+        <!-- STEP 0: Take photo -->
+        <div class="creator-step active" id="step-0">
+          <div class="step-label">Step 1 — Take your photo</div>
+          <div id="cam-wrap">
+            <video id="cam-video" autoplay playsinline muted></video>
+            <canvas id="cam-canvas"></canvas>
+            <div id="cam-placeholder">🧒</div>
+          </div>
+          <div id="no-cam-msg">
+            Camera not available on this device.<br>
+            A default avatar will be used instead.
+          </div>
+          <div id="cam-btn-row">
+            <button class="creator-btn btn-primary" id="snap-btn" onclick="snapPhoto()">📸 Take Photo</button>
+            <button class="creator-btn btn-neutral" id="retake-btn" onclick="retakePhoto()" style="display:none">🔄 Retake</button>
+            <button class="creator-btn btn-neutral" onclick="skipPhoto()">Skip →</button>
+          </div>
+          <div class="step-nav">
+            <span></span>
+            <button class="creator-btn btn-primary" id="step0-next" onclick="goStep(1)" disabled>Next →</button>
+          </div>
+        </div>
+
+        <!-- STEP 1: Pick a name -->
+        <div class="creator-step" id="step-1">
+          <div class="step-label">Step 2 — What's your name?</div>
+          <input type="text" id="name-input" placeholder="Your name" maxlength="16" autocomplete="off">
+          <div class="step-nav">
+            <button class="creator-btn btn-neutral" onclick="goStep(0)">← Back</button>
+            <button class="creator-btn btn-primary" onclick="goStep(2)">Next →</button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Pick jersey colour -->
+        <div class="creator-step" id="step-2">
+          <div class="step-label">Step 3 — Pick your jersey colour</div>
+          <div id="jersey-colours">
+            <!-- swatches injected by JS -->
+          </div>
+          <div class="step-nav">
+            <button class="creator-btn btn-neutral" onclick="goStep(1)">← Back</button>
+            <button class="creator-btn btn-primary" onclick="goStep(3)">Next →</button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Pick jersey number + preview + confirm -->
+        <div class="creator-step" id="step-3">
+          <div class="step-label">Step 4 — Pick your jersey number</div>
+          <div id="jersey-numbers">
+            <!-- buttons injected by JS -->
+          </div>
+
+          <div class="step-label" style="margin-top:8px;">Your player card</div>
+          <div id="preview-card">
+            <div id="preview-frame">
+              <img id="preview-img" src="" alt="Your photo">
+            </div>
+            <div id="preview-name">—</div>
+            <div id="preview-jersey" style="font-size:13px;color:#888;"></div>
+          </div>
+
+          <div class="step-nav">
+            <button class="creator-btn btn-neutral" onclick="goStep(2)">← Back</button>
+            <button class="creator-btn btn-success" onclick="savePlayer()">✅ Let's Play!</button>
+          </div>
+        </div>
+
+      </div><!-- /creator-body -->
+    </div><!-- /creator-box -->
+  </div><!-- /creator-overlay -->
+
+
+<script>
+// =============================================================
+// DREAM DROP — LOGIN PAGE
+// All data stored in localStorage. No server needed.
+// dreamdrop_players = [ { id, name, photo, jerseyColor, jerseyNum, created } ]
+// dreamdrop_current_player = id
+// =============================================================
+
+const JERSEY_COLOURS = [
+  { name:'Red',    hex:'#e03040' },
+  { name:'Blue',   hex:'#2255cc' },
+  { name:'Green',  hex:'#1D9E75' },
+  { name:'Gold',   hex:'#f5a623' },
+  { name:'Purple', hex:'#7c4dff' },
+  { name:'Orange', hex:'#ff6b35' },
+  { name:'Teal',   hex:'#00897b' },
+  { name:'Pink',   hex:'#d4537e' },
+  { name:'Black',  hex:'#1a1a2e' },
+];
+
+const JERSEY_NUMBERS = [0,1,3,5,7,8,10,11,12,13,15,20,21,22,23,24,25,30,32,33];
+
+// Default avatar — plain basketball emoji as base64 SVG
+const DEFAULT_PHOTO = 'data:image/svg+xml,' + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">' +
+  '<circle cx="50" cy="50" r="50" fill="#f5a623"/>' +
+  '<text x="50" y="68" font-size="56" text-anchor="middle">🧒</text>' +
+  '</svg>'
+);
+
+let _players   = [];
+let _pickedColor = JERSEY_COLOURS[0].hex;
+let _pickedNum   = 23;
+let _photoData   = null;  // base64 captured photo
+let _stream      = null;  // camera stream
+let _camAvailable = true;
+let _currentStep  = 0;
+
+// ── Load players ─────────────────────────────────────────────
+function loadPlayers() {
+  try { return JSON.parse(localStorage.getItem('dreamdrop_players') || '[]'); }
+  catch(e) { return []; }
+}
+function savePlayers(p) {
+  localStorage.setItem('dreamdrop_players', JSON.stringify(p));
+}
+
+// ── Render the cards grid ─────────────────────────────────────
+function renderGrid() {
+  _players = loadPlayers();
+  const grid = document.getElementById('players-grid');
+
+  // Remove old cards (keep add-card)
+  const addCard = document.getElementById('add-card');
+  grid.innerHTML = '';
+
+  _players.forEach(function(p) {
+    const card = document.createElement('div');
+    card.className = 'player-card';
+    card.style.setProperty('--jersey-color', p.jerseyColor);
+    card.innerHTML =
+      '<button class="card-delete" onclick="deletePlayer(\'' + p.id + '\',event)" title="Remove">✕</button>' +
+      '<div class="player-frame" style="box-shadow:0 0 0 4px ' + p.jerseyColor + '">' +
+        '<img src="' + (p.photo || DEFAULT_PHOTO) + '" alt="' + p.name + '">' +
+        '<div class="jersey-badge" style="background:' + p.jerseyColor + '">' + p.jerseyNum + '</div>' +
+      '</div>' +
+      '<div class="player-name">' + escHtml(p.name) + '</div>' +
+      '<div class="player-stats">Tap to play!</div>';
+    card.addEventListener('click', function() { selectPlayer(p.id); });
+    grid.appendChild(card);
+  });
+
+  grid.appendChild(addCard);
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Select a player and go to game ───────────────────────────
+function selectPlayer(id) {
+  localStorage.setItem('dreamdrop_current_player', id);
+  window.location.href = 'index.html';
+}
+
+// ── Delete a player ───────────────────────────────────────────
+function deletePlayer(id, e) {
+  e.stopPropagation();
+  if (!confirm('Remove this player? Their progress will be deleted.')) return;
+  _players = loadPlayers().filter(function(p) { return p.id !== id; });
+  savePlayers(_players);
+  // Also remove their progress key
+  localStorage.removeItem('dreamdrop_progress_' + id);
+  renderGrid();
+}
+
+// ── Open creator ──────────────────────────────────────────────
+function openCreator() {
+  _photoData  = null;
+  _pickedColor = JERSEY_COLOURS[0].hex;
+  _pickedNum   = 23;
+  document.getElementById('name-input').value = '';
+  document.getElementById('step0-next').disabled = true;
+  document.getElementById('retake-btn').style.display = 'none';
+  document.getElementById('snap-btn').style.display   = 'block';
+
+  buildSwatches();
+  buildNumbers();
+  goStep(0);
+  document.getElementById('creator-overlay').classList.add('open');
+  startCamera();
+}
+
+function closeCreator() {
+  stopCamera();
+  document.getElementById('creator-overlay').classList.remove('open');
+}
+
+// ── Camera ────────────────────────────────────────────────────
+function startCamera() {
+  const video    = document.getElementById('cam-video');
+  const placeholder = document.getElementById('cam-placeholder');
+  const noCam    = document.getElementById('no-cam-msg');
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    _camAvailable = false;
+    video.style.display = 'none';
+    placeholder.style.display = 'flex';
+    noCam.style.display = 'block';
+    document.getElementById('snap-btn').style.display = 'none';
+    document.getElementById('step0-next').disabled = false;
+    _photoData = DEFAULT_PHOTO;
+    return;
+  }
+
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false })
+    .then(function(stream) {
+      _stream = stream;
+      _camAvailable = true;
+      video.srcObject = stream;
+      video.style.display = 'block';
+      placeholder.style.display = 'none';
+    })
+    .catch(function() {
+      _camAvailable = false;
+      video.style.display = 'none';
+      placeholder.style.display = 'flex';
+      noCam.style.display = 'block';
+      document.getElementById('snap-btn').style.display = 'none';
+      document.getElementById('step0-next').disabled = false;
+      _photoData = DEFAULT_PHOTO;
+    });
+}
+
+function stopCamera() {
+  if (_stream) {
+    _stream.getTracks().forEach(function(t) { t.stop(); });
+    _stream = null;
+  }
+}
+
+function snapPhoto() {
+  const video  = document.getElementById('cam-video');
+  const canvas = document.getElementById('cam-canvas');
+  const snap   = document.getElementById('snap-btn');
+  const retake = document.getElementById('retake-btn');
+  const next   = document.getElementById('step0-next');
+
+  canvas.width  = video.videoWidth  || 320;
+  canvas.height = video.videoHeight || 240;
+  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  // Mirror so it looks natural (selfie flip)
+  const ctx = canvas.getContext('2d');
+  ctx.save();
+  ctx.scale(-1, 1);
+  ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
+  ctx.restore();
+
+  _photoData = canvas.toDataURL('image/jpeg', 0.75);
+
+  // Show the captured frame, hide live video
+  video.style.display  = 'none';
+  canvas.style.display = 'block';
+  snap.style.display   = 'none';
+  retake.style.display = 'block';
+  next.disabled        = false;
+}
+
+function retakePhoto() {
+  const video  = document.getElementById('cam-video');
+  const canvas = document.getElementById('cam-canvas');
+  const snap   = document.getElementById('snap-btn');
+  const retake = document.getElementById('retake-btn');
+  const next   = document.getElementById('step0-next');
+
+  video.style.display  = 'block';
+  canvas.style.display = 'none';
+  snap.style.display   = 'block';
+  retake.style.display = 'none';
+  next.disabled        = true;
+  _photoData = null;
+}
+
+function skipPhoto() {
+  _photoData = DEFAULT_PHOTO;
+  document.getElementById('step0-next').disabled = false;
+  goStep(1);
+}
+
+// ── Jersey colour swatches ────────────────────────────────────
+function buildSwatches() {
+  const wrap = document.getElementById('jersey-colours');
+  wrap.innerHTML = '';
+  JERSEY_COLOURS.forEach(function(c, i) {
+    const sw = document.createElement('div');
+    sw.className = 'jc-swatch' + (i === 0 ? ' picked' : '');
+    sw.style.background = c.hex;
+    sw.title = c.name;
+    sw.addEventListener('click', function() {
+      document.querySelectorAll('.jc-swatch').forEach(function(s){ s.classList.remove('picked'); });
+      sw.classList.add('picked');
+      _pickedColor = c.hex;
+      updatePreview();
+    });
+    wrap.appendChild(sw);
+  });
+}
+
+// ── Jersey number buttons ─────────────────────────────────────
+function buildNumbers() {
+  const wrap = document.getElementById('jersey-numbers');
+  wrap.innerHTML = '';
+  JERSEY_NUMBERS.forEach(function(n) {
+    const btn = document.createElement('button');
+    btn.className = 'jn-btn' + (n === _pickedNum ? ' picked' : '');
+    btn.textContent = n;
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.jn-btn').forEach(function(b){ b.classList.remove('picked'); });
+      btn.classList.add('picked');
+      _pickedNum = n;
+      updatePreview();
+    });
+    wrap.appendChild(btn);
+  });
+}
+
+// ── Preview card update ───────────────────────────────────────
+function updatePreview() {
+  const img    = document.getElementById('preview-img');
+  const name   = document.getElementById('preview-name');
+  const jersey = document.getElementById('preview-jersey');
+  const frame  = document.getElementById('preview-frame');
+
+  img.src = _photoData || DEFAULT_PHOTO;
+  frame.style.boxShadow = '0 0 0 4px ' + _pickedColor;
+  name.textContent   = document.getElementById('name-input').value.trim() || '—';
+  jersey.textContent = 'Jersey #' + _pickedNum;
+  jersey.style.color = _pickedColor;
+}
+
+// Name input → live update preview
+document.getElementById('name-input').addEventListener('input', updatePreview);
+
+// ── Step navigation ───────────────────────────────────────────
+function goStep(n) {
+  // Validate step 1 (name)
+  if (n === 2) {
+    const nm = document.getElementById('name-input').value.trim();
+    if (!nm) {
+      document.getElementById('name-input').focus();
+      document.getElementById('name-input').style.borderColor = '#e03040';
+      setTimeout(function(){ document.getElementById('name-input').style.borderColor = ''; }, 1500);
+      return;
+    }
+  }
+
+  _currentStep = n;
+  document.querySelectorAll('.creator-step').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById('step-' + n).classList.add('active');
+
+  document.querySelectorAll('.sdot').forEach(function(d, i){ d.classList.toggle('on', i === n); });
+
+  if (n === 3) updatePreview();
+}
+
+// ── Save player ───────────────────────────────────────────────
+function savePlayer() {
+  const name = document.getElementById('name-input').value.trim();
+  if (!name) { goStep(1); return; }
+
+  const id = 'p_' + Date.now();
+  const player = {
+    id:          id,
+    name:        name,
+    photo:       _photoData || DEFAULT_PHOTO,
+    jerseyColor: _pickedColor,
+    jerseyNum:   _pickedNum,
+    created:     new Date().toISOString()
+  };
+
+  _players = loadPlayers();
+  _players.push(player);
+  savePlayers(_players);
+
+  stopCamera();
+  document.getElementById('creator-overlay').classList.remove('open');
+  renderGrid();
+
+  // Auto-select the new player and launch the game
+  setTimeout(function() { selectPlayer(id); }, 300);
+}
+
+// ── Init ──────────────────────────────────────────────────────
+renderGrid();
+
+// If already logged in, go straight to game
+const cur = localStorage.getItem('dreamdrop_current_player');
+if (cur && loadPlayers().find(function(p){ return p.id === cur; })) {
+  // Show the grid for 0.5s then auto-redirect (let child see who they are)
+  // Actually — always show the grid so child can consciously choose
+  // window.location.href = 'index.html';
+}
+</script>
+</body>
+</html>

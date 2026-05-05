@@ -3,16 +3,38 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- =====================================================
+       MOBILE/TABLET SUPPORT ADDED:
+       Updated viewport meta tag.
+       - Added maximum-scale=1 to prevent iOS auto-zoom on input focus
+       - Added user-scalable=no to prevent accidental pinch-zoom during gameplay
+       The original width=device-width, initial-scale=1.0 is kept.
+       ===================================================== -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Ball Game</title>
   <link rel="stylesheet" type="text/css" href="stylee.css">
 </head>
 
 <body id="fidrat-home">
+  <div id="rotate-block">
+    <div id="rotate-icon">&#8635;</div>
+    <h2>Rotate your device</h2>
+    <p>Please turn your phone to landscape mode.</p>
+  </div>
+  <div id="player-badge" style="display:none;position:fixed;top:10px;left:10px;z-index:5000;align-items:center;gap:8px;background:rgba(255,255,255,0.92);border-radius:40px;padding:4px 12px 4px 4px;box-shadow:0 4px 14px rgba(0,0,0,0.18);cursor:pointer;" onclick="window.location.href='login.html'">
+    <div id="pb-frame" style="width:36px;height:36px;border-radius:50%;overflow:hidden;border:3px solid #4b2e83;flex-shrink:0;"><img id="pb-photo" src="" style="width:100%;height:100%;object-fit:cover;"></div>
+    <span id="pb-name" style="font-weight:800;font-size:13px;color:#1a1a2e;max-width:90px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></span>
+    <span style="font-size:10px;color:#888;">▼</span>
+  </div>
   <div id="device-block">
-    <h1>🚫 Desktop Only</h1>
-    <p>This game is designed for PC / Laptop only.<br>
-      Please open it on a desktop browser.</p>
+    <!-- =====================================================
+         MOBILE/TABLET SUPPORT ADDED:
+         Updated message — now only very small phones (< 400px) see this.
+         Tablets and larger devices are allowed to play.
+         ===================================================== -->
+    <h1>🚫 Screen Too Small</h1>
+    <p>This game works best on a tablet, laptop, or desktop.<br>
+      Please use a larger screen to play.</p>
   </div>
 
   <div id="focus-block">
@@ -45,10 +67,11 @@
 
   <h1 id="game-title">Dream Drop</h1>
 
-  <div class="buttons">
+  <div class="buttons" id="menu-buttons">
     <button id="easyBtn">Easy</button>
     <button id="mediumBtn">Medium</button>
     <button id="hardBtn">Hard</button>
+    <button id="roadmapBtn" onclick="window.location.href='roadmap.html'">📍 My Progress</button>
   </div>
 
   <!--<button id="start-button">Start Game</button>-->
@@ -76,8 +99,14 @@
 
   <img src="Images\Common_Images\vv.png" id="vv">
   <img src="Images\Common_Images\ie.png" id="ie">
-  <img src="Images\Common_Images\prem.png" id="prem">
-  <img src="Images\Common_Images\shanti.png" id="shanti">
+
+  <!-- MOBILE/TABLET SUPPORT:
+       Wrapped in #kids-row so on phone they sit side by side
+       in a flex row below the buttons instead of overlapping. -->
+  <div id="kids-row">
+    <img src="Images\Common_Images\prem.png" id="prem">
+    <img src="Images\Common_Images\shanti.png" id="shanti">
+  </div>
 
   <div id="overlay" class="overlay">
 
@@ -99,6 +128,9 @@
       <button id="restartBtn">Restart</button>
       <button id="quitBtn">Quit</button>
       <button id="next">Next</button>
+      <!-- MY PROGRESS button in game over modal — always visible after any level -->
+      <button id="progressBtn" onclick="window.location.href='roadmap.html'">📍 My Progress</button>
+      <button id="analytics-btn" onclick="analyticsOpen()">📊 View Analytics</button>
     </div>
   </div>
 
@@ -110,8 +142,95 @@
   <div class="obstacle"></div>
   <div id="maze"></div>
 
-  <!-- <script src="scriptt.js"></script> -->
+  <!-- =====================================================
+       LIVE FEEDBACK ADDED (Point 5):
+       1. #emoji-burst — shows floating emojis on score events
+       2. #mascot-message — speech bubble above mascots
+       3. #feedback-flash — full screen color flash on success/fail
+       ===================================================== -->
+
+  <!-- Floating emoji that appears and flies up on good/bad events -->
+  <div id="emoji-burst"></div>
+
+  <!-- Speech bubble shown above the mascots during gameplay -->
+  <div id="mascot-message">
+    <span id="mascot-text"></span>
+  </div>
+
+  <!-- Full screen color flash (green = good, red = bad) -->
+  <div id="feedback-flash"></div>
+
+  
+  <!-- GAME TASKBAR -->
+  <div id="game-taskbar">
+    <div id="tb-lvl-wrap">LVL<br><strong id="tb-lvl-num">1</strong></div>
+    <div class="tb-sep"></div>
+    <button class="tb-btn" id="tb-snd" onclick="tbSound()" title="Sound">
+      <img id="tb-snd-img" src="Images/Common_Images/audio_on.png" alt="Sound"></button>
+    <div class="tb-sep"></div>
+    <button class="tb-btn" id="tb-pause" onclick="tbPause()" title="Pause">⏸</button>
+    <button class="tb-btn" id="tb-restart" onclick="tbRestart()" title="Restart">🔄</button>
+  </div>
+
+  <!-- ANALYTICS OVERLAY -->
+  <div id="an-overlay">
+    <div id="an-panel">
+      <div id="an-header">
+        <span id="an-title">Mouse Movement Analytics — <span id="an-lvl-badge">—</span></span>
+        <button class="an-hdr-btn" onclick="analyticsClose()">✕ Close</button>
+      </div>
+      <div id="an-stats">
+        <div class="an-card"><div class="an-lbl">Points</div><div class="an-val" id="an-pts">0</div></div>
+        <div class="an-card"><div class="an-lbl">Avg speed</div><div class="an-val" id="an-spd">0 px/s</div></div>
+        <div class="an-card"><div class="an-lbl">Path length</div><div class="an-val" id="an-len">0 px</div></div>
+        <div class="an-card"><div class="an-lbl">Hesitations</div><div class="an-val" id="an-hes">0</div></div>
+        <div class="an-card"><div class="an-lbl">Duration</div><div class="an-val" id="an-dur">0s</div></div>
+      </div>
+      <div id="an-body">
+        <div id="an-canvas-col">
+          <div id="an-chk-row">
+            <label><input type="checkbox" id="an-chk-heat" checked> Heatmap</label>
+            <label><input type="checkbox" id="an-chk-path" checked> Path trail</label>
+          </div>
+          <div id="an-canvas-wrap">
+            <canvas id="an-cv-heat"></canvas>
+            <canvas id="an-cv-path"></canvas>
+            <canvas id="an-cv-main"></canvas>
+          </div>
+          <div id="an-fb"><span id="an-fb-dot"></span><span id="an-fb-msg">Play a level — tracking starts automatically.</span></div>
+        </div>
+        <div id="an-sidebar">
+          <div class="an-sec"><div class="an-sec-ttl">Speed over time</div><div style="position:relative;height:80px;"><canvas id="an-cv-spd"></canvas></div></div>
+          <div class="an-sec"><div class="an-sec-ttl">Movement breakdown</div><div id="an-pattern"></div></div>
+          <div class="an-sec"><div class="an-sec-ttl">Zone activity (3x3)</div><div id="an-zones"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script src="firebase-config.js"></script>
+  <script>
+  (function() {
+    var pid = localStorage.getItem('dreamdrop_current_player');
+    if (!pid) return;
+    try {
+      var players = JSON.parse(localStorage.getItem('dreamdrop_players') || '[]');
+      var player = players.find(function(p){ return p.id === pid; });
+      if (!player) return;
+      var badge = document.getElementById('player-badge');
+      if (badge) {
+        badge.style.display = 'flex';
+        document.getElementById('pb-photo').src = player.photo || '';
+        document.getElementById('pb-name').textContent = player.name;
+        document.getElementById('pb-frame').style.borderColor = player.jerseyColor || '#4b2e83';
+      }
+    } catch(e) {}
+  })();
+  </script>
+
   <script src="scriptt.js"></script>
+  <!-- progress.js is now embedded inside scriptt.js -->
 </body>
 
 </html>
