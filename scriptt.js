@@ -42,7 +42,6 @@ function loadProgress() {
 
 function saveProgress(data) {
   try { localStorage.setItem(getStorageKey(), JSON.stringify(data)); } catch(e) { console.warn('[Progress] Save failed:', e); }
-  if (typeof firebaseSync === 'function' && navigator.onLine) { try { firebaseSync(data); } catch(e) {} }
 }
 
 let _levelStartTime   = null;
@@ -2799,18 +2798,6 @@ function stopTrackingAndExport(taskName = 'task') {
   mouseMovements.forEach(move => {
     content += `${move.x},${move.y},${new Date(move.time).toISOString()}\n`;
   });
-
-  const formData = new FormData();
-  formData.append('filename', `${taskName}_mouse_log.txt`);
-  formData.append('content', content);
-
-  fetch('save_mouse_data.php', {
-    method: 'POST',
-    body: formData
-  })
-    .then(response => response.text())
-    .then(result => console.log('Mouse data saved:', result))
-    .catch(error => console.error('Save failed:', error));
 }
 
 
@@ -3453,19 +3440,7 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('resize',function(){var o=document.getElementById('an-overlay');if(o&&o.classList.contains('an-open')){_resize();_dMain();_dHeat();_dPath();}});
 })();
 
-// =============================================================
-// FIREBASE SYNC
-// =============================================================
-(function() {
-  if(typeof FIREBASE_CONFIG==='undefined'||(typeof FIREBASE_ENABLED!=='undefined'&&!FIREBASE_ENABLED))return;
-  if(typeof firebase==='undefined')return;
-  var db=null;
-  try{var app=firebase.apps&&firebase.apps.length?firebase.apps[0]:firebase.initializeApp(FIREBASE_CONFIG);db=firebase.database();}catch(e){return;}
-  function pid(){return localStorage.getItem('dreamdrop_current_player')||'guest';}
-  window.firebaseSync=function(data){if(!db||!navigator.onLine)return;db.ref('dreamdrop/players/'+pid()+'/progress').set(data).catch(function(){});};
-  window.firebaseClear=function(){if(!db||!navigator.onLine)return;db.ref('dreamdrop/players/'+pid()+'/progress').remove().catch(function(){});};
-  window.addEventListener('online',function(){try{var raw=localStorage.getItem('dreamdrop_progress_'+pid());if(raw&&typeof firebaseSync==='function')firebaseSync(JSON.parse(raw));}catch(e){}});
-})();
+
 
 // =============================================================
 // MASCOT ANIMATION ENGINE
