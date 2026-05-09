@@ -1,3 +1,15 @@
+// CLICK-TO-RESUME: clicking anywhere on the paused screen resumes the game
+document.addEventListener('click', function(e) {
+  if (!GAME_PAUSED) return;
+  // Don't trigger if clicking the taskbar buttons themselves
+  var tb = document.getElementById('game-taskbar');
+  if (tb && tb.contains(e.target)) return;
+  hideFocusWarning();
+  // Sync the pause button icon back to ⏸
+  var btn = document.getElementById('tb-pause');
+  if (btn) { btn.classList.remove('tb-paused'); btn.textContent = '⏸'; }
+}, true);
+
 // =============================================================
 // DREAM DROP — PROGRESS + BADGES + REWARDS SYSTEM
 // =============================================================
@@ -3372,7 +3384,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function tbHide() { var tb=document.getElementById('game-taskbar'); if(tb)tb.classList.remove('tb-on'); }
   function tbSyncPause() { var btn=document.getElementById('tb-pause'); if(!btn)return; if(GAME_PAUSED){btn.classList.add('tb-paused');btn.textContent='▶';}else{btn.classList.remove('tb-paused');btn.textContent='⏸';} }
   window.tbSound = function() { var cb=document.getElementById('audio_setting'); if(!cb)return; cb.checked=!cb.checked; cb.dispatchEvent(new Event('change')); var tb=document.getElementById('game-taskbar'),img=document.getElementById('tb-snd-img'); if(cb.checked){if(tb)tb.classList.remove('snd-off');if(img)img.src='Images/Common_Images/audio_on.png';}else{if(tb)tb.classList.add('snd-off');if(img)img.src='Images/Common_Images/audio_off.png';} };
-  window.tbPause = function() { if(!GAME_STARTED)return; if(GAME_PAUSED){GAME_PAUSED=false;PAUSE_LOCK=false;gamePaused=false;wasPausedByFocus=false;var fb=document.getElementById('focus-block');if(fb){fb.style.display='none';fb.style.pointerEvents='none';}clearInterval(timer);timer=setInterval(function(){if(GAME_PAUSED)return;time++;var tv=document.getElementById('time-value');if(tv)tv.innerText=time;},1000);}else{pauseGame();showFocusWarning();} tbSyncPause(); };
+  window.tbPause = function() { if(!GAME_STARTED)return; if(GAME_PAUSED){GAME_PAUSED=false;PAUSE_LOCK=false;gamePaused=false;wasPausedByFocus=false;var fb=document.getElementById('focus-block');if(fb){fb.style.display='none';fb.style.pointerEvents='none';}var tb=document.getElementById('game-taskbar');if(tb)tb.style.pointerEvents='';clearInterval(timer);timer=setInterval(function(){if(GAME_PAUSED)return;time++;var tv=document.getElementById('time-value');if(tv)tv.innerText=time;},1000);}else{pauseGame();} tbSyncPause(); };
   window.tbRestart = function() { if(!GAME_STARTED&&!isGameRunning)return; GAME_PAUSED=false;PAUSE_LOCK=false;gamePaused=false;isGameRunning=true;GAME_STARTED=true;var fb=document.getElementById('focus-block');if(fb){fb.style.display='none';fb.style.pointerEvents='none';}tbSyncPause();restartGame(); };
   function patch(name,after){var orig=window[name];if(typeof orig!=='function')return;window[name]=function(){var r=orig.apply(this,arguments);after();return r;};}
   var onStart=function(){setTimeout(function(){tbShow();var ln=document.getElementById('tb-lvl-num');if(ln)ln.textContent=currentLevel||1;},40);};
