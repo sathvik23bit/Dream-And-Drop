@@ -456,6 +456,13 @@ const audioIconOn = document.getElementById('audio_icon_on');
 const audioIconOff = document.getElementById('audio_icon_off');
 let backgroundAudio;
 
+// FIX: 'maze' was used by generateObstacles()/addMovingObstacle() but was
+// never defined anywhere, causing a ReferenceError ("maze is not defined")
+// every time a level tried to build its obstacles — i.e. on almost every
+// level from 3 onward. Cache the #maze container element here so both
+// functions can append obstacles to it.
+const maze = document.getElementById('maze');
+
 function toggleBackgroundAudio() {
   if (audioSettingCheckbox.checked) {
     playBackgroundSound();
@@ -584,13 +591,6 @@ function createRedBall() {
   ball.style.left = left + 'px';
   ball.style.top  = top  + 'px';
 
-
-
-  // Cleanup function to remove interval when the ball is removed
-  ball.addEventListener('animationend', function () {
-    if (GAME_PAUSED) return;
-    clearInterval(animationInterval);
-  });
 
   ball.addEventListener('pointerdown', function (e) {
     if (GAME_PAUSED) return;
@@ -769,7 +769,6 @@ function level1() {
     if (time >= 10) {
       clearInterval(timer);
       if (score >= 3) {
-        levelCompleted = true;
         showGameOverAlert(true, 1);
         document.querySelectorAll('.ball').forEach(ball => ball.remove());
         level2();
@@ -1365,6 +1364,12 @@ function checkDrop(ball, basketId, currentLevel) {
 function showGameOverAlert(levelCompleted, currentLevel) {
   isGameRunning = false;
   wasPausedByFocus = false;
+
+  // FIX: 'overlay' was referenced below (overlay.style.display = ...) but
+  // was never defined in this function's scope, causing a ReferenceError
+  // ("overlay is not defined") at the end of EVERY level — success or
+  // failure — which stopped the game-over modal from ever showing.
+  const overlay = document.getElementById('overlay');
 
   GAME_STARTED  = false;   // stop blur/focus handlers from firing
   GAME_PAUSED = true;
@@ -3287,7 +3292,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (hardBtn)   hardBtn.addEventListener('click',   () => setDifficulty('Hard'));
 });
 // =============================================================
-// ROADMAP LEVEL JUMP — index.html?level=9 → starts level 9
+// ROADMAP LEVEL JUMP — home.html?level=9 → starts level 9
 // =============================================================
 (function launchFromRoadmap() {
   const params = new URLSearchParams(window.location.search);
