@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Dream Drop — Teacher Dashboard</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: url('Images/Common_Images/bg2.jpg') no-repeat center center / cover;
+      background-color: #1a1a2e;
+      min-height: 100vh;
+      padding: 0 0 6vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Header ───────────────────────────────────────────── */
+    .dash-header {
+      background: linear-gradient(135deg, #4b2e83, #2c1654);
+      padding: 18px clamp(16px,4vw,48px) 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .dash-header .h-left { display: flex; align-items: center; gap: 14px; }
+    .dash-title { font-size: clamp(1.1rem,3vw,1.7rem); font-weight: 900; color: #fff; letter-spacing: 0.02em; }
+    .dash-sub   { font-size: 11px; color: rgba(255,255,255,0.6); font-weight: 600; margin-top: 2px; }
+    .host-chip  {
+      background: linear-gradient(135deg,#f5a623,#e03040);
+      color: #fff; font-size: 11px; font-weight: 900;
+      border-radius: 20px; padding: 4px 12px;
+      display: flex; align-items: center; gap: 5px;
+      box-shadow: 0 2px 8px rgba(229,48,64,0.4);
+    }
+    .back-link {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 14px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      transition: background 0.15s;
+    }
+    .back-link:hover { background: rgba(255,255,255,0.12); }
+
+    /* ── Page body ────────────────────────────────────────── */
+    .dash-body { max-width: 1100px; margin: 0 auto; padding: clamp(16px,3vw,32px) clamp(12px,3vw,32px); }
+
+    /* ── Access denied ────────────────────────────────────── */
+    #access-denied {
+      display: none;
+      text-align: center;
+      padding: 10vh 2vw;
+      color: #fff;
+    }
+    #access-denied .ad-icon { font-size: 4rem; margin-bottom: 16px; }
+    #access-denied h2 { font-size: 1.6rem; margin-bottom: 10px; }
+    #access-denied p  { font-size: 1rem; opacity: 0.7; }
+
+    /* ── Class summary bar ────────────────────────────────── */
+    .class-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .cs-card {
+      background: rgba(255,255,255,0.93);
+      border-radius: 16px;
+      padding: 16px 12px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    .cs-icon  { font-size: 1.6rem; margin-bottom: 4px; }
+    .cs-value { font-size: 1.4rem; font-weight: 900; color: #4b2e83; display: block; }
+    .cs-label { font-size: 11px; color: #777; font-weight: 700; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* ── Section heading ──────────────────────────────────── */
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 24px 0 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .section-head h2 {
+      font-size: clamp(1rem,2.5vw,1.3rem);
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .section-head .sh-right { display: flex; gap: 8px; align-items: center; }
+
+    /* Search + sort controls */
+    #student-search {
+      padding: 8px 14px;
+      border-radius: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-size: 13px;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      outline: none;
+      width: 180px;
+      transition: border 0.15s, background 0.15s;
+    }
+    #student-search::placeholder { color: rgba(255,255,255,0.5); }
+    #student-search:focus { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.22); }
+    .sort-btn {
+      padding: 7px 14px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.85);
+      font-size: 12px; font-weight: 700;
+      cursor: pointer;
+      transition: background 0.12s;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .sort-btn.active, .sort-btn:hover { background: rgba(255,255,255,0.28); color: #fff; }
+
+    /* ── Student grid ─────────────────────────────────────── */
+    #student-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 18px;
+    }
+
+    /* ── Student card ─────────────────────────────────────── */
+    .student-card {
+      background: rgba(255,255,255,0.96);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .student-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.22); }
+
+    .sc-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px 12px;
+      border-bottom: 1px solid #f0f0f5;
+    }
+    .sc-photo {
+      width: 54px; height: 54px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #4b2e83;
+      flex-shrink: 0;
+    }
+    .sc-info { flex: 1; min-width: 0; }
+    .sc-name {
+      font-size: 1rem; font-weight: 900; color: #1a1a2e;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .sc-jersey {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 700; color: #666; margin-top: 3px;
+    }
+    .jersey-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      display: inline-block;
+    }
+    .sc-grade {
+      font-size: 1.4rem; font-weight: 900;
+      text-align: center;
+      min-width: 38px;
+    }
+
+    /* Grade colours */
+    .grade-s  { color: #7c4dff; }
+    .grade-a  { color: #2ecc71; }
+    .grade-b  { color: #1e88e5; }
+    .grade-c  { color: #f5a623; }
+    .grade-d  { color: #e03040; }
+    .grade-nd { color: #aaa; }
+
+    /* Progress bar inside card */
+    .sc-progress-wrap {
+      padding: 10px 18px 8px;
+      border-bottom: 1px solid #f0f0f5;
+    }
+    .sc-progress-row {
+      display: flex; justify-content: space-between;
+      font-size: 11px; color: #888; font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .sc-prog-bar {
+      height: 8px; background: #eee; border-radius: 6px; overflow: hidden;
+    }
+    .sc-prog-fill {
+      height: 100%; border-radius: 6px;
+      background: linear-gradient(90deg, #4b2e83, #7c4dff);
+      transition: width 0.5s;
+    }
+
+    /* Stats row */
+    .sc-stats {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 0;
+      border-bottom: 1px solid #f0f0f5;
+    }
+    .sc-stat {
+      text-align: center;
+      padding: 10px 6px;
+      border-right: 1px solid #f5f5f8;
+    }
+    .sc-stat:last-child { border-right: none; }
+    .sc-stat-val { font-size: 1rem; font-weight: 900; color: #1a1a2e; display: block; }
+    .sc-stat-lbl { font-size: 10px; color: #999; font-weight: 700; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+    /* Badges preview */
+    .sc-badges {
+      padding: 8px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      min-height: 34px;
+      border-bottom: 1px solid #f0f0f5;
+    }
+    .sc-badge-icon { font-size: 1.2rem; }
+    .sc-badge-none { font-size: 11px; color: #ccc; align-self: center; }
+
+    /* Action buttons */
+    .sc-actions {
+      display: flex;
+      gap: 8px;
+      padding: 12px 18px;
+    }
+    .sc-btn {
+      flex: 1;
+      padding: 9px 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 12px; font-weight: 800;
+      cursor: pointer;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      transition: opacity 0.12s, transform 0.1s;
+      text-decoration: none;
+      display: flex; align-items: center; justify-content: center;
+      gap: 5px;
+    }
+    .sc-btn:hover  { opacity: 0.88; transform: scale(1.02); }
+    .sc-btn:active { transform: scale(0.97); }
+    .sc-btn.roadmap  { background: #4b2e83; color: #fff; }
+    .sc-btn.analytics { background: #1e88e5; color: #fff; }
+    .sc-btn.reset    { background: #fff0f0; color: #e03040; border: 1.5px solid #f5b5b5; }
+
+    /* ── Analytics modal ──────────────────────────────────── */
+    #analytics-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(0,0,0,0.7);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #analytics-modal.open { display: flex; }
+    .am-panel {
+      background: #fff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 620px;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .am-header {
+      background: linear-gradient(135deg,#1e88e5,#1565c0);
+      padding: 16px 20px;
+      border-radius: 20px 20px 0 0;
+      display: flex; align-items: center; justify-content: space-between;
+      color: #fff;
+      position: sticky; top: 0; z-index: 2;
+    }
+    .am-title { font-size: 1rem; font-weight: 900; }
+    .am-close {
+      background: rgba(255,255,255,0.18); border: none;
+      border-radius: 50%; width: 30px; height: 30px;
+      font-size: 16px; cursor: pointer; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .am-close:hover { background: rgba(255,255,255,0.3); }
+    .am-body { padding: 20px; }
+
+    .am-empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: #aaa;
+    }
+    .am-empty .am-empty-icon { font-size: 3rem; margin-bottom: 12px; }
+
+    /* Analytics level list */
+    .am-level-item {
+      border: 1.5px solid #e8ecf5;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .am-level-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .am-level-name { font-size: 14px; font-weight: 900; color: #1a1a2e; }
+    .am-level-time { font-size: 11px; color: #aaa; }
+    .am-level-stats {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 8px;
+    }
+    .am-stat-box {
+      background: #f5f7fc;
+      border-radius: 8px;
+      padding: 8px 6px;
+      text-align: center;
+    }
+    .am-stat-val { font-size: 1rem; font-weight: 900; color: #4b2e83; display: block; }
+    .am-stat-lbl { font-size: 10px; color: #999; font-weight: 700; text-transform: uppercase; }
+
+    /* Path preview in analytics */
+    .am-path-wrap {
+      margin-top: 10px;
+      background: #f5f7fc;
+      border-radius: 8px;
+      height: 80px;
+      overflow: hidden;
+      position: relative;
+    }
+    .am-path-canvas { width: 100%; height: 100%; }
+
+    /* ── No students state ────────────────────────────────── */
+    .no-students {
+      text-align: center;
+      padding: 6vh 2vw;
+      color: rgba(255,255,255,0.7);
+    }
+    .no-students .ns-icon { font-size: 3rem; margin-bottom: 12px; }
+
+    /* ── Responsive ───────────────────────────────────────── */
+    @media (max-width: 500px) {
+      #student-grid { grid-template-columns: 1fr; }
+      .class-summary { grid-template-columns: repeat(3,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <div class="dash-header">
+    <div class="h-left">
+      <div>
+        <div class="dash-title">👑 Teacher Dashboard</div>
+        <div class="dash-sub">Dream Drop — Sri Sathya Sai Vidya Vahini</div>
+      </div>
+      <div class="host-chip" id="host-name-chip">👑 Host</div>
+    </div>
+    <a href="roadmap.html" class="back-link">← My Roadmap</a>
+  </div>
+
+  <!-- ── Access denied (non-host) ── -->
+  <div id="access-denied">
+    <div class="ad-icon">🔒</div>
+    <h2>Host Access Only</h2>
+    <p>This dashboard is only available to the assigned Host / Teacher player.<br>
+       Ask your teacher to set a Host in ⚙️ Settings on the login page.</p>
+    <br>
+    <a href="roadmap.html" style="color:#ffd54f;font-weight:800;">← Go Back</a>
+  </div>
+
+  <!-- ── Main dashboard content ── -->
+  <div class="dash-body" id="dash-content" style="display:none;">
+
+    <!-- Class summary -->
+    <div id="class-summary" class="class-summary"></div>
+
+    <!-- Students section -->
+    <div class="section-head">
+      <h2>👥 All Students</h2>
+      <div class="sh-right">
+        <input id="student-search" type="text" placeholder="🔍 Search student…" oninput="filterStudents()">
+        <button class="sort-btn active" id="sort-name"     onclick="sortStudents('name')">A–Z</button>
+        <button class="sort-btn"       id="sort-progress"  onclick="sortStudents('progress')">Progress ↓</button>
+        <button class="sort-btn"       id="sort-grade"     onclick="sortStudents('grade')">Grade</button>
+      </div>
+    </div>
+
+    <div id="student-grid"></div>
+    <div id="no-students" class="no-students" style="display:none;">
+      <div class="ns-icon">👤</div>
+      <p>No students yet. Add players on the login page.</p>
+    </div>
+  </div>
+
+  <!-- ── Analytics modal ── -->
+  <div id="analytics-modal">
+    <div class="am-panel">
+      <div class="am-header">
+        <div class="am-title" id="am-title">Mouse Analytics</div>
+        <button class="am-close" onclick="closeAnalytics()">✕</button>
+      </div>
+      <div class="am-body" id="am-body"></div>
+    </div>
+  </div>
+
+  <script>
+  // =============================================================
+  // DREAM DROP — HOST DASHBOARD
+  // =============================================================
+
+  var BADGE_DEFS = {
+    first_drop:  { icon:'🏀', name:'First Drop' },
+    speed_demon: { icon:'⚡', name:'Speed Demon' },
+    no_miss:     { icon:'🎯', name:'Perfect Shot' },
+    hat_trick:   { icon:'🎩', name:'Hat Trick' },
+    level_5:     { icon:'⭐', name:'Rising Star' },
+    level_10:    { icon:'🌟', name:'All Star' },
+    level_15:    { icon:'🏆', name:'Champion' },
+    level_20:    { icon:'💎', name:'Diamond Player' },
+    level_25:    { icon:'🚀', name:'Rocket' },
+    level_30:    { icon:'👑', name:'Dream Drop King' },
+    comeback:    { icon:'💪', name:'Comeback Kid' },
+    hard_mode:   { icon:'🔥', name:'Fire Starter' },
+    marathon:    { icon:'⏱️', name:'Marathon' },
+  };
+
+  var TOTAL_LEVELS = 33;
+
+  // ── Access check ────────────────────────────────────────────
+  var currentPid = localStorage.getItem('dreamdrop_current_player');
+  var hostId     = localStorage.getItem('dreamdrop_host_player');
+  var isHost     = currentPid && hostId && currentPid === hostId;
+
+  if (!isHost) {
+    document.getElementById('access-denied').style.display = 'block';
+  } else {
+    document.getElementById('dash-content').style.display = 'block';
+
+    // Show host name in chip
+    try {
+      var allPlayers = JSON.parse(localStorage.getItem('dreamdrop_players') || '[]');
+      var hostPlayer = allPlayers.find(function(p){ return p.id === hostId; });
+      if (hostPlayer) {
+        document.getElementById('host-name-chip').textContent = '👑 ' + hostPlayer.name;
+      }
+    } catch(e) {}
+
+    buildDashboard();
+  }
+
+  // ── Helpers ─────────────────────────────────────────────────
+  function loadPlayerProgress(pid) {
+    try {
+      var raw = localStorage.getItem('dreamdrop_progress_' + pid);
+      if (!raw) raw = localStorage.getItem('dreamdrop_progress');
+      if (raw) {
+        var d = JSON.parse(raw);
+        d.levels = d.levels || {};
+        d.badges = d.badges || [];
+        d.totalPlayTime = d.totalPlayTime || 0;
+        d.totalLevelsCompleted = d.totalLevelsCompleted || 0;
+        return d;
+      }
+    } catch(e) {}
+    return { levels:{}, badges:[], totalPlayTime:0, totalLevelsCompleted:0 };
+  }
+
+  function getGrade(pct) {
+    if (pct >= 90) return { letter:'S', cls:'grade-s', label:'Outstanding' };
+    if (pct >= 75) return { letter:'A', cls:'grade-a', label:'Excellent' };
+    if (pct >= 55) return { letter:'B', cls:'grade-b', label:'Good' };
+    if (pct >= 35) return { letter:'C', cls:'grade-c', label:'Developing' };
+    if (pct > 0)   return { letter:'D', cls:'grade-d', label:'Needs Support' };
+    return { letter:'—', cls:'grade-nd', label:'Not Started' };
+  }
+
+  function formatTime(s) {
+    if (!s) return '—';
+    if (s < 60) return s + 's';
+    return Math.floor(s/60) + 'm ' + (s%60) + 's';
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── Build the full dashboard ─────────────────────────────────
+  var _allStudents = [];
+  var _currentSort = 'name';
+
+  function buildDashboard() {
+    var players = JSON.parse(localStorage.getItem('dreamdrop_players') || '[]');
+    // Exclude the host from student list
+    var students = players.filter(function(p){ return p.id !== hostId; });
+
+    // Enrich each student with their progress
+    _allStudents = students.map(function(p) {
+      var prog = loadPlayerProgress(p.id);
+      var pct  = Math.round((prog.totalLevelsCompleted / TOTAL_LEVELS) * 100);
+      var grade = getGrade(pct);
+      var bestTime = null;
+      Object.values(prog.levels).forEach(function(l) {
+        if (l.bestTime !== null && l.bestTime !== undefined) {
+          if (bestTime === null || l.bestTime < bestTime) bestTime = l.bestTime;
+        }
+      });
+      return {
+        player:   p,
+        prog:     prog,
+        pct:      pct,
+        grade:    grade,
+        bestTime: bestTime,
+      };
+    });
+
+    buildClassSummary(_allStudents);
+    renderStudentGrid(_allStudents);
+  }
+
+  function buildClassSummary(students) {
+    var total    = students.length;
+    var avgPct   = total ? Math.round(students.reduce(function(s,x){ return s+x.pct; },0)/total) : 0;
+    var totalBadges = students.reduce(function(s,x){ return s+x.prog.badges.length; },0);
+    var totalTime   = students.reduce(function(s,x){ return s+x.prog.totalPlayTime; },0);
+    var completed   = students.filter(function(x){ return x.pct === 100; }).length;
+    var topStudent  = total ? students.slice().sort(function(a,b){ return b.pct-a.pct; })[0] : null;
+
+    document.getElementById('class-summary').innerHTML =
+      '<div class="cs-card"><div class="cs-icon">👥</div><span class="cs-value">' + total + '</span><span class="cs-label">Students</span></div>' +
+      '<div class="cs-card"><div class="cs-icon">📈</div><span class="cs-value">' + avgPct + '%</span><span class="cs-label">Avg Progress</span></div>' +
+      '<div class="cs-card"><div class="cs-icon">⏱️</div><span class="cs-value">' + formatTime(totalTime) + '</span><span class="cs-label">Total Play Time</span></div>' +
+      '<div class="cs-card"><div class="cs-icon">🎖️</div><span class="cs-value">' + totalBadges + '</span><span class="cs-label">Badges Earned</span></div>' +
+      '<div class="cs-card"><div class="cs-icon">🏆</div><span class="cs-value">' + completed + '</span><span class="cs-label">Finished All</span></div>' +
+      (topStudent ? '<div class="cs-card"><div class="cs-icon">⭐</div><span class="cs-value" style="font-size:0.95rem;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + escHtml(topStudent.player.name) + '</span><span class="cs-label">Top Student</span></div>' : '');
+  }
+
+  function renderStudentGrid(students) {
+    var grid = document.getElementById('student-grid');
+    var noMsg = document.getElementById('no-students');
+
+    if (!students || students.length === 0) {
+      grid.innerHTML = '';
+      noMsg.style.display = 'block';
+      return;
+    }
+    noMsg.style.display = 'none';
+
+    var html = '';
+    students.forEach(function(s) {
+      var p    = s.player;
+      var prog = s.prog;
+      var pct  = s.pct;
+      var grade = s.grade;
+
+      var badgesHtml = '';
+      if (prog.badges.length === 0) {
+        badgesHtml = '<span class="sc-badge-none">No badges yet</span>';
+      } else {
+        prog.badges.slice(0,8).forEach(function(id) {
+          var b = BADGE_DEFS[id];
+          if (b) badgesHtml += '<span class="sc-badge-icon" title="' + escHtml(b.name) + '">' + b.icon + '</span>';
+        });
+        if (prog.badges.length > 8) badgesHtml += '<span class="sc-badge-none">+' + (prog.badges.length-8) + '</span>';
+      }
+
+      html +=
+        '<div class="student-card" id="sc-' + escHtml(p.id) + '">' +
+          '<div class="sc-top">' +
+            '<img class="sc-photo" src="' + escHtml(p.photo||'') + '" onerror="this.src=\'data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;54&quot; height=&quot;54&quot;><rect width=&quot;54&quot; height=&quot;54&quot; rx=&quot;27&quot; fill=&quot;' + encodeURIComponent(p.jerseyColor||'#4b2e83') + '&quot;/></svg>\'" alt="' + escHtml(p.name) + '">' +
+            '<div class="sc-info">' +
+              '<div class="sc-name">' + escHtml(p.name) + '</div>' +
+              '<div class="sc-jersey"><span class="jersey-dot" style="background:' + escHtml(p.jerseyColor||'#4b2e83') + '"></span>#' + escHtml(String(p.jerseyNum||'')) + ' · ' + escHtml(p.jerseyColor||'') + '</div>' +
+            '</div>' +
+            '<div class="sc-grade ' + grade.cls + '" title="' + grade.label + '">' + grade.letter + '</div>' +
+          '</div>' +
+
+          '<div class="sc-progress-wrap">' +
+            '<div class="sc-progress-row"><span>' + grade.label + '</span><span>' + pct + '% (' + prog.totalLevelsCompleted + '/' + TOTAL_LEVELS + ' levels)</span></div>' +
+            '<div class="sc-prog-bar"><div class="sc-prog-fill" style="width:' + pct + '%"></div></div>' +
+          '</div>' +
+
+          '<div class="sc-stats">' +
+            '<div class="sc-stat"><span class="sc-stat-val">' + prog.badges.length + '</span><span class="sc-stat-lbl">Badges</span></div>' +
+            '<div class="sc-stat"><span class="sc-stat-val">' + formatTime(prog.totalPlayTime) + '</span><span class="sc-stat-lbl">Play Time</span></div>' +
+            '<div class="sc-stat"><span class="sc-stat-val">' + formatTime(s.bestTime) + '</span><span class="sc-stat-lbl">Best Time</span></div>' +
+          '</div>' +
+
+          '<div class="sc-badges">' + badgesHtml + '</div>' +
+
+          '<div class="sc-actions">' +
+            '<a class="sc-btn roadmap" href="roadmap.html?player=' + encodeURIComponent(p.id) + '" onclick="switchToPlayer(\'' + escHtml(p.id) + '\')">🗺️ Roadmap</a>' +
+            '<button class="sc-btn analytics" onclick="openAnalytics(\'' + escHtml(p.id) + '\',\'' + escHtml(p.name) + '\')">📊 Analytics</button>' +
+            '<button class="sc-btn reset" onclick="resetStudent(\'' + escHtml(p.id) + '\',\'' + escHtml(p.name) + '\')">🗑️ Reset</button>' +
+          '</div>' +
+        '</div>';
+    });
+
+    grid.innerHTML = html;
+  }
+
+  // ── Sorting ──────────────────────────────────────────────────
+  function sortStudents(by) {
+    _currentSort = by;
+    document.querySelectorAll('.sort-btn').forEach(function(b){ b.classList.remove('active'); });
+    document.getElementById('sort-' + by).classList.add('active');
+
+    var sorted = _allStudents.slice();
+    if (by === 'name')     sorted.sort(function(a,b){ return a.player.name.localeCompare(b.player.name); });
+    if (by === 'progress') sorted.sort(function(a,b){ return b.pct - a.pct; });
+    if (by === 'grade')    sorted.sort(function(a,b){ return b.pct - a.pct; });
+
+    var query = document.getElementById('student-search').value.trim().toLowerCase();
+    if (query) sorted = sorted.filter(function(s){ return s.player.name.toLowerCase().includes(query); });
+    renderStudentGrid(sorted);
+  }
+
+  // ── Search ───────────────────────────────────────────────────
+  function filterStudents() {
+    var q = document.getElementById('student-search').value.trim().toLowerCase();
+    var filtered = _allStudents.filter(function(s){ return !q || s.player.name.toLowerCase().includes(q); });
+    if (_currentSort === 'progress' || _currentSort === 'grade') filtered.sort(function(a,b){ return b.pct-a.pct; });
+    else filtered.sort(function(a,b){ return a.player.name.localeCompare(b.player.name); });
+    renderStudentGrid(filtered);
+  }
+
+  // ── Switch player & open roadmap ─────────────────────────────
+  function switchToPlayer(pid) {
+    localStorage.setItem('dreamdrop_current_player', pid);
+  }
+
+  // ── Reset student progress ───────────────────────────────────
+  function resetStudent(pid, name) {
+    if (!confirm('Reset ALL progress for ' + name + '? This cannot be undone.')) return;
+    try {
+      localStorage.removeItem('dreamdrop_progress_' + pid);
+      localStorage.removeItem('dreamdrop_mousedata_' + pid);
+    } catch(e) {}
+    buildDashboard();
+  }
+
+  // ── Analytics modal ──────────────────────────────────────────
+  function openAnalytics(pid, name) {
+    document.getElementById('am-title').textContent = '📊 ' + name + ' — Mouse Analytics';
+    var body = document.getElementById('am-body');
+
+    // Try to load mouse data from localStorage
+    // Data saved by firebase-sync.js under dreamdrop_mousedata_{pid} or similar
+    var mouseData = null;
+    try {
+      var raw = localStorage.getItem('dreamdrop_mousedata_' + pid);
+      if (raw) mouseData = JSON.parse(raw);
+    } catch(e) {}
+
+    // Also check per-level keys
+    var levels = [];
+    try {
+      for (var k in localStorage) {
+        if (localStorage.hasOwnProperty(k) && k.startsWith('dreamdrop_mouse_' + pid + '_')) {
+          var lvlRaw = localStorage.getItem(k);
+          if (lvlRaw) {
+            var lvlData = JSON.parse(lvlRaw);
+            lvlData._key = k;
+            levels.push(lvlData);
+          }
+        }
+      }
+    } catch(e) {}
+
+    // Also pull progress data for display
+    var prog = loadPlayerProgress(pid);
+
+    if (levels.length === 0 && !mouseData) {
+      // Show progress summary even without mouse data
+      body.innerHTML = buildAnalyticsFallback(prog, name);
+    } else {
+      body.innerHTML = buildAnalyticsBody(levels, mouseData, prog);
+      // Draw paths
+      levels.forEach(function(lvl, i) {
+        if (lvl.path && lvl.path.length > 1) {
+          drawPath('am-path-' + i, lvl.path);
+        }
+      });
+    }
+
+    document.getElementById('analytics-modal').classList.add('open');
+  }
+
+  function buildAnalyticsFallback(prog, name) {
+    var html = '<div style="margin-bottom:16px;">';
+    html += '<div style="font-size:13px;color:#888;margin-bottom:14px;">No mouse tracking data saved yet for this student. Mouse data is recorded during gameplay and saved per level.</div>';
+    html += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">';
+    html += '<div class="am-stat-box"><span class="am-stat-val">' + prog.totalLevelsCompleted + '</span><span class="am-stat-lbl">Levels Done</span></div>';
+    html += '<div class="am-stat-box"><span class="am-stat-val">' + formatTime(prog.totalPlayTime) + '</span><span class="am-stat-lbl">Play Time</span></div>';
+    html += '<div class="am-stat-box"><span class="am-stat-val">' + prog.badges.length + '</span><span class="am-stat-lbl">Badges</span></div>';
+    html += '</div>';
+
+    if (prog.badges.length > 0) {
+      html += '<div style="font-size:12px;font-weight:800;color:#444;margin-bottom:8px;">Badges Earned</div>';
+      html += '<div style="display:flex;flex-wrap:wrap;gap:6px;">';
+      prog.badges.forEach(function(id) {
+        var b = BADGE_DEFS[id];
+        if (b) html += '<span title="' + escHtml(b.name) + '" style="font-size:1.4rem;">' + b.icon + '</span>';
+      });
+      html += '</div>';
+    }
+
+    html += '</div>';
+    return html;
+  }
+
+  function buildAnalyticsBody(levels, mouseData, prog) {
+    var html = '';
+
+    // Overall summary
+    html += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">';
+    html += '<div class="am-stat-box"><span class="am-stat-val">' + levels.length + '</span><span class="am-stat-lbl">Levels Tracked</span></div>';
+    html += '<div class="am-stat-box"><span class="am-stat-val">' + prog.totalLevelsCompleted + '</span><span class="am-stat-lbl">Levels Done</span></div>';
+    html += '<div class="am-stat-box"><span class="am-stat-val">' + formatTime(prog.totalPlayTime) + '</span><span class="am-stat-lbl">Play Time</span></div>';
+    html += '</div>';
+
+    // Per-level analytics
+    levels.forEach(function(lvl, i) {
+      html += '<div class="am-level-item">';
+      html += '<div class="am-level-head">' +
+        '<div class="am-level-name">' + escHtml(lvl.level || lvl._key || 'Level') + '</div>' +
+        '<div class="am-level-time">' + escHtml(lvl.timestamp ? new Date(lvl.timestamp).toLocaleString() : '') + '</div>' +
+      '</div>';
+      html += '<div class="am-level-stats">';
+      html += '<div class="am-stat-box"><span class="am-stat-val">' + (lvl.pointCount||0) + '</span><span class="am-stat-lbl">Points</span></div>';
+      html += '<div class="am-stat-box"><span class="am-stat-val">' + escHtml(lvl.duration||'—') + '</span><span class="am-stat-lbl">Duration</span></div>';
+      html += '<div class="am-stat-box"><span class="am-stat-val">' + (lvl.path ? lvl.path.length : 0) + '</span><span class="am-stat-lbl">Path pts</span></div>';
+      html += '</div>';
+
+      if (lvl.path && lvl.path.length > 1) {
+        html += '<div class="am-path-wrap"><canvas id="am-path-' + i + '" class="am-path-canvas"></canvas></div>';
+      }
+      html += '</div>';
+    });
+
+    return html;
+  }
+
+  function drawPath(canvasId, path) {
+    setTimeout(function() {
+      var canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      canvas.width  = canvas.offsetWidth  || 300;
+      canvas.height = canvas.offsetHeight || 80;
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Normalize path to canvas size
+      var xs = path.map(function(p){ return p.x; });
+      var ys = path.map(function(p){ return p.y; });
+      var minX = Math.min.apply(null, xs), maxX = Math.max.apply(null, xs);
+      var minY = Math.min.apply(null, ys), maxY = Math.max.apply(null, ys);
+      var rngX = maxX - minX || 1, rngY = maxY - minY || 1;
+      var pad = 8;
+      function nx(x){ return pad + ((x-minX)/rngX)*(canvas.width-pad*2); }
+      function ny(y){ return pad + ((y-minY)/rngY)*(canvas.height-pad*2); }
+
+      ctx.strokeStyle = '#4b2e83';
+      ctx.lineWidth   = 1.5;
+      ctx.lineJoin    = 'round';
+      ctx.lineCap     = 'round';
+      ctx.beginPath();
+      ctx.moveTo(nx(path[0].x), ny(path[0].y));
+      for (var i = 1; i < path.length; i++) {
+        ctx.lineTo(nx(path[i].x), ny(path[i].y));
+      }
+      ctx.stroke();
+
+      // Start dot (green)
+      ctx.fillStyle = '#2ecc71';
+      ctx.beginPath();
+      ctx.arc(nx(path[0].x), ny(path[0].y), 4, 0, Math.PI*2);
+      ctx.fill();
+
+      // End dot (red)
+      ctx.fillStyle = '#e03040';
+      ctx.beginPath();
+      ctx.arc(nx(path[path.length-1].x), ny(path[path.length-1].y), 4, 0, Math.PI*2);
+      ctx.fill();
+    }, 50);
+  }
+
+  function closeAnalytics() {
+    document.getElementById('analytics-modal').classList.remove('open');
+  }
+
+  // Close modal on backdrop click
+  document.getElementById('analytics-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeAnalytics();
+  });
+
+  </script>
+</body>
+</html>

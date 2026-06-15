@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="UTF-8">
-  <script>if(!localStorage.getItem("dreamdrop_current_player"))window.location.replace("login.html");</script>
   <!-- =====================================================
        MOBILE/TABLET SUPPORT ADDED:
        Updated viewport meta tag.
@@ -40,7 +39,7 @@
 
   <div id="focus-block">
     <h2>⚠️ Game Paused</h2>
-    <p>Click anywhere to resume.</p>
+    <p>Please return to the game window to continue.</p>
   </div>
 
 
@@ -48,16 +47,17 @@
 
   <div class="header">
 
-    <!-- Audio On/Off Toggle -->
-    <div class="container1">
+    <!-- Audio toggle moved to the in-game taskbar (right side).
+         This wrapper is kept off-screen so existing sound logic
+         (toggleBackgroundAudio) still works without breaking layout. -->
+    <div class="container1" style="position:fixed;top:-200vh;left:-200vw;pointer-events:none;">
       <label class="switch">
         <input type="checkbox" class="hidden" id="audio_setting" checked>
         <div class="slider"></div>
-        <img id="audio_icon_off" class="audio_icon" src="Images/Common_Images/audio_off.png" alt="Audio Off">
-        <img id="audio_icon_on" class="audio_icon" src="Images/Common_Images/audio_on.png" alt="Audio On">
+        <img id="audio_icon_off" class="audio_icon" src="Images\Common_Images\audio_off.png" alt="Audio Off">
+        <img id="audio_icon_on" class="audio_icon" src="Images\Common_Images\audio_on.png" alt="Audio On">
       </label>
     </div>
-
 
   </div>
   <!--
@@ -98,15 +98,15 @@
   <p id="para">Sri Sathya Sai Vidya Vahini </p>
   <p id="para1">INCLUSIVE EDUCATION</p>
 
-  <img src="Images/Common_Images/vv.png" id="vv">
-  <img src="Images/Common_Images/ie.png" id="ie">
+  <img src="Images\Common_Images\vv.png" id="vv">
+  <img src="Images\Common_Images\ie.png" id="ie">
 
   <!-- MOBILE/TABLET SUPPORT:
        Wrapped in #kids-row so on phone they sit side by side
        in a flex row below the buttons instead of overlapping. -->
   <div id="kids-row">
-    <img src="Images/Common_Images/prem.png" id="prem">
-    <img src="Images/Common_Images/shanti.png" id="shanti">
+    <img src="Images\Common_Images\prem.png" id="prem">
+    <img src="Images\Common_Images\shanti.png" id="shanti">
   </div>
 
   <div id="overlay" class="overlay">
@@ -122,8 +122,8 @@
   </video>
 
   <div id="gameOver" class="over">
-    <img src="Images/Common_Images/shanti_overlay.png" alt="Left Image" class="left-image">
-    <img src="Images/Common_Images/prem_overlay.png" alt="Right Image" class="right-image">
+    <img src="Images\Common_Images\shanti_overlay.png" alt="Left Image" class="left-image">
+    <img src="Images\Common_Images\prem_overlay.png" alt="Right Image" class="right-image">
     <div class="game">
       <p id="gameOverMessage">Do you want to restart?</p>
       <button id="restartBtn">Restart</button>
@@ -162,22 +162,21 @@
   <div id="feedback-flash"></div>
 
   
-  <!-- GAME TASKBAR -->
   <div id="game-taskbar">
     <div id="tb-lvl-wrap">LVL<br><strong id="tb-lvl-num">1</strong></div>
     <div class="tb-sep"></div>
     <button class="tb-btn" id="tb-snd" onclick="tbSound()" title="Sound">
       <img id="tb-snd-img" src="Images/Common_Images/audio_on.png" alt="Sound"></button>
     <div class="tb-sep"></div>
-    <button class="tb-btn" id="tb-pause" onclick="tbPause()" title="Pause">⏸</button>
+    <div id="tb-timer-wrap">⏱<br><strong id="tb-timer-num">0s</strong></div>
+    <div class="tb-sep"></div>
     <button class="tb-btn" id="tb-restart" onclick="tbRestart()" title="Restart">🔄</button>
   </div>
 
-  <!-- ANALYTICS OVERLAY -->
   <div id="an-overlay">
     <div id="an-panel">
       <div id="an-header">
-        <span id="an-title">Mouse Movement Analytics — <span id="an-lvl-badge">—</span></span>
+        <span id="an-title">Mouse Analytics — <span id="an-lvl-badge">—</span></span>
         <button class="an-hdr-btn" onclick="analyticsClose()">✕ Close</button>
       </div>
       <div id="an-stats">
@@ -194,22 +193,21 @@
             <label><input type="checkbox" id="an-chk-path" checked> Path trail</label>
           </div>
           <div id="an-canvas-wrap">
-            <canvas id="an-cv-heat"></canvas>
-            <canvas id="an-cv-path"></canvas>
-            <canvas id="an-cv-main"></canvas>
+            <canvas id="an-cv-heat"></canvas><canvas id="an-cv-path"></canvas><canvas id="an-cv-main"></canvas>
           </div>
-          <div id="an-fb"><span id="an-fb-dot"></span><span id="an-fb-msg">Play a level — tracking starts automatically.</span></div>
+          <div id="an-fb"><span id="an-fb-dot"></span><span id="an-fb-msg">Play a level to see analytics.</span></div>
         </div>
         <div id="an-sidebar">
           <div class="an-sec"><div class="an-sec-ttl">Speed over time</div><div style="position:relative;height:80px;"><canvas id="an-cv-spd"></canvas></div></div>
           <div class="an-sec"><div class="an-sec-ttl">Movement breakdown</div><div id="an-pattern"></div></div>
-          <div class="an-sec"><div class="an-sec-ttl">Zone activity (3x3)</div><div id="an-zones"></div></div>
+          <div class="an-sec"><div class="an-sec-ttl">Zone activity</div><div id="an-zones"></div></div>
         </div>
       </div>
     </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script src="firebase-config.js"></script>
   <script>
   (function() {
     var pid = localStorage.getItem('dreamdrop_current_player');
@@ -230,6 +228,18 @@
   </script>
 
   <script src="scriptt.js"></script>
+  <!-- Sync existing #time-value to taskbar timer -->
+  <script>
+    (function() {
+      setInterval(function() {
+        var src = document.getElementById('time-value');
+        var dst = document.getElementById('tb-timer-num');
+        if (!src || !dst) return;
+        var raw = (src.innerText || src.textContent || '0').replace(/s/g, '').trim();
+        dst.textContent = raw + 's';
+      }, 500);
+    })();
+  </script>
   <!-- progress.js is now embedded inside scriptt.js -->
 </body>
 

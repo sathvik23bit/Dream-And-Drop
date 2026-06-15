@@ -339,6 +339,12 @@ button:hover {
   cursor: pointer;
 }
 
+/* Sound toggle moved to in-game taskbar — these legacy icons must
+   never be visible, even when JS toggles their inline display style. */
+#audio_icon_off, #audio_icon_on {
+  display: none !important;
+}
+
 /* =============================================================
    INSTRUCTION MODALS
    Centered with flex. Padding and font in vw/vh.
@@ -1194,30 +1200,19 @@ body.game-active #fidrat-home,
   0%   { transform: scale(1.2); opacity: 1; }
   100% { transform: scale(0); opacity: 0; }
 }
-/* ============================================================
-   ALL ADDONS CSS
-   ============================================================ */
+/* ============================================================ ALL ADDONS ============================================================ */
 #rotate-block{display:none;position:fixed;inset:0;background:#1a1a2e;z-index:999999;flex-direction:column;align-items:center;justify-content:center;gap:2vh;text-align:center;padding:4vw;}
 #rotate-icon{font-size:clamp(3rem,15vw,5rem);color:#afdbf8;animation:rotate-hint 2s ease-in-out infinite;}
 @keyframes rotate-hint{0%{transform:rotate(0deg)}40%{transform:rotate(90deg)}60%{transform:rotate(90deg)}100%{transform:rotate(0deg)}}
 #rotate-block h2{font-size:clamp(1.1rem,5vw,1.6rem);color:#fff;font-weight:700;margin:0;}
 #rotate-block p{font-size:clamp(0.75rem,3.5vw,1rem);color:rgba(255,255,255,0.65);max-width:80vw;margin:0;}
-@media(max-height:500px)and(max-width:900px){
-  #score{position:fixed!important;top:4px!important;left:8px!important;right:auto!important;font-size:clamp(0.65rem,2.5vw,0.9rem)!important;background:rgba(0,0,0,0.55);color:#fff;padding:2px 8px;border-radius:6px;z-index:200;}
-  #time{position:fixed!important;top:4px!important;right:8px!important;left:auto!important;font-size:clamp(0.65rem,2.5vw,0.9rem)!important;background:rgba(0,0,0,0.55);color:#fff;padding:2px 8px;border-radius:6px;z-index:200;}
-  .game{width:70vw!important;padding:2vh 3vw!important;margin:10% auto!important;}
-  .left-image,.right-image{display:none!important;}
-}
+@media(max-height:500px)and(max-width:900px){#score{position:fixed!important;top:4px!important;left:8px!important;right:auto!important;font-size:clamp(0.65rem,2.5vw,0.9rem)!important;background:rgba(0,0,0,0.55);color:#fff;padding:2px 8px;border-radius:6px;z-index:200;}#time{position:fixed!important;top:4px!important;right:8px!important;left:auto!important;font-size:clamp(0.65rem,2.5vw,0.9rem)!important;background:rgba(0,0,0,0.55);color:#fff;padding:2px 8px;border-radius:6px;z-index:200;}.game{width:70vw!important;padding:2vh 3vw!important;margin:10% auto!important;}.left-image,.right-image{display:none!important;}}
 .modal-content{margin-right:auto!important;margin-left:auto!important;}
 #gameOver{overflow-y:auto!important;}
 #gameOver[style*="display: block"],#gameOver[style*="display:block"]{display:flex!important;overflow-y:auto!important;align-items:flex-start!important;padding:4vh 0!important;}
 @media(max-height:600px){.game{margin:2vh auto!important;padding:2vh 3vw!important;}.left-image,.right-image{display:none!important;}}
 body.is-touch-device button{min-height:44px;}
-
-/* Analytics button */
 #analytics-btn{display:block;margin:1.5vh auto;width:60%;}
-
-/* Analytics overlay */
 #an-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999999;align-items:center;justify-content:center;padding:10px;}
 #an-overlay.an-open{display:flex;}
 #an-panel{background:#fff;border-radius:14px;width:min(96vw,940px);max-height:92vh;overflow-y:auto;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,0.5);}
@@ -1237,7 +1232,7 @@ body.is-touch-device button{min-height:44px;}
 #an-cv-heat{opacity:0.55;}
 #an-cv-main{display:block;width:100%;height:260px;}
 #an-fb{display:flex;align-items:center;gap:8px;background:#f4f6fb;border-radius:8px;padding:7px 12px;font-size:12px;color:#555;min-height:34px;}
-#an-fb-dot{width:9px;height:9px;border-radius:50%;background:#ccc;flex-shrink:0;transition:background 0.3s;}
+#an-fb-dot{width:9px;height:9px;border-radius:50%;background:#ccc;flex-shrink:0;}
 #an-sidebar{display:flex;flex-direction:column;gap:10px;}
 .an-sec{background:#f8f9ff;border-radius:8px;padding:9px 10px;border:1px solid #e8eaf0;}
 .an-sec-ttl{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:7px;}
@@ -1249,16 +1244,19 @@ body.is-touch-device button{min-height:44px;}
 @media(max-width:600px){#an-stats{grid-template-columns:repeat(3,1fr);}#an-body{grid-template-columns:1fr;}#an-sidebar{display:none;}}
 
 /* Taskbar */
-#game-taskbar{display:none;position:fixed;right:0;top:50%;transform:translateY(-50%);width:clamp(48px,6.5vw,68px);background:rgba(12,10,30,0.88);border-radius:16px 0 0 16px;border:1.5px solid rgba(255,255,255,0.12);border-right:none;z-index:90000;flex-direction:column;align-items:center;padding:clamp(10px,1.6vh,18px) 0;gap:clamp(5px,0.9vh,11px);box-shadow:-6px 0 28px rgba(0,0,0,0.45);}
+#game-taskbar{display:none;position:fixed;right:0;top:50%;transform:translateY(-50%);width:clamp(48px,6.5vw,68px);background:rgba(12,10,30,0.88);backdrop-filter:blur(14px);border-radius:16px 0 0 16px;border:1.5px solid rgba(255,255,255,0.12);border-right:none;z-index:90000;flex-direction:column;align-items:center;padding:clamp(10px,1.6vh,18px) 0;gap:clamp(5px,0.9vh,11px);box-shadow:-6px 0 28px rgba(0,0,0,0.45);}
 #game-taskbar.tb-on{display:flex;}
 #tb-lvl-wrap{color:rgba(255,255,255,0.55);font-size:clamp(0.45rem,0.85vh,0.62rem);font-weight:800;letter-spacing:0.1em;text-transform:uppercase;text-align:center;user-select:none;line-height:1.25;}
 #tb-lvl-wrap strong{font-size:clamp(0.9rem,1.7vh,1.15rem);color:#fff;display:block;}
 .tb-sep{width:58%;height:1px;background:rgba(255,255,255,0.12);flex-shrink:0;}
 .tb-btn{display:flex;align-items:center;justify-content:center;width:clamp(32px,4vw,46px);height:clamp(32px,4vw,46px);background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.14);border-radius:9px;color:#fff;cursor:pointer;font-size:clamp(0.95rem,1.8vh,1.3rem);transition:background 0.15s,transform 0.1s;padding:0;flex-shrink:0;min-height:unset!important;}
 .tb-btn:hover{background:rgba(255,255,255,0.2);transform:scale(1.08);}
+.tb-btn:active{transform:scale(0.94);}
 .tb-btn img{width:clamp(17px,2.4vh,25px);height:clamp(17px,2.4vh,25px);object-fit:contain;filter:brightness(0)invert(1);}
-#game-taskbar.snd-off #tb-snd{background:rgba(220,55,55,0.28);}
-#tb-pause.tb-paused{background:rgba(245,166,35,0.3);color:#ffcc55;}
+#game-taskbar.snd-off #tb-snd{background:rgba(220,55,55,0.28);border-color:rgba(220,55,55,0.5);}
+#tb-timer-wrap{color:rgba(255,255,255,0.55);font-size:clamp(0.45rem,0.85vh,0.62rem);font-weight:800;letter-spacing:0.1em;text-transform:uppercase;text-align:center;user-select:none;line-height:1.25;}
+#tb-timer-wrap strong{font-size:clamp(0.9rem,1.7vh,1.15rem);color:#fff;display:block;}
+#tb-pause.tb-paused{background:rgba(245,166,35,0.3);border-color:rgba(245,166,35,0.6);color:#ffcc55;}
 
 /* Mascot animations */
 #prem,#shanti{transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);will-change:transform;}
