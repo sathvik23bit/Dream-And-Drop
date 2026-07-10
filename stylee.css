@@ -267,6 +267,7 @@ button:hover {
   display: none;          /* JS shows this when level ends */
   margin: 1.5vh auto 0;
   width: 60%;
+  white-space: normal; 
   background: rgba(175, 219, 248, 0.7);
   border: none;
   border-radius: 0.5em;
@@ -277,6 +278,7 @@ button:hover {
   cursor: pointer;
   letter-spacing: 0.05em;
   transition: background 0.2s;
+
 }
 #progressBtn:hover { background: rgba(175, 219, 248, 1); }
 
@@ -513,6 +515,7 @@ button:hover {
   min-height: 74px;
   user-select: none;
   z-index: 9;
+  pointer-events: none;
 }
 
 #basket > img {
@@ -564,8 +567,9 @@ button:hover {
   position: fixed;
   z-index: 1002;
   top: 2vh;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 2vw;        /* was: left: 50%; transform: translateX(-50%); */
+  left: auto;
+  transform: none;
   width: 10vmin;
   height: 10vmin;
   min-width: 55px;
@@ -1212,7 +1216,7 @@ body.game-active #fidrat-home,
 #gameOver[style*="display: block"],#gameOver[style*="display:block"]{display:flex!important;overflow-y:auto!important;align-items:flex-start!important;padding:4vh 0!important;}
 @media(max-height:600px){.game{margin:2vh auto!important;padding:2vh 3vw!important;}.left-image,.right-image{display:none!important;}}
 body.is-touch-device button{min-height:44px;}
-#analytics-btn{display:block;margin:1.5vh auto;width:60%;}
+#analytics-btn{display:block;margin:1.5vh auto;width:60%;white-space: normal;}
 #an-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999999;align-items:center;justify-content:center;padding:10px;}
 #an-overlay.an-open{display:flex;}
 #an-panel{background:#fff;border-radius:14px;width:min(96vw,940px);max-height:92vh;overflow-y:auto;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,0.5);}
