@@ -671,6 +671,7 @@ document.addEventListener("DOMContentLoaded", function () {
       score = 0;
       time = 0;
       currentLevel = 1;
+      GAME_STARTED = true;
       level1();
     });
   });
@@ -697,6 +698,7 @@ document.addEventListener("DOMContentLoaded", function () {
     score = 0;
     time = 0;
     currentLevel = 3;  // Starts from Level 3 — first easy obstacle maze
+    GAME_STARTED = true;
     level3();
   });
 
@@ -719,6 +721,7 @@ document.addEventListener("DOMContentLoaded", function () {
     score = 0;
     time = 0;
     currentLevel = 13;  // Starts from Level 13 — original hard levels
+    GAME_STARTED = true;
     level13();
   });
 });
@@ -3526,13 +3529,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 40);
   };
 
-  patch('level1',           onStart);
-  patch('level2',           onStart);
-  patch('startLevelCommon', onStart);
-  patch('startTimedLevel',  onStart);
-  patch('nextLevelFunction',onStart);
-  patch('restartGame',      onStart);
-  patch('showGameOverAlert', function() { tbHide(); });
+for (var i = 1; i <= 33; i++) {
+  patch('level' + i, onStart);
+}
+patch('startLevelCommon', onStart);
+patch('startTimedLevel',  onStart);
+patch('nextLevelFunction',onStart);
+patch('restartGame',      onStart);
 
 })();
 
