@@ -446,22 +446,40 @@ button:hover {
   font-weight: bold;
   font-size: clamp(0.85rem, 1.8vw, 1.4rem);
   position: relative;
-  z-index: 1000;
+  /* Fix: dialog text was getting covered by the mascot images on some
+     tablet widths because the mascots sat above it in stacking order.
+     The card must always win — mascots are decorative, text is not. */
+  z-index: 1002;
 }
 
 /* Side character images — positioned so they stand beside the card.
-   z-index higher than card so they appear in front. */
+   Fix: previously only `height` was capped, so on narrower viewports the
+   auto-computed width grew large enough to slide under the dialog card
+   and overlap its text. Capping max-width keeps them clear of the card,
+   and dropping their z-index below .game means any residual overlap no
+   longer hides text. pointer-events:none stops them intercepting clicks
+   meant for the dialog buttons. */
 .left-image, .right-image {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   height: 55vh;
   width: auto;
+  max-width: 22vw;
   object-fit: contain;
-  z-index: 1001;
+  z-index: 1000;
+  pointer-events: none;
 }
 .left-image  { left: 3vw; }
 .right-image { right: 3vw; }
+
+/* Mid-width tablets/laptops (portrait tablets, small laptops) — the range
+   where the overlap was reported. Shrink mascots further and give the
+   card a touch more breathing room so text never sits under an image. */
+@media (max-width: 900px) and (min-width: 481px) {
+  .left-image, .right-image { max-width: 16vw; height: 40vh; }
+  .game { width: clamp(200px, 40vw, 380px); }
+}
 
 .overlay {
   position: fixed;
@@ -557,24 +575,6 @@ button:hover {
   background-repeat: repeat;
   z-index: 1;
   pointer-events: none;
-}
-
-/* ---- Video popups (basket success / try again animations) ----
-   Fixed position at top-center, small size so they don't
-   dominate the screen or block the game over card. */
-#Basketvideo, #tryvideo {
-  display: none;
-  position: fixed;
-  z-index: 1002;
-  top: 2vh;
-  right: 2vw;        /* was: left: 50%; transform: translateX(-50%); */
-  left: auto;
-  transform: none;
-  width: 10vmin;
-  height: 10vmin;
-  min-width: 55px;
-  min-height: 55px;
-  user-select: none;
 }
 
 /* ---- Animations ---- */
@@ -755,11 +755,6 @@ body.is-phone .buttons { width: 50vw; right: 50%; transform: translate(50%, -50%
   }
 
   #restartBtn, #quitBtn, #next, #progressBtn { width: 80%; }
-
-  #Basketvideo, #tryvideo {
-    width: 15vmin;
-    height: 15vmin;
-  }
 }
 
 /* --- Very narrow portrait phones < 430px --- */
@@ -1249,6 +1244,16 @@ body.is-touch-device button{min-height:44px;}
 
 /* Taskbar */
 #game-taskbar{display:none;position:fixed;right:0;top:50%;transform:translateY(-50%);width:clamp(48px,6.5vw,68px);background:rgba(12,10,30,0.88);backdrop-filter:blur(14px);border-radius:16px 0 0 16px;border:1.5px solid rgba(255,255,255,0.12);border-right:none;z-index:100001;flex-direction:column;align-items:center;padding:clamp(10px,1.6vh,18px) 0;gap:clamp(5px,0.9vh,11px);box-shadow:-6px 0 28px rgba(0,0,0,0.45);}
+
+/* Always-visible mute button — shown on the menu screen, hidden once a
+   level starts (the in-game taskbar's own mute button takes over then,
+   and they share the same underlying #audio_setting state). */
+#global-mute-btn{position:fixed;top:56px;left:14px;z-index:100002;width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.25);background:rgba(12,10,30,0.75);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,0.3);padding:0;}
+#global-mute-btn img{width:20px;height:20px;}
+#global-mute-btn.gm-muted{background:rgba(220,55,55,0.28);border-color:rgba(220,55,55,0.5);}
+body.game-active #global-mute-btn{display:none;} /* in-level taskbar's mute button takes over */
+#global-mute-btn.gm-hidden{display:none;}
+
 #game-taskbar.tb-on{display:flex;}
 #tb-lvl-wrap{color:rgba(255,255,255,0.55);font-size:clamp(0.45rem,0.85vh,0.62rem);font-weight:800;letter-spacing:0.1em;text-transform:uppercase;text-align:center;user-select:none;line-height:1.25;}
 #tb-lvl-wrap strong{font-size:clamp(0.9rem,1.7vh,1.15rem);color:#fff;display:block;}

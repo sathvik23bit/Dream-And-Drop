@@ -426,28 +426,17 @@ document.querySelector('#instruction-modal button').addEventListener('click', le
 
 
 document.getElementById('easyBtn').addEventListener('click', function () {
-  // Create an audio element
-  var audio = new Audio('/Sounds/Common%20Sound/click.wav'); // Replace 'sound.wav' with the path to your sound file
-
-  // Play the audio
-  audio.play();
+  playSfx('/Sounds/Common%20Sound/click.wav');
 });
 
 
 document.getElementById('mediumBtn').addEventListener('click', function () {
-  // Create an audio element
-  var audio = new Audio('/Sounds/Common%20Sound/click.wav'); // Replace 'sound.wav' with the path to your sound file
-  // Play the audio
-  audio.play();
+  playSfx('/Sounds/Common%20Sound/click.wav');
 });
 
 
 document.getElementById('hardBtn').addEventListener('click', function () {
-  // Create an audio element
-  var audio = new Audio('/Sounds/Common%20Sound/click.wav'); // Replace 'sound.wav' with the path to your sound file
-
-  // Play the audio
-  audio.play();
+  playSfx('/Sounds/Common%20Sound/click.wav');
 });
 
 //soud and all
@@ -462,6 +451,22 @@ let backgroundAudio;
 // level from 3 onward. Cache the #maze container element here so both
 // functions can append obstacles to it.
 const maze = document.getElementById('maze');
+
+// ── Mute-aware sound effect helper ─────────────────────────────
+// Point 2 fix: the mute toggle previously only silenced the looping
+// background music (via toggleBackgroundAudio). One-off SFX like button
+// clicks were created with `new Audio(...).play()` directly, so they kept
+// playing even after the user muted. Route all one-off SFX through this
+// helper instead so a single mute switch controls everything.
+function playSfx(src, volume) {
+  var cb = document.getElementById('audio_setting');
+  if (cb && !cb.checked) return; // muted — skip playback entirely
+  var audio = new Audio(src);
+  if (typeof volume === 'number') audio.volume = volume;
+  var p = audio.play();
+  if (p && typeof p.catch === 'function') p.catch(function () {});
+  return audio;
+}
 
 function toggleBackgroundAudio() {
   if (audioSettingCheckbox.checked) {
@@ -510,7 +515,17 @@ function stopBackgroundSound() {
   }
 }
 
-audioSettingCheckbox.addEventListener('change', toggleBackgroundAudio);
+audioSettingCheckbox.addEventListener('change', function() {
+  toggleBackgroundAudio();
+  try { localStorage.setItem('dreamdrop_muted', audioSettingCheckbox.checked ? '0' : '1'); } catch(e) {}
+});
+// Restore previous mute preference before first play, so muting truly
+// persists "at any point" — including across page reloads and levels.
+try {
+  if (localStorage.getItem('dreamdrop_muted') === '1') {
+    audioSettingCheckbox.checked = false;
+  }
+} catch(e) {}
 toggleBackgroundAudio()
 
 
@@ -647,8 +662,7 @@ document.addEventListener('click', function (event) {
 document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById('easyBtn').addEventListener('click', function () {
-    var audio = new Audio('/Sounds/Common%20Sound/click.wav');
-    audio.play();
+    playSfx('/Sounds/Common%20Sound/click.wav');
 
     document.getElementById('fidrat-home').style.backgroundImage = 'url("Images/Common_Images/gamebg.png")';
     clearGame();
@@ -677,8 +691,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.getElementById('mediumBtn').addEventListener('click', function () {
-    var audio = new Audio('/Sounds/Common%20Sound/click.wav');
-    audio.play();
+    playSfx('/Sounds/Common%20Sound/click.wav');
     clearGame();
 
     document.getElementById('para').style.display = 'none';
@@ -966,14 +979,12 @@ function level2() {
   // We use getElementById to be safe, rather than relying on the variable 'overlay'
   const overlay = document.getElementById('overlay');
   const modal = document.getElementById('gameOver');
-  const basketVideo = document.getElementById('Basketvideo');
   const scoreEl = document.getElementById('score');
   const timeEl = document.getElementById('time');
   const basketEl = document.getElementById('basket');
 
   if (overlay) overlay.style.display = 'none';
   if (modal) modal.style.display = 'none';
-  if (basketVideo) basketVideo.style.display = 'none';
   if (scoreEl) scoreEl.style.display = 'none';
   if (timeEl) timeEl.style.display = 'none';
   if (basketEl) basketEl.style.display = 'none';
@@ -1210,10 +1221,15 @@ function generateBall(left, bottom, currentLevel) {
 
   function startDrag(event) {
 
-
     const ballRect = ball.getBoundingClientRect();
-    offsetX = (event.clientX - ballRect.left) / window.innerWidth * 100;
-    offsetY = (event.clientY - ballRect.top) / window.innerHeight * 100;
+    // BUG FIX (ball over-sensitivity): offsetX/offsetY must be stored in
+    // PIXELS, matching the pixel-based e.clientX/e.clientY used in drag().
+    // They were previously stored as percentages of viewport size, so on
+    // the very first drag frame the ball snapped almost exactly under the
+    // cursor instead of keeping the grab point — a large sudden jump that
+    // could clip a wall immediately and fail the level on click 1.
+    offsetX = event.clientX - ballRect.left;
+    offsetY = event.clientY - ballRect.top;
     isDragging = true;
 
     ball.style.zIndex = "1000";
@@ -1240,9 +1256,13 @@ function generateBall(left, bottom, currentLevel) {
     if (isDragging) {
 
       const ballRect = ball.getBoundingClientRect();
-      // Calculate the new position of the ball 
-      let newX = (e.clientX - offsetX) / window.innerWidth * 100;
-      let newY = (window.innerHeight - e.clientY - offsetY) / window.innerHeight * 100;
+      // Calculate the new position of the ball.
+      // offsetX/offsetY are now pixels (see startDrag fix above), so
+      // subtract in pixel space first, then convert the result to vw/vh.
+      let newLeftPx = e.clientX - offsetX;
+      let newTopPx  = e.clientY - offsetY;
+      let newX = newLeftPx / window.innerWidth * 100;
+      let newY = (window.innerHeight - newTopPx - ballRect.height) / window.innerHeight * 100;
 
       // Ensure that the ball stays within the bounds of the viewport
       newX = Math.max(0, Math.min(100 - ballRect.width / window.innerWidth * 100, newX)); // Ensure it doesn't go beyond viewport width
@@ -1419,11 +1439,6 @@ function showGameOverAlert(levelCompleted, currentLevel) {
     stopTrackingAndExport(`level ${currentLevel}`);
     message.innerText = "You have cleared the level " + currentLevel;
     // Hide the restart and quit buttons, display next button
-    document.getElementById('Basketvideo').style.display = 'block';
-    const basketVid = document.getElementById('Basketvideo');
-    basketVid.currentTime = 0;   // restart from beginning
-    basketVid.play().catch(err => console.log("Autoplay blocked:", err));
-    document.getElementById('tryvideo').style.display = 'none';
     restartBtn.style.display = 'none';
     quitBtn.style.display = 'block';
     Next.style.display = 'block';
@@ -1434,8 +1449,6 @@ function showGameOverAlert(levelCompleted, currentLevel) {
       score = 0; time = 0;
       const _pb2 = document.getElementById('progressBtn');
       if (_pb2) _pb2.style.display = 'none';
-      document.getElementById('Basketvideo').style.display = 'none';
-      document.getElementById('tryvideo').style.display = 'none';
       document.getElementById('gameOver').style.display = 'none';
       modal.style.display = 'none';
       overlay.style.display = 'none';
@@ -1444,8 +1457,6 @@ function showGameOverAlert(levelCompleted, currentLevel) {
       nextLevelFunction(currentLevel + 1);
     }
     quitBtn.onclick = function () {
-      document.getElementById('Basketvideo').style.display = 'none';
-      document.getElementById('tryvideo').style.display = 'none';
       modal.style.display = 'none';
       overlay.style.display = 'none';
       window.location.href = 'roadmap.html';
@@ -1457,11 +1468,6 @@ function showGameOverAlert(levelCompleted, currentLevel) {
   else {
     stopTrackingAndExport(`level${currentLevel}`);
     message.innerText = "Game Over! Do you want to restart?";
-    document.getElementById('Basketvideo').style.display = 'none';
-    document.getElementById('tryvideo').style.display = 'block';
-    const tryVid = document.getElementById('tryvideo');
-    tryVid.currentTime = 0;   // restart from beginning
-    tryVid.play().catch(err => console.log("Autoplay blocked:", err));
     // Show the restart and quit buttons, hide next button
     restartBtn.style.display = 'block';
     quitBtn.style.display = 'block';
@@ -1473,8 +1479,6 @@ function showGameOverAlert(levelCompleted, currentLevel) {
       const _pb3 = document.getElementById('progressBtn');
       if (_pb3) _pb3.style.display = 'none';
       overlay.style.display = 'none';
-      document.getElementById('Basketvideo').style.display = 'none';
-      document.getElementById('tryvideo').style.display = 'none';
       modal.style.display = 'none';
       const _sp2 = document.getElementById('level-stats-panel');
       if (_sp2) _sp2.remove();
@@ -1482,8 +1486,6 @@ function showGameOverAlert(levelCompleted, currentLevel) {
     }
     quitBtn.onclick = function () {
       overlay.style.display = 'none';
-      document.getElementById('Basketvideo').style.display = 'none';
-      document.getElementById('tryvideo').style.display = 'none';
       modal.style.display = 'none';
       window.location.href = 'roadmap.html';
     }
@@ -3403,6 +3405,8 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
           var tb = document.getElementById('game-taskbar');
           if (tb) tb.classList.add('tb-on');
+          var gm = document.getElementById('global-mute-btn');
+          if (gm) gm.classList.add('gm-hidden');
           var ln = document.getElementById('tb-lvl-num');
           if (ln) ln.textContent = targetLevel;
         }, 50);
@@ -3425,6 +3429,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var tb = document.getElementById('game-taskbar');
     if (!tb) return;
     tb.classList.add('tb-on');
+    var gm = document.getElementById('global-mute-btn');
+    if (gm) gm.classList.add('gm-hidden'); // in-level taskbar mute button takes over
     var ln = document.getElementById('tb-lvl-num');
     if (ln) ln.textContent = currentLevel || 1;
     tbSyncPause();
@@ -3433,6 +3439,8 @@ document.addEventListener('DOMContentLoaded', function() {
   function tbHide() {
     var tb = document.getElementById('game-taskbar');
     if (tb) tb.classList.remove('tb-on');
+    var gm = document.getElementById('global-mute-btn');
+    if (gm) gm.classList.remove('gm-hidden'); // back to menu — show it again
   }
 
   function tbSyncPause() {
@@ -3464,7 +3472,39 @@ document.addEventListener('DOMContentLoaded', function() {
       if (tb)  tb.classList.add('snd-off');
       if (img) img.src = 'Images/Common_Images/audio_off.png';
     }
+    syncGlobalMuteIcon();
   };
+
+  // ── Always-visible mute button (menu screen, pre-level) ────────
+  // Shares the same #audio_setting checkbox as the in-level taskbar
+  // button, so toggling either one keeps both in sync.
+  window.globalMuteToggle = function() {
+    var cb = document.getElementById('audio_setting');
+    if (!cb) return;
+    cb.checked = !cb.checked;
+    cb.dispatchEvent(new Event('change'));
+    var tb = document.getElementById('game-taskbar');
+    if (cb.checked) { if (tb) tb.classList.remove('snd-off'); }
+    else            { if (tb) tb.classList.add('snd-off'); }
+    syncGlobalMuteIcon();
+  };
+
+  function syncGlobalMuteIcon() {
+    var cb  = document.getElementById('audio_setting');
+    var btn = document.getElementById('global-mute-btn');
+    var img = document.getElementById('global-mute-icon');
+    var tbImg = document.getElementById('tb-snd-img');
+    if (!cb) return;
+    var onSrc  = 'Images/Common_Images/audio_on.png';
+    var offSrc = 'Images/Common_Images/audio_off.png';
+    if (btn) btn.classList.toggle('gm-muted', !cb.checked);
+    if (img) img.src = cb.checked ? onSrc : offSrc;
+    if (tbImg) tbImg.src = cb.checked ? onSrc : offSrc;
+  }
+  // Keep icon correct on load (in case a previous mute preference was
+  // already applied to the checkbox before this script ran).
+  document.addEventListener('DOMContentLoaded', syncGlobalMuteIcon);
+  setTimeout(syncGlobalMuteIcon, 0);
 
   // ── Pause / Resume — uses the game's own pauseGame/resumeGame ─
   window.tbPause = function() {
