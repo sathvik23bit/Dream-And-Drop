@@ -1311,9 +1311,11 @@ function generateBall(left, bottom, currentLevel) {
   }
 
   function Collision() {
+    // const GRACE_MS = 200; // <-- how long (ms) after grabbing the ball collisions are ignored
+   // if (Date.now() - dragStartTime < GRACE_MS) return;
     const ballRect = ball.getBoundingClientRect();
     const obstacles = document.querySelectorAll('.obstacle');
-    const buffer = Math.min(ballRect.width, ballRect.height) * 0.1088;
+    const buffer = Math.min(ballRect.width, ballRect.height) * 0.25;
 
     obstacles.forEach(obstacle => {
       const obstacleRect = obstacle.getBoundingClientRect();
@@ -2039,7 +2041,7 @@ function level14() {
   document.getElementById('score').style.display = 'none';
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '6vh';
+  document.getElementById('basket').style.top  = '70vh';
   document.getElementById('basket').style.left = '85vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
@@ -2055,7 +2057,7 @@ function level14() {
     { top: 22, left: 60, width: 4,   height: 18 }, // right stopper 1
     { top: 42, left: 35, width: 62,  height: 4  }, // shelf 2 — gap left
     { top: 42, left: 35, width: 4,   height: 18 }, // left stopper 2
-    { top: 60, left: 3,  width: 65,  height: 4  }, // shelf 3 — gap right
+    { top: 60, left: 13,  width: 65,  height: 4  }, // shelf 3 — gap right
     { top: 60, left: 65, width: 4,   height: 18 }, // right stopper 3
     { top: 78, left: 30, width: 67,  height: 4  }, // shelf 4 — gap left
     { top: 78, left: 30, width: 4,   height: 4  },
