@@ -2078,7 +2078,7 @@ function level15() {
   document.getElementById('score').style.display = 'none';
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '45vh';
+  document.getElementById('basket').style.top  = '35vh';
   document.getElementById('basket').style.left = '45vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
