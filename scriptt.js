@@ -2771,7 +2771,7 @@ function level32() {
 }
 
 function level33() {
-  startTimedLevel(33, '48vh', '48vw', 12);
+  startTimedLevel(33, '48vh', '48vw', 3000);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
     { top: 95, left: 0,  width: 100, height: 3  },
@@ -2780,30 +2780,30 @@ function level33() {
     // FINAL LABYRINTH — basket dead center, approach from all 4 corners
     // Outer ring
     { top: 12, left: 12, width: 76,  height: 4  },
-    { top: 12, left: 12, width: 4,   height: 55 },
+    { top: 25, left: 12, width: 4,   height: 45 },
     { top: 88, left: 12, width: 76,  height: 4  },
-    { top: 12, left: 84, width: 4,   height: 76 },
+    { top: 28, left: 84, width: 4,   height: 45 },
     // Middle ring (open corners)
     { top: 26, left: 26, width: 50,  height: 4  }, // gap right (72-84)
     { top: 26, left: 26, width: 4,   height: 40 }, // gap bottom (72-84)
     { top: 76, left: 26, width: 50,  height: 4  }, // gap left (12-26)
-    { top: 26, left: 72, width: 4,   height: 50 }, // gap top (12-26)
+    { top: 40, left: 72, width: 4,   height: 40 }, // gap top (12-26)
     // Inner ring (one gap each — none aligned with outer)
     { top: 38, left: 38, width: 26,  height: 4  }, // gap right (62-72)
     { top: 38, left: 38, width: 4,   height: 12 }, // gap bottom (62-76)
     { top: 64, left: 38, width: 26,  height: 4  }, // gap left (26-38)
-    { top: 38, left: 60, width: 4,   height: 26 }, // gap top (26-38)
+    { top: 53, left: 60, width: 4,   height: 16 }, // gap top (26-38)
   ];
   generateObstacles(obstacles);
   addMovingObstacle('mv30a', 6,  16, 10, 4, 16, 60,  'horizontal', 0.50);
   addMovingObstacle('mv30b', 6,  65, 10, 4, 65, 80,  'horizontal', 0.45);
-  addMovingObstacle('mv30c', 20, 30, 10, 4, 30, 68,  'horizontal', 0.50);
-  addMovingObstacle('mv30d', 34, 30, 10, 4, 30, 35,  'horizontal', 0.45);
-  addMovingObstacle('mv30e', 50, 42, 10, 4, 42, 56,  'horizontal', 0.50);
-  addMovingObstacle('mv30f', 82, 30, 10, 4, 30, 68,  'horizontal', 0.45);
-  addMovingObstacle('mv30g', 18, 16, 4, 20, 12, 38,  'vertical',   0.50);
-  addMovingObstacle('mv30h', 18, 80, 4, 20, 12, 38,  'vertical',   0.45);
-  generateBall('5vw', '5vh', currentLevel);
+ // addMovingObstacle('mv30c', 20, 30, 10, 4, 30, 68,  'horizontal', 0.50);
+  addMovingObstacle('mv30d', 34, 30, 10, 4, 30, 50,  'horizontal', 0.45);
+  //addMovingObstacle('mv30e', 50, 42, 10, 4, 42, 56,  'horizontal', 0.50);
+ // addMovingObstacle('mv30f', 82, 30, 10, 4, 30, 68,  'horizontal', 0.45);
+  addMovingObstacle('mv30g', 18, 16, 4, 20, 12, 38,  'vertical',   0.60);
+  addMovingObstacle('mv30h', 18, 80, 4, 10, 12, 45,  'vertical',   0.60);
+  generateBall('7vw', '7vh', currentLevel);
 }
 
 
