@@ -2078,8 +2078,8 @@ function level15() {
   document.getElementById('score').style.display = 'none';
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '35vh';
-  document.getElementById('basket').style.left = '45vw';
+  document.getElementById('basket').style.top  = '28vh';
+  document.getElementById('basket').style.left = '48vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
   document.querySelectorAll('.obstacle').forEach(o => o.remove());
@@ -2121,7 +2121,7 @@ function level16() {
   startTracking();
   currentLevel = 16;
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '8vh';
+  document.getElementById('basket').style.top  = '80vh';
   document.getElementById('basket').style.left = '85vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
