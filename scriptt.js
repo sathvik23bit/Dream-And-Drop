@@ -2738,7 +2738,7 @@ function level31() {
 }
 
 function level32() {
-  startTimedLevel(32, '6vh', '82vw', 25);
+  startTimedLevel(32, '6vh', '82vw', 5000);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
     { top: 95, left: 0,  width: 100, height: 3  },
@@ -2749,29 +2749,29 @@ function level32() {
     { top: 16, left: 12, width: 4,   height: 30 },
     { top: 46, left: 32, width: 55,  height: 4  }, // gap left
     { top: 46, left: 83, width: 4,   height: 30 },
-    { top: 74, left: 12, width: 55,  height: 4  }, // gap right
+   // { top: 74, left: 12, width: 55,  height: 4  }, // gap right
     { top: 74, left: 12, width: 4,   height: 21 },
     // Inner thin walls — force specific routes
-    { top: 30, left: 25, width: 4,   height: 18 },
+    { top: 20, left: 25, width: 4,   height: 18 },
     { top: 60, left: 55, width: 4,   height: 16 },
     { top: 30, left: 65, width: 4,   height: 18 },
     // Bottom corridor guard
     { top: 85, left: 30, width: 40,  height: 4  },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv29a', 6,  16, 10, 4, 16, 55,  'horizontal', 0.55);
-  addMovingObstacle('mv29b', 25, 5,  10, 4, 3,  20,  'horizontal', 0.90);
-  addMovingObstacle('mv29c', 38, 38, 10, 4, 36, 80,  'horizontal', 0.55);
-  addMovingObstacle('mv29d', 62, 5,  10, 4, 3,  30,  'horizontal', 0.50);
-  addMovingObstacle('mv29e', 62, 55, 10, 4, 52, 78,  'horizontal', 1);
-  addMovingObstacle('mv29f', 82, 5,  10, 4, 3,  28,  'horizontal', 0.50);
+  //addMovingObstacle('mv29a', 6,  16, 10, 4, 16, 55,  'horizontal', 0.55);
+  addMovingObstacle('mv29b', 25, 5,  5, 4, 3,  10,  'horizontal', 1.20);
+ // addMovingObstacle('mv29c', 38, 38, 10, 4, 36, 80,  'horizontal', 0.55);
+  addMovingObstacle('mv29d', 62, 5,  10, 4, 3,  30,  'horizontal', 1.10);
+  addMovingObstacle('mv29e', 62, 55, 10, 4, 52, 78,  'horizontal', 1.10);
+ // addMovingObstacle('mv29f', 82, 5,  10, 4, 3,  28,  'horizontal', 0.50);
   //addMovingObstacle('mv29g', 82, 68, 10, 4, 65, 90,  'horizontal', 0.55);
-  addMovingObstacle('mv29h', 8,  55, 4, 18, 3,  28,  'vertical',   0.50);
-  generateBall('5vw', '88vh', currentLevel);
+  addMovingObstacle('mv29h', 8,  55, 4, 18, 3,  28,  'vertical',   1.20);
+  generateBall('50vw', '56vh', currentLevel);
 }
 
 function level33() {
-  startTimedLevel(33, '48vh', '48vw', 3000);
+  startTimedLevel(33, '48vh', '48vw', 15);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
     { top: 97, left: 0,  width: 100, height: 3  },
@@ -2797,10 +2797,6 @@ function level33() {
   generateObstacles(obstacles);
   addMovingObstacle('mv30b', 25,  36, 2, 10, 30, 60,  'vertical', 0.85);
   addMovingObstacle('mv30c', 23,  61, 2, 10, 30, 60,  'vertical', 2);
- // addMovingObstacle('mv30c', 20, 30, 10, 4, 30, 68,  'horizontal', 0.50);
-  //addMovingObstacle('mv30d', 34, 30, 10, 4, 30, 50,  'horizontal', 0.45);
-  //addMovingObstacle('mv30e', 50, 42, 10, 4, 42, 56,  'horizontal', 0.50);
- // addMovingObstacle('mv30f', 82, 30, 10, 4, 30, 68,  'horizontal', 0.45);
   addMovingObstacle('mv30a', 18, 16, 4, 20, 12, 38,  'vertical',   0.60);
   addMovingObstacle('mv30d', 18, 80, 4, 10, 12, 45,  'vertical',   0.60);
   generateBall('7vw', '7vh', currentLevel);
