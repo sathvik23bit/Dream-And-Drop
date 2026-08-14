@@ -2055,16 +2055,16 @@ function level14() {
     { top: 22, left: 3,  width: 60,  height: 4  }, // shelf 1 — gap right
     //{ top: 22, left: 60, width: 4,   height: 18 }, // right stopper 1
     { top: 42, left: 35, width: 62,  height: 4  }, // shelf 2 — gap left
-    { top: 42, left: 35, width: 4,   height: 18 }, // left stopper 2
-    { top: 60, left: 13,  width: 65,  height: 4  }, // shelf 3 — gap right
-    { top: 60, left: 65, width: 4,   height: 18 }, // right stopper 3
+    //{ top: 42, left: 35, width: 4,   height: 18 }, // left stopper 2
+    { top: 60, left: 3,  width: 75,  height: 4  }, // shelf 3 — gap right
+    //{ top: 60, left: 65, width: 4,   height: 18 }, // right stopper 3
     { top: 78, left: 30, width: 67,  height: 4  }, // shelf 4 — gap left
     { top: 78, left: 30, width: 4,   height: 4  },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv11a', 30, 5,  20, 4, 5,  50, 'horizontal', 1.4);
-  addMovingObstacle('mv11b', 50, 40, 20, 4, 40, 90, 'horizontal', 1.5);
-  addMovingObstacle('mv11c', 68, 5,  20, 4, 5,  45, 'horizontal', 1.6);
+  addMovingObstacle('mv11a', 42, 5,  20, 4, 5,  50, 'horizontal', 1.4);
+  addMovingObstacle('mv11b', 42, 35, 4, 20, 40, 67, 'vertical', 1.5);
+  addMovingObstacle('mv11c', 60, 74,  4, 20, 25,  68, 'vertical', 1.6);
   addMovingObstacle('mv11d', 10, 70, 4, 18, 5,  30, 'vertical',   1.5);
   generateBall('8vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
@@ -2104,6 +2104,8 @@ function level15() {
   generateObstacles(obstacles);
   addMovingObstacle('mv12a', 12, 25, 22, 4, 25, 60, 'horizontal', 1.4);
   addMovingObstacle('mv12b', 72, 3,  22, 4, 3,  48, 'horizontal', 1.3);
+  addMovingObstacle('mv12e', 45, 3,  22, 4, 3,  35, 'horizontal', 1.3);
+  addMovingObstacle('mv12f', 20, 58,  22, 4, 60,  87, 'horizontal', 1.3);
   addMovingObstacle('mv12c', 50, 5,  4, 20, 30, 70, 'vertical',   1.5);
   addMovingObstacle('mv12d', 42, 80, 4, 20, 30, 70, 'vertical',   1.4);
   generateBall('88vw', '5vh', currentLevel);
@@ -2120,7 +2122,7 @@ function level16() {
   startTracking();
   currentLevel = 16;
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '70vh';
+  document.getElementById('basket').style.top  = '9vh';
   document.getElementById('basket').style.left = '85vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
@@ -2132,20 +2134,20 @@ function level16() {
     { top: 95, left: 0,  width: 100, height: 3  },
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
-    { top: 18, left: 3,  width: 62,  height: 4  }, // row 1 — gap right
-    { top: 18, left: 62, width: 4,   height: 20 }, // stopper
-    { top: 38, left: 33, width: 64,  height: 4  }, // row 2 — gap left
-    { top: 38, left: 33, width: 4,   height: 20 }, // stopper
+    { top: 18, left: 13,  width: 52,  height: 4  }, // row 1 — gap right
+    { top: 3, left: 62, width: 4,   height: 38 }, // stopper
+    { top: 28, left: 33, width: 64,  height: 4  }, // row 2 — gap left
+    //{ top: 38, left: 33, width: 4,   height: 20 }, // stopper
     { top: 58, left: 3,  width: 62,  height: 4  }, // row 3 — gap right
-    { top: 58, left: 62, width: 4,   height: 20 }, // stopper
+    { top: 38, left: 62, width: 4,   height: 40 }, // stopper
     { top: 78, left: 33, width: 64,  height: 4  }, // row 4 — gap left
-    { top: 78, left: 33, width: 4,   height: 4  },
+    //{ top: 78, left: 33, width: 4,   height: 4  },
   ];
   generateObstacles(obstacles);
   addMovingObstacle('mv13a', 26, 5,  15, 4, 5,  50,  'horizontal', 1.3);
-  addMovingObstacle('mv13b', 48, 38, 15, 4, 38, 85,  'horizontal', 1.2);
-  addMovingObstacle('mv13c', 68, 5,  15, 4, 5,  50,  'horizontal', 1.4);
-  addMovingObstacle('mv13d', 8,  70, 4, 20, 5,  35,  'vertical',   1.3);
+  //addMovingObstacle('mv13b', 48, 38, 15, 4, 38, 85,  'horizontal', 1.2);
+  //addMovingObstacle('mv13c', 68, 5,  15, 4, 5,  50,  'horizontal', 1.4);
+  //addMovingObstacle('mv13d', 8,  70, 4, 20, 5,  35,  'vertical',   1.3);
   generateBall('5vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
