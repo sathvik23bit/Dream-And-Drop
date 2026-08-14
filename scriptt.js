@@ -1719,7 +1719,7 @@ function level5() {
   document.getElementById('time').style.display   = 'none';
   document.getElementById('basket').style.display = 'block';
   document.getElementById('basket').style.top     = '6vh';
-  document.getElementById('basket').style.left    = '80vw';  // top-right
+  document.getElementById('basket').style.left    = '20vw';  // top-right
 
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
@@ -1735,7 +1735,7 @@ function level5() {
     { top: 0,  left: 0,  width: 3,   height: 100 },
     { top: 0,  left: 97, width: 3,   height: 100 },
     { top: 50, left: 3,  width: 57,  height: 4   },  // horizontal shelf — gap on right
-    { top: 3,  left: 40, width: 4,   height: 47  },  // vertical wall — gap below shelf
+    { top: 13,  left: 40, width: 4,   height: 37  },  // vertical wall — gap below shelf
   ];
   generateObstacles(obstacles);
 
@@ -1768,13 +1768,14 @@ function level6() {
     { top: 95, left: 0,  width: 100, height: 3  },
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
+    { top: 20, left: 75,  width: 3,  height: 70  },
     { top: 20, left: 3,  width: 50,  height: 4  }, // top shelf — gap right side
     { top: 40, left: 25, width: 50,  height: 4  }, // mid shelf — gap left side
     { top: 60, left: 3,  width: 55,  height: 4  }, // lower shelf — gap right side
     { top: 78, left: 20, width: 50,  height: 4  }, // bottom shelf — gap left side
   ];
   generateObstacles(obstacles);
-  generateBall('90vw', '88vh', currentLevel);
+  generateBall('9vw', '8vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
 
@@ -1785,7 +1786,7 @@ function level7() {
   document.getElementById('score').style.display = 'none';
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '8vh';
+  document.getElementById('basket').style.top  = '80vh';
   document.getElementById('basket').style.left = '82vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
@@ -1797,6 +1798,9 @@ function level7() {
     { top: 95, left: 0,  width: 100, height: 3  },
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
+    { top: 25,  left: 30, width: 3,   height: 20},
+    { top: 25,  left: 70, width: 3,   height: 20},
+    { top: 50,  left: 60, width: 3,   height: 20},
     { top: 25, left: 3,  width: 40,  height: 4  }, // left shelf
     { top: 25, left: 60, width: 37,  height: 4  }, // right shelf — gap at 43-60
     { top: 50, left: 20, width: 25,  height: 4  }, // inner left
@@ -1806,7 +1810,7 @@ function level7() {
     { top: 50, left: 3,  width: 4,   height: 27 }, // left pillar bottom
   ];
   generateObstacles(obstacles);
-  generateBall('8vw', '88vh', currentLevel);
+  generateBall('15vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
 
@@ -1854,7 +1858,7 @@ function level9() {
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
   document.getElementById('basket').style.top  = '5vh';
-  document.getElementById('basket').style.left = '43vw';
+  document.getElementById('basket').style.left = '9vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
   document.querySelectorAll('.obstacle').forEach(o => o.remove());
@@ -1865,19 +1869,14 @@ function level9() {
     { top: 95, left: 0,  width: 100, height: 3  },
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
-    { top: 20, left: 3,  width: 70,  height: 4  }, // outer top — gap right
-    { top: 20, left: 20, width: 4,   height: 40 }, // outer left wall
-    { top: 60, left: 20, width: 60,  height: 4  }, // outer bottom — gap right edge
-    { top: 20, left: 77, width: 4,   height: 25 }, // outer right wall — gap below
-    { top: 35, left: 35, width: 30,  height: 4  }, // inner top — gap right
-    { top: 35, left: 35, width: 4,   height: 20 }, // inner left wall
-    { top: 55, left: 35, width: 25,  height: 4  }, // inner bottom — gap right
-    { top: 35, left: 62, width: 4,   height: 18 }, // inner right wall — gap below
+    { top: 0,  left: 18,  width: 3, height: 80  },
+    { top: 20,  left: 36,  width: 3, height: 77  },
+    { top: 0,  left: 56,  width: 3, height: 57  },    
   ];
   generateObstacles(obstacles);
   // One slow moving barrier across the outer entry
   addMovingObstacle('mv6a', 45, 22, 15, 4, 22, 55, 'horizontal', 2.5);
-  generateBall('88vw', '88vh', currentLevel);
+  generateBall('82vw', '82vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
 
@@ -1901,21 +1900,21 @@ function level10() {
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     // Room divider 1 — door at top (gap top:0–15)
-    { top: 15, left: 33, width: 4,   height: 60 },
+    { top: 0, left: 33, width: 4,   height: 60 },
     // Room divider 2 — door at bottom (gap top:75–95)
     { top: 0,  left: 65, width: 4,   height: 75 },
     // Obstacles inside room 1
     { top: 30, left: 10,  width: 22,  height: 4  },
-    { top: 55, left: 10,  width: 20,  height: 4  },
+    { top: 62, left: 3,  width: 20,  height: 4  },
     // Obstacles inside room 2
-    { top: 25, left: 38, width: 20,  height: 4  },
-    { top: 60, left: 38, width: 19,  height: 4  },
+    { top: 20, left: 50, width: 3,  height: 77  },
+    //{ top: 60, left: 38, width: 19,  height: 4  },
     // Obstacles inside room 3
     { top: 20, left: 70, width: 24,  height: 4  },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv7a', 42, 6,  18, 4, 6,  28, 'horizontal', 2.2);
-  addMovingObstacle('mv7b', 38, 38, 4, 20, 25, 60, 'vertical',   2.4);
+  addMovingObstacle('mv7a', 42, 6,  18, 4, 6,  18, 'horizontal', 2.8);
+  addMovingObstacle('mv7b', 50, 70, 4, 20, 50, 80, 'vertical',   2.4);
   generateBall('8vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -1927,8 +1926,8 @@ function level11() {
   document.getElementById('score').style.display = 'none';
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '5vh';
-  document.getElementById('basket').style.left = '5vw';
+  document.getElementById('basket').style.top  = '80vh';
+  document.getElementById('basket').style.left = '85vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
   document.querySelectorAll('.obstacle').forEach(o => o.remove());
@@ -1949,8 +1948,8 @@ function level11() {
     { top: 38, left: 42, width: 4,   height: 22 }, // center pillar
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv8a', 26, 5,  18, 4, 5,  45,  'horizontal', 2.0);
-  addMovingObstacle('mv8b', 66, 55, 18, 4, 45, 80,  'horizontal', 2.2);
+  //addMovingObstacle('mv8a', 26, 5,  18, 4, 5,  45,  'horizontal', 2.0);
+  addMovingObstacle('mv8b', 66, 55, 4, 18, 45, 80,  'vertical', 2.2);
   generateBall('88vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -1963,7 +1962,7 @@ function level12() {
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
   document.getElementById('basket').style.top  = '8vh';
-  document.getElementById('basket').style.left = '48vw';
+  document.getElementById('basket').style.left = '8vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
   document.querySelectorAll('.obstacle').forEach(o => o.remove());
@@ -1975,16 +1974,16 @@ function level12() {
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     // Horizontal cross bar — gap at 45-55 center
-    { top: 42, left: 3,  width: 42,  height: 4  },
-    { top: 42, left: 55, width: 42,  height: 4  },
+    { top: 42, left: 15,  width: 32,  height: 4  },
+    { top: 42, left: 58, width: 42,  height: 4  },
     // Vertical cross bar — gap at 40-52 center
-    { top: 3,  left: 45, width: 4,   height: 40 },
-    { top: 52, left: 45, width: 4,   height: 43 },
+    { top: 3,  left: 45, width: 4,   height: 80 },
+    //{ top: 52, left: 45, width: 4,   height: 43 },
     // Corner walls to force routing
-    { top: 20, left: 20, width: 22,  height: 4  },
-    { top: 65, left: 58, width: 22,  height: 4  },
-    { top: 20, left: 20, width: 4,   height: 22 },
-    { top: 58, left: 70, width: 4,   height: 25 },
+    { top: 60, left: 3, width: 22,  height: 4  },
+    //{ top: 65, left: 58, width: 22,  height: 4  },
+    { top: 70, left: 60, width: 4,   height: 22 },
+    { top: 70, left: 30, width: 4,   height: 25 },
   ];
   generateObstacles(obstacles);
   addMovingObstacle('mv9a', 22, 5,  20, 4, 5,  40,  'horizontal', 1.8);
@@ -2006,8 +2005,8 @@ function level13() {
   document.getElementById('score').style.display = 'none';
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '7vh';
-  document.getElementById('basket').style.left = '7vw';
+  document.getElementById('basket').style.top  = '80vh';
+  document.getElementById('basket').style.left = '85vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
   document.querySelectorAll('.obstacle').forEach(o => o.remove());
@@ -2019,16 +2018,16 @@ function level13() {
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     { top: 20, left: 20, width: 77,  height: 4  }, // top band — gap left
-    { top: 20, left: 20, width: 4,   height: 30 }, // left wall of top band
+    //{ top: 20, left: 20, width: 4,   height: 30 }, // left wall of top band
     { top: 50, left: 3,  width: 72,  height: 4  }, // mid band — gap right
-    { top: 50, left: 72, width: 4,   height: 30 }, // right wall of mid band
+    //{ top: 50, left: 72, width: 4,   height: 30 }, // right wall of mid band
     { top: 78, left: 20, width: 77,  height: 4  }, // bottom band — gap left
-    { top: 32, left: 50, width: 4,   height: 20 }, // inner divider top
-    { top: 60, left: 40, width: 4,   height: 20 }, // inner divider bottom
+    { top: 35, left: 50, width: 4,   height: 16 }, // inner divider top
+    { top: 65, left: 40, width: 4,   height: 16 }, // inner divider bottom
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv10a', 34, 24, 18, 4, 24, 65, 'horizontal', 1.6);
-  addMovingObstacle('mv10b', 62, 5,  18, 4, 5,  50, 'horizontal', 1.5);
+  //addMovingObstacle('mv10a', 34, 24, 18, 4, 24, 65, 'horizontal', 1.6);
+  addMovingObstacle('mv10b', 50, 72,  4, 18, 25,  70, 'vertical', 1.5);
   addMovingObstacle('mv10c', 5,  30, 4, 18, 3,  40, 'vertical',   1.7);
   generateBall('88vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
@@ -2041,7 +2040,7 @@ function level14() {
   document.getElementById('score').style.display = 'none';
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '70vh';
+  document.getElementById('basket').style.top  = '80vh';
   document.getElementById('basket').style.left = '85vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
@@ -2054,7 +2053,7 @@ function level14() {
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     { top: 22, left: 3,  width: 60,  height: 4  }, // shelf 1 — gap right
-    { top: 22, left: 60, width: 4,   height: 18 }, // right stopper 1
+    //{ top: 22, left: 60, width: 4,   height: 18 }, // right stopper 1
     { top: 42, left: 35, width: 62,  height: 4  }, // shelf 2 — gap left
     { top: 42, left: 35, width: 4,   height: 18 }, // left stopper 2
     { top: 60, left: 13,  width: 65,  height: 4  }, // shelf 3 — gap right
@@ -2121,7 +2120,7 @@ function level16() {
   startTracking();
   currentLevel = 16;
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '80vh';
+  document.getElementById('basket').style.top  = '70vh';
   document.getElementById('basket').style.left = '85vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
