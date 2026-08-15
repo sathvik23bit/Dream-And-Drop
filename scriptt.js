@@ -2366,7 +2366,7 @@ function level20() {
 }
 
 function level21() {
-  startTimedLevel(21, '45vh', '45vw', 9930);
+  startTimedLevel(21, '45vh', '45vw', 30);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
     { top: 95, left: 0,  width: 100, height: 3  },
@@ -2402,20 +2402,20 @@ function level21() {
 // =============================================================
 
 function level22() {
-  startTimedLevel(22, '60vh', '17vw', 25);
+  startTimedLevel(22, '60vh', '17vw', 9925);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
     { top: 95, left: 0,  width: 100, height: 3  },
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     // Comb teeth from top — gaps between each tooth
-    { top: 3,  left: 15, width: 4,   height: 28 }, // tooth 1
-    { top: 3,  left: 30, width: 4,   height: 35 }, // tooth 2
-    { top: 3,  left: 45, width: 4,   height: 22 }, // tooth 3 — short (basket above)
-    { top: 3,  left: 62, width: 4,   height: 32 }, // tooth 4
+    { top: 13,  left: 15, width: 4,   height: 22 }, // tooth 1
+    { top: 3,  left: 30, width: 4,   height: 25 }, // tooth 2
+    { top: 13,  left: 45, width: 4,   height: 22 }, // tooth 3 — short (basket above)
+    { top: 16,  left: 62, width: 4,   height: 32 }, // tooth 4
     { top: 12,  left: 78, width: 4,   height: 15 }, // tooth 5
     // Base shelf connecting teeth
-    { top: 38, left: 3,  width: 80,  height: 4  },
+    { top: 38, left: 18,  width: 80,  height: 4  },
     // Bottom maze
     { top: 60, left: 3,  width: 45,  height: 4  },
     { top: 60, left: 58, width: 28,  height: 4  },
