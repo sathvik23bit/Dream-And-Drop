@@ -2648,10 +2648,10 @@ function level29() {
 }
 
 function level30() {
-  startTimedLevel(30, '8vh', '8vw', 25);
+  startTimedLevel(30, '8vh', '8vw', 30);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
-    { top: 95, left: 0,  width: 100, height: 3  },
+    { top: 97, left: 0,  width: 100, height: 3  },
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     // Grid lock — 4x4 grid of walls with one exit each
@@ -2681,23 +2681,24 @@ function level30() {
     //{ top: 66, left: 3,  width: 20,  height: 4  },
     { top: 66, left: 32, width: 28,  height: 4  },
     // Column 1 — gap at row 1
-    { top: 26, left: 22, width: 4,   height: 55 },
+    { top: 36, left: 22, width: 4,   height: 50 },
     // Column 2 — gap at row 2
-    { top: 3,  left: 44, width: 4,   height: 42 },
-    { top: 48, left: 44, width: 4,   height: 35 },
+    { top: 10,  left: 44, width: 4,   height: 13 },
+   // { top: 48, left: 44, width: 4,   height: 35 },
     // Column 3 — gap at row 3
-    { top: 3,  left: 66, width: 4,   height: 52 },
+    { top: 3,  left: 66, width: 4,   height: 10 },
     //{ top: 70, left: 66, width: 4,   height: 25 },
   ];
   generateObstacles(partial);
   addMovingObstacle('mv27a', 10, 5,  10, 4, 3,  18,  'horizontal', 0.65);
-  addMovingObstacle('mv27b', 10, 48, 10, 4, 46, 62,  'horizontal', 0.60);
-  addMovingObstacle('mv27c', 32, 26, 10, 4, 26, 40,  'horizontal', 0.65);
-  addMovingObstacle('mv27d', 54, 48, 10, 4, 46, 62,  'horizontal', 0.60);
-  addMovingObstacle('mv27e', 76, 26, 10, 4, 26, 40,  'horizontal', 0.65);
-  addMovingObstacle('mv27f', 76, 70, 10, 4, 68, 92,  'horizontal', 0.60);
-  addMovingObstacle('mv27g', 32, 70, 4, 18, 22, 66,  'vertical',   0.60);
-  generateBall('88vw', '88vh', currentLevel);
+  addMovingObstacle('mv27b', 10, 48, 10, 4, 46, 62,  'horizontal', 0.90);
+  addMovingObstacle('mv27c', 54, 48, 10, 4, 46, 62,  'horizontal', 0.60);
+  addMovingObstacle('mv27d', 76, 26, 10, 4, 26, 40,  'horizontal', 0.65);
+  addMovingObstacle('mv27e', 76, 70, 10, 4, 68, 92,  'horizontal', 0.60);
+  addMovingObstacle('mv27f', 32, 70, 4, 18, 22, 66,  'vertical',   1.05);
+  addMovingObstacle('mv27g', 32, 26, 10, 4, 26, 40,  'vertical',   1.0);
+
+  generateBall('88vw', '86vh', currentLevel);
 }
 
 // =============================================================
