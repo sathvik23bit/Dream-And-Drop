@@ -1874,7 +1874,7 @@ function level9() {
   ];
   generateObstacles(obstacles);
   // One slow moving barrier across the outer entry
-  addMovingObstacle('mv6a', 45, 22, 15, 4, 22, 55, 'horizontal', 2.5);
+  addMovingObstacle('mv9a', 45, 22, 15, 4, 22, 55, 'horizontal', 2.5);
   generateBall('88vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -1912,8 +1912,8 @@ function level10() {
     { top: 20, left: 70, width: 24,  height: 4  },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv7a', 42, 6,  18, 4, 6,  28, 'horizontal', 2.2);
-  addMovingObstacle('mv7b', 38, 38, 4, 20, 25, 60, 'vertical',   2.4);
+  addMovingObstacle('mv10a', 42, 6,  18, 4, 6,  28, 'horizontal', 2.2);
+  addMovingObstacle('mv10b', 38, 38, 4, 20, 25, 60, 'vertical',   2.4);
   generateBall('8vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -1947,8 +1947,8 @@ function level11() {
     { top: 38, left: 42, width: 4,   height: 22 }, // center pillar
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv8a', 26, 5,  18, 4, 5,  45,  'horizontal', 2.0);
-  addMovingObstacle('mv8b', 66, 55, 18, 4, 45, 80,  'horizontal', 2.2);
+  addMovingObstacle('mv11a', 26, 5,  18, 4, 5,  45,  'horizontal', 2.0);
+  addMovingObstacle('mv11b', 66, 55, 18, 4, 45, 80,  'horizontal', 2.2);
   generateBall('88vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -1985,9 +1985,9 @@ function level12() {
     { top: 58, left: 70, width: 4,   height: 25 },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv9a', 22, 5,  20, 4, 5,  40,  'horizontal', 1.8);
-  addMovingObstacle('mv9b', 62, 50, 20, 4, 50, 85,  'horizontal', 2.0);
-  addMovingObstacle('mv9c', 5,  68, 4,  22, 3,  38,  'vertical',   1.9);
+  addMovingObstacle('mv12a', 22, 5,  20, 4, 5,  40,  'horizontal', 1.8);
+  addMovingObstacle('mv12b', 62, 50, 20, 4, 50, 85,  'horizontal', 2.0);
+  addMovingObstacle('mv12c', 5,  68, 4,  22, 3,  38,  'vertical',   1.9);
   generateBall('88vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -2025,9 +2025,9 @@ function level13() {
     { top: 60, left: 40, width: 4,   height: 20 }, // inner divider bottom
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv10a', 34, 24, 18, 4, 24, 65, 'horizontal', 1.6);
-  addMovingObstacle('mv10b', 62, 5,  18, 4, 5,  50, 'horizontal', 1.5);
-  addMovingObstacle('mv10c', 5,  30, 4, 18, 3,  40, 'vertical',   1.7);
+  addMovingObstacle('mv13a', 34, 24, 18, 4, 24, 65, 'horizontal', 1.6);
+  addMovingObstacle('mv13b', 62, 5,  18, 4, 5,  50, 'horizontal', 1.5);
+  addMovingObstacle('mv13c', 5,  30, 4, 18, 3,  40, 'vertical',   1.7);
   generateBall('88vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -2061,10 +2061,10 @@ function level14() {
     { top: 78, left: 30, width: 4,   height: 4  },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv11a', 30, 5,  20, 4, 5,  50, 'horizontal', 1.4);
-  addMovingObstacle('mv11b', 50, 40, 20, 4, 40, 90, 'horizontal', 1.5);
-  addMovingObstacle('mv11c', 68, 5,  20, 4, 5,  45, 'horizontal', 1.6);
-  addMovingObstacle('mv11d', 10, 70, 4, 18, 5,  30, 'vertical',   1.5);
+  addMovingObstacle('mv14a', 30, 5,  20, 4, 5,  50, 'horizontal', 1.4);
+  addMovingObstacle('mv14b', 50, 40, 20, 4, 40, 90, 'horizontal', 1.5);
+  addMovingObstacle('mv14c', 68, 5,  20, 4, 5,  45, 'horizontal', 1.6);
+  addMovingObstacle('mv14d', 10, 70, 4, 18, 5,  30, 'vertical',   1.5);
   generateBall('8vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -2101,10 +2101,10 @@ function level15() {
     { top: 80, left: 78, width: 4,  height: 4  },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv12a', 12, 25, 22, 4, 25, 60, 'horizontal', 1.4);
-  addMovingObstacle('mv12b', 72, 3,  22, 4, 3,  48, 'horizontal', 1.3);
-  addMovingObstacle('mv12c', 50, 5,  4, 20, 30, 70, 'vertical',   1.5);
-  addMovingObstacle('mv12d', 42, 80, 4, 20, 30, 70, 'vertical',   1.4);
+  addMovingObstacle('mv15a', 12, 25, 22, 4, 25, 60, 'horizontal', 1.4);
+  addMovingObstacle('mv15b', 72, 3,  22, 4, 3,  48, 'horizontal', 1.3);
+  addMovingObstacle('mv15c', 50, 5,  4, 20, 30, 70, 'vertical',   1.5);
+  addMovingObstacle('mv15d', 42, 80, 4, 20, 30, 70, 'vertical',   1.4);
   generateBall('88vw', '5vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -2141,10 +2141,10 @@ function level16() {
     { top: 78, left: 33, width: 4,   height: 4  },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv13a', 26, 5,  15, 4, 5,  50,  'horizontal', 1.3);
-  addMovingObstacle('mv13b', 48, 38, 15, 4, 38, 85,  'horizontal', 1.2);
-  addMovingObstacle('mv13c', 68, 5,  15, 4, 5,  50,  'horizontal', 1.4);
-  addMovingObstacle('mv13d', 8,  70, 4, 20, 5,  35,  'vertical',   1.3);
+  addMovingObstacle('mv16a', 26, 5,  15, 4, 5,  50,  'horizontal', 1.3);
+  addMovingObstacle('mv16b', 48, 38, 15, 4, 38, 85,  'horizontal', 1.2);
+  addMovingObstacle('mv16c', 68, 5,  15, 4, 5,  50,  'horizontal', 1.4);
+  addMovingObstacle('mv16d', 8,  70, 4, 20, 5,  35,  'vertical',   1.3);
   generateBall('5vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -2174,11 +2174,11 @@ function level17() {
     { top: 20, left: 55, width: 4,   height: 12 }, // right guard
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv14a', 16, 5,  18, 4, 5,  55,  'horizontal', 1.2);
-  addMovingObstacle('mv14b', 44, 40, 18, 4, 40, 85,  'horizontal', 1.1);
-  addMovingObstacle('mv14c', 74, 5,  18, 4, 5,  55,  'horizontal', 1.3);
-  addMovingObstacle('mv14d', 8,  40, 4, 22, 5,  28,  'vertical',   1.2);
-  addMovingObstacle('mv14e', 65, 78, 4, 22, 60, 93,  'vertical',   1.1);
+  addMovingObstacle('mv17a', 16, 5,  18, 4, 5,  55,  'horizontal', 1.2);
+  addMovingObstacle('mv17b', 44, 40, 18, 4, 40, 85,  'horizontal', 1.1);
+  addMovingObstacle('mv17c', 74, 5,  18, 4, 5,  55,  'horizontal', 1.3);
+  addMovingObstacle('mv17d', 8,  40, 4, 22, 5,  28,  'vertical',   1.2);
+  addMovingObstacle('mv17e', 65, 78, 4, 22, 60, 93,  'vertical',   1.1);
   generateBall('88vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -2216,10 +2216,10 @@ function level18() {
   ];
   generateObstacles(obstacles);
   
-  addMovingObstacle('mv15b', 38, 22, 18, 4, 22, 68, 'horizontal', 1.0);
-  addMovingObstacle('mv15c', 64, 5,  18, 4, 5,  48, 'horizontal', 1.3);
-  addMovingObstacle('mv15d', 86, 60, 18, 4, 55, 90, 'horizontal', 1.1);
-  addMovingObstacle('mv15e', 30, 85, 4, 22, 28, 52, 'vertical',   1.2);
+  addMovingObstacle('mv18b', 38, 22, 18, 4, 22, 68, 'horizontal', 1.0);
+  addMovingObstacle('mv18c', 64, 5,  18, 4, 5,  48, 'horizontal', 1.3);
+  addMovingObstacle('mv18d', 86, 60, 18, 4, 55, 90, 'horizontal', 1.1);
+  addMovingObstacle('mv18e', 30, 85, 4, 22, 28, 52, 'vertical',   1.2);
   generateBall('88vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -2324,9 +2324,9 @@ function level19() {
   ];
   generateObstacles(obstacles);
   
-  addMovingObstacle('mv16b', 30, 62, 16, 4, 62, 90,  'horizontal', 1.4);
-  addMovingObstacle('mv16c', 52, 5,  16, 4, 5,  35,  'horizontal', 1.6);
-  addMovingObstacle('mv16d', 73, 30, 4, 22, 28, 62,  'vertical',   1.5);
+  addMovingObstacle('mv19b', 30, 62, 16, 4, 62, 90,  'horizontal', 1.4);
+  addMovingObstacle('mv19c', 52, 5,  16, 4, 5,  35,  'horizontal', 1.6);
+  addMovingObstacle('mv19d', 73, 30, 4, 22, 28, 62,  'vertical',   1.5);
   generateBall('5vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -2349,11 +2349,11 @@ function level20() {
     { top: 30, left: 58, width: 4,   height: 22 }, // inner right
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv17a', 4,  22, 16, 4, 22, 75,  'horizontal', 1.4);
-  addMovingObstacle('mv17b', 58, 22, 16, 4, 22, 60,  'horizontal', 1.3);
-  addMovingObstacle('mv17c', 78, 5,  16, 4, 5,  55,  'horizontal', 1.5);
-  addMovingObstacle('mv17d', 38, 72, 4, 20, 55, 93,  'vertical',   1.4);
-  addMovingObstacle('mv17e', 8,  82, 4, 20, 5,  30,  'vertical',   1.3);
+  addMovingObstacle('mv20a', 4,  22, 16, 4, 22, 75,  'horizontal', 1.4);
+  addMovingObstacle('mv20b', 58, 22, 16, 4, 22, 60,  'horizontal', 1.3);
+  addMovingObstacle('mv20c', 78, 5,  16, 4, 5,  55,  'horizontal', 1.5);
+  addMovingObstacle('mv20d', 38, 72, 4, 20, 55, 93,  'vertical',   1.4);
+  addMovingObstacle('mv20e', 8,  82, 4, 20, 5,  30,  'vertical',   1.3);
   generateBall('88vw', '88vh', currentLevel);
 }
 
@@ -2380,12 +2380,12 @@ function level21() {
     { top: 72, left: 79, width: 4,   height: 18 },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv18a', 20, 5,  16, 4, 5,  40,  'horizontal', 1.3);
-  addMovingObstacle('mv18b', 20, 55, 16, 4, 55, 90,  'horizontal', 1.2);
-  addMovingObstacle('mv18c', 74, 5,  16, 4, 5,  40,  'horizontal', 1.4);
-  addMovingObstacle('mv18d', 74, 55, 16, 4, 55, 90,  'horizontal', 1.3);
-  addMovingObstacle('mv18e', 5,  25, 4, 20, 3,  38,  'vertical',   1.3);
-  addMovingObstacle('mv18f', 5,  70, 4, 20, 3,  38,  'vertical',   1.2);
+  addMovingObstacle('mv21a', 20, 5,  16, 4, 5,  40,  'horizontal', 1.3);
+  addMovingObstacle('mv21b', 20, 55, 16, 4, 55, 90,  'horizontal', 1.2);
+  addMovingObstacle('mv21c', 74, 5,  16, 4, 5,  40,  'horizontal', 1.4);
+  addMovingObstacle('mv21d', 74, 55, 16, 4, 55, 90,  'horizontal', 1.3);
+  addMovingObstacle('mv21e', 5,  25, 4, 20, 3,  38,  'vertical',   1.3);
+  addMovingObstacle('mv21f', 5,  70, 4, 20, 3,  38,  'vertical',   1.2);
   generateBall('5vw', '5vh', currentLevel);
 }
 
@@ -2416,11 +2416,11 @@ function level22() {
     //{ top: 42, left: 65, width: 4,   height: 20 },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv19a', 42, 5,  14, 4, 3,  18,  'horizontal', 1.2);
-  addMovingObstacle('mv19b', 48, 30, 14, 4, 30, 58,  'horizontal', 1.1);
-  //addMovingObstacle('mv19c', 48, 68, 14, 4, 65, 90,  'horizontal', 1.3);
-  addMovingObstacle('mv19d', 64, 50, 14, 4, 45, 80,  'horizontal', 1.2);
-  addMovingObstacle('mv19e', 62, 5,  4, 18, 58, 93,  'vertical',   1.2);
+  addMovingObstacle('mv22a', 42, 5,  14, 4, 3,  18,  'horizontal', 1.2);
+  addMovingObstacle('mv22b', 48, 30, 14, 4, 30, 58,  'horizontal', 1.1);
+  //addMovingObstacle('mv22c', 48, 68, 14, 4, 65, 90,  'horizontal', 1.3);
+  addMovingObstacle('mv22d', 64, 50, 14, 4, 45, 80,  'horizontal', 1.2);
+  addMovingObstacle('mv22e', 62, 5,  4, 18, 58, 93,  'vertical',   1.2);
   generateBall('88vw', '88vh', currentLevel);
 }
 
@@ -2445,11 +2445,11 @@ function level23() {
     { top: 78, left: 3,  width: 25,  height: 4  },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv20a', 10, 32, 14, 4, 32, 60,  'horizontal', 1.1);
-  addMovingObstacle('mv20b', 85, 32, 14, 4, 32, 60,  'horizontal', 1.0);
-  addMovingObstacle('mv20c', 30, 68, 14, 4, 68, 90,  'horizontal', 1.2);
-  addMovingObstacle('mv20d', 30, 5,  4, 20, 24, 70,  'vertical',   1.1);
-  addMovingObstacle('mv20e', 55, 80, 4, 20, 22, 70,  'vertical',   1.0);
+  addMovingObstacle('mv23a', 10, 32, 14, 4, 32, 60,  'horizontal', 1.1);
+  addMovingObstacle('mv23b', 85, 32, 14, 4, 32, 60,  'horizontal', 1.0);
+  addMovingObstacle('mv23c', 30, 68, 14, 4, 68, 90,  'horizontal', 1.2);
+  addMovingObstacle('mv23d', 30, 5,  4, 20, 24, 70,  'vertical',   1.1);
+  addMovingObstacle('mv23e', 55, 80, 4, 20, 22, 70,  'vertical',   1.0);
   generateBall('88vw', '88vh', currentLevel);
 }
 
@@ -2507,12 +2507,12 @@ function level25() {
    // { top: 78, left: 82, width: 12,  height: 4  },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv22a', 8,  5,  12, 4, 3,  18,  'horizontal', 1.0);
- // addMovingObstacle('mv22b', 8,  68, 12, 4, 65, 92,  'horizontal', 0.9);
-  addMovingObstacle('mv22c', 33, 24, 12, 4, 24, 72,  'horizontal', 1.0);
-  addMovingObstacle('mv22d', 56, 24, 12, 4, 24, 72,  'horizontal', 0.9);
-  addMovingObstacle('mv22e', 78, 15,  4, 16, 70, 93,  'vertical',   1.0);
-  addMovingObstacle('mv22f', 5,  60, 4, 16, 3,  28,  'vertical',   0.9);
+  addMovingObstacle('mv25a', 8,  5,  12, 4, 3,  18,  'horizontal', 1.0);
+ // addMovingObstacle('mv25b', 8,  68, 12, 4, 65, 92,  'horizontal', 0.9);
+  addMovingObstacle('mv25c', 33, 24, 12, 4, 24, 72,  'horizontal', 1.0);
+  addMovingObstacle('mv25d', 56, 24, 12, 4, 24, 72,  'horizontal', 0.9);
+  addMovingObstacle('mv25e', 78, 15,  4, 16, 70, 93,  'vertical',   1.0);
+  addMovingObstacle('mv25f', 5,  60, 4, 16, 3,  28,  'vertical',   0.9);
   generateBall('88vw', '6vh', currentLevel);
 }
 
@@ -2538,12 +2538,12 @@ function level26() {
     { top: 30, left: 75, width: 4,   height: 22 }, // right pillar
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv23a', 40, 5,  10, 4, 3,  12,  'horizontal', 0.9);
-  addMovingObstacle('mv23b', 40, 18, 10, 4, 18, 30,  'horizontal', 0.8);
-  //addMovingObstacle('mv23c', 40, 36, 10, 4, 36, 50,  'horizontal', 1.0);
-  addMovingObstacle('mv23d', 40, 57, 10, 4, 57, 70,  'horizontal', 0.9);
-  addMovingObstacle('mv23e', 40, 75, 10, 4, 75, 92,  'horizontal', 0.8);
-  addMovingObstacle('mv23f', 8,  82, 4, 18, 5,  30,  'vertical',   0.9);
+  addMovingObstacle('mv26a', 40, 5,  10, 4, 3,  12,  'horizontal', 0.9);
+  addMovingObstacle('mv26b', 40, 18, 10, 4, 18, 30,  'horizontal', 0.8);
+  //addMovingObstacle('mv26c', 40, 36, 10, 4, 36, 50,  'horizontal', 1.0);
+  addMovingObstacle('mv26d', 40, 57, 10, 4, 57, 70,  'horizontal', 0.9);
+  addMovingObstacle('mv26e', 40, 75, 10, 4, 75, 92,  'horizontal', 0.8);
+  addMovingObstacle('mv26f', 8,  82, 4, 18, 5,  30,  'vertical',   0.9);
   generateBall('9vw', '88vh', currentLevel);
 }
 
@@ -2569,10 +2569,10 @@ function level27() {
     //{ top: 80, left: 25, width: 50,  height: 4  }, // bottom approach block
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv24a', 44, 22, 12, 4, 22, 60,  'horizontal', 1.1);
-  addMovingObstacle('mv24b', 61, 22, 12, 4, 22, 75,  'horizontal', 0.9);
-  addMovingObstacle('mv24c', 20, 83, 4, 18, 18, 45,  'vertical',   0.9);
-  addMovingObstacle('mv24d', 20, 5,  4, 18, 50, 75,  'vertical',   0.8);
+  addMovingObstacle('mv27a', 44, 22, 12, 4, 22, 60,  'horizontal', 1.1);
+  addMovingObstacle('mv27b', 61, 22, 12, 4, 22, 75,  'horizontal', 0.9);
+  addMovingObstacle('mv27c', 20, 83, 4, 18, 18, 45,  'vertical',   0.9);
+  addMovingObstacle('mv27d', 20, 5,  4, 18, 50, 75,  'vertical',   0.8);
   generateBall('88vw', '88vh', currentLevel);
 }
 
@@ -2599,11 +2599,11 @@ function level28() {
     //{ top: 44, left: 75, width: 4,   height: 26 }, // pillar 3 lower
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv25a', 6,  28, 12, 4, 28, 48,  'horizontal', 0.7);
-  addMovingObstacle('mv25b', 6,  52, 12, 4, 52, 73,  'horizontal', 0.8);
-  addMovingObstacle('mv25c', 58, 28, 12, 4, 28, 48,  'horizontal', 0.8);
-  addMovingObstacle('mv25d', 80, 52, 12, 4, 52, 73,  'horizontal', 0.7);
-  addMovingObstacle('mv25e', 32, 79, 4, 18, 12, 68,  'vertical',   0.9);
+  addMovingObstacle('mv28a', 6,  28, 12, 4, 28, 48,  'horizontal', 0.7);
+  addMovingObstacle('mv28b', 6,  52, 12, 4, 52, 73,  'horizontal', 0.8);
+  addMovingObstacle('mv28c', 58, 28, 12, 4, 28, 48,  'horizontal', 0.8);
+  addMovingObstacle('mv28d', 80, 52, 12, 4, 52, 73,  'horizontal', 0.7);
+  addMovingObstacle('mv28e', 32, 79, 4, 18, 12, 68,  'vertical',   0.9);
   generateBall('7vw', '85vh', currentLevel);
 }
 
@@ -2633,13 +2633,13 @@ function level29() {
    // { top: 40, left: 58, width: 4,   height: 20 }, // ring 3 right
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv26a', 3,  16, 12, 4, 16, 62,  'horizontal', 1.0);
-  addMovingObstacle('mv26b', 20, 30, 12, 4, 30, 68,  'horizontal', 0.6);
-  //addMovingObstacle('mv26c', 36, 28, 10, 4, 28, 35,  'horizontal', 0.7);
-  addMovingObstacle('mv26d', 40, 58, 4, 20, 28, 68,  'vertical', 1.20);
-  addMovingObstacle('mv26e', 40, 38, 4, 20, 28, 68,  'vertical', 1.20);
-  //addMovingObstacle('mv26f', 82, 16, 12, 4, 16, 30,  'horizontal', 0.9);
-  addMovingObstacle('mv26g', 8,  88, 4, 18, 5,  30,  'vertical',   0.6);
+  addMovingObstacle('mv29a', 3,  16, 12, 4, 16, 62,  'horizontal', 1.0);
+  addMovingObstacle('mv29b', 20, 30, 12, 4, 30, 68,  'horizontal', 0.6);
+  //addMovingObstacle('mv29c', 36, 28, 10, 4, 28, 35,  'horizontal', 0.7);
+  addMovingObstacle('mv29d', 40, 58, 4, 20, 28, 68,  'vertical', 1.20);
+  addMovingObstacle('mv29e', 40, 38, 4, 20, 28, 68,  'vertical', 1.20);
+  //addMovingObstacle('mv29f', 82, 16, 12, 4, 16, 30,  'horizontal', 0.9);
+  addMovingObstacle('mv29g', 8,  88, 4, 18, 5,  30,  'vertical',   0.6);
   generateBall('7vw', '85vh', currentLevel);
 }
 
@@ -2686,13 +2686,13 @@ function level30() {
     //{ top: 70, left: 66, width: 4,   height: 25 },
   ];
   generateObstacles(partial);
-  addMovingObstacle('mv27a', 10, 5,  10, 4, 3,  18,  'horizontal', 0.65);
-  addMovingObstacle('mv27b', 10, 48, 10, 4, 46, 62,  'horizontal', 0.90);
-  addMovingObstacle('mv27c', 54, 48, 10, 4, 46, 62,  'horizontal', 0.60);
-  addMovingObstacle('mv27d', 76, 26, 10, 4, 26, 40,  'horizontal', 0.65);
-  addMovingObstacle('mv27e', 76, 70, 10, 4, 68, 92,  'horizontal', 0.60);
-  addMovingObstacle('mv27f', 32, 70, 4, 18, 22, 66,  'vertical',   1.05);
-  addMovingObstacle('mv27g', 32, 26, 10, 4, 26, 40,  'vertical',   1.00);
+  addMovingObstacle('mv30a', 10, 5,  10, 4, 3,  18,  'horizontal', 0.65);
+  addMovingObstacle('mv30b', 10, 48, 10, 4, 46, 62,  'horizontal', 0.90);
+  addMovingObstacle('mv30c', 54, 48, 10, 4, 46, 62,  'horizontal', 0.60);
+  addMovingObstacle('mv30d', 76, 26, 10, 4, 26, 40,  'horizontal', 0.65);
+  addMovingObstacle('mv30e', 76, 70, 10, 4, 68, 92,  'horizontal', 0.60);
+  addMovingObstacle('mv30f', 32, 70, 4, 18, 22, 66,  'vertical',   1.05);
+  addMovingObstacle('mv30g', 32, 26, 10, 4, 26, 40,  'vertical',   1.00);
 
   generateBall('88vw', '86vh', currentLevel);
 }
@@ -2723,14 +2723,13 @@ function level31() {
     { top: 38, left: 75, width: 4,   height: 15 }, // outer decoy right
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv28a', 15, 5,  10, 4, 3,  38,  'horizontal', 0.9);
-  addMovingObstacle('mv28b', 15, 58, 10, 4, 58, 90,  'horizontal', 0.9);
-  addMovingObstacle('mv28c', 36, 5,  10, 4, 3,  25,  'horizontal', 0.9);
-  addMovingObstacle('mv28d', 36, 78, 10, 4, 78, 92,  'horizontal', 0.9);
-  //addMovingObstacle('mv28e', 60, 5,  10, 4, 3,  18,  'horizontal', 0.6);
-  addMovingObstacle('mv28f', 60, 65, 10, 4, 62, 90,  'horizontal', 0.9);
-  addMovingObstacle('mv28g', 82, 22, 10, 4, 22, 75,  'horizontal', 0.9);
-  addMovingObstacle('mv28h', 8,  50, 4, 18, 3,  30,  'vertical',   1.0);
+  addMovingObstacle('mv31a', 15, 5,  10, 4, 3,  38,  'horizontal', 0.9);
+  addMovingObstacle('mv31b', 15, 58, 10, 4, 58, 90,  'horizontal', 0.9);
+  addMovingObstacle('mv31c', 36, 5,  10, 4, 3,  25,  'horizontal', 0.9);
+  addMovingObstacle('mv31d', 36, 78, 10, 4, 78, 92,  'horizontal', 0.9);
+  addMovingObstacle('mv31e', 60, 65, 10, 4, 62, 90,  'horizontal', 0.9);
+  addMovingObstacle('mv31f', 82, 22, 10, 4, 22, 75,  'horizontal', 0.9);
+  addMovingObstacle('mv31g', 8,  50, 4, 18, 3,  30,  'vertical',   1.0);
   generateBall('7vw', '10vh', currentLevel);
 }
 
@@ -2756,14 +2755,10 @@ function level32() {
     { top: 85, left: 30, width: 40,  height: 4  },
   ];
   generateObstacles(obstacles);
-  //addMovingObstacle('mv29a', 6,  16, 10, 4, 16, 55,  'horizontal', 0.55);
-  addMovingObstacle('mv29b', 25, 5,  5, 4, 3,  10,  'horizontal', 1.20);
- // addMovingObstacle('mv29c', 38, 38, 10, 4, 36, 80,  'horizontal', 0.55);
-  addMovingObstacle('mv29d', 62, 5,  10, 4, 3,  30,  'horizontal', 1.10);
-  addMovingObstacle('mv29e', 62, 55, 10, 4, 52, 78,  'horizontal', 1.10);
- // addMovingObstacle('mv29f', 82, 5,  10, 4, 3,  28,  'horizontal', 0.50);
-  //addMovingObstacle('mv29g', 82, 68, 10, 4, 65, 90,  'horizontal', 0.55);
-  addMovingObstacle('mv29h', 8,  55, 4, 18, 3,  28,  'vertical',   1.20);
+  addMovingObstacle('mv32a', 25, 5,  5, 4, 3,  10,  'horizontal', 1.20);
+  addMovingObstacle('mv32b', 62, 5,  10, 4, 3,  30,  'horizontal', 1.10);
+  addMovingObstacle('mv32c', 62, 55, 10, 4, 52, 78,  'horizontal', 1.10);
+  addMovingObstacle('mv32d', 8,  55, 4, 18, 3,  28,  'vertical',   1.20);
   generateBall('50vw', '56vh', currentLevel);
 }
 
@@ -2792,10 +2787,10 @@ function level33() {
     { top: 53, left: 60, width: 4,   height: 16 }, // gap top (26-38)
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv30b', 25,  36, 2, 10, 30, 60,  'vertical', 0.85);
-  addMovingObstacle('mv30c', 23,  61, 2, 10, 30, 60,  'vertical', 2);
-  addMovingObstacle('mv30a', 18, 16, 4, 20, 12, 38,  'vertical',   0.60);
-  addMovingObstacle('mv30d', 18, 80, 4, 10, 12, 45,  'vertical',   0.60);
+  addMovingObstacle('mv33a', 18, 16, 4, 20, 12, 38,  'vertical',   0.60);
+  addMovingObstacle('mv33b', 25,  36, 2, 10, 30, 60,  'vertical', 0.85);
+  addMovingObstacle('mv33c', 23,  61, 2, 10, 30, 60,  'vertical', 2);
+  addMovingObstacle('mv33d', 18, 80, 4, 10, 12, 45,  'vertical',   0.60);
   generateBall('7vw', '7vh', currentLevel);
 }
 
