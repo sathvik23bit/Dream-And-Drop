@@ -2718,23 +2718,23 @@ function level31() {
     { top: 50, left: 60, width: 25,  height: 4  },// wide mid shelf — gaps edges
     { top: 73, left: 15,  width: 26,  height: 4  }, // lower-left shelf
     { top: 73, left: 55, width: 30,  height: 4  }, // lower-right — gap 41-55
-    { top: 25, left: 40, width: 4,   height: 25 }, // left inner pillar
+    { top: 35, left: 40, width: 4,   height: 15 }, // left inner pillar
     //{ top: 25, left: 57, width: 4,   height: 25 }, // right inner pillar
-    { top: 50, left: 35, width: 4,   height: 23 }, // lower-left pillar
-    { top: 50, left: 62, width: 4,   height: 23 }, // lower-right pillar
+    { top: 50, left: 35, width: 4,   height: 15 }, // lower-left pillar
+    { top: 50, left: 62, width: 4,   height: 15 }, // lower-right pillar
     { top: 38, left: 22, width: 4,   height: 15 }, // outer decoy left
     { top: 38, left: 75, width: 4,   height: 15 }, // outer decoy right
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv28a', 15, 5,  10, 4, 3,  38,  'horizontal', 0.6);
+  addMovingObstacle('mv28a', 15, 5,  10, 4, 3,  38,  'horizontal', 0.9);
   addMovingObstacle('mv28b', 15, 58, 10, 4, 58, 90,  'horizontal', 0.9);
-  addMovingObstacle('mv28c', 36, 5,  10, 4, 3,  25,  'horizontal', 0.6);
-  addMovingObstacle('mv28d', 36, 78, 10, 4, 78, 92,  'horizontal', 0.5);
+  addMovingObstacle('mv28c', 36, 5,  10, 4, 3,  25,  'horizontal', 0.9);
+  addMovingObstacle('mv28d', 36, 78, 10, 4, 78, 92,  'horizontal', 0.9);
   //addMovingObstacle('mv28e', 60, 5,  10, 4, 3,  18,  'horizontal', 0.6);
-  addMovingObstacle('mv28f', 60, 65, 10, 4, 62, 90,  'horizontal', 0.5);
+  addMovingObstacle('mv28f', 60, 65, 10, 4, 62, 90,  'horizontal', 0.9);
   addMovingObstacle('mv28g', 82, 22, 10, 4, 22, 75,  'horizontal', 0.9);
-  addMovingObstacle('mv28h', 8,  50, 4, 18, 3,  30,  'vertical',   0.55);
-  generateBall('5vw', '5vh', currentLevel);
+  addMovingObstacle('mv28h', 8,  50, 4, 18, 3,  30,  'vertical',   1.0);
+  generateBall('7vw', '10vh', currentLevel);
 }
 
 function level32() {
