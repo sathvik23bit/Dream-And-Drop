@@ -2690,14 +2690,14 @@ function level30() {
     //{ top: 70, left: 66, width: 4,   height: 25 },
   ];
   generateObstacles(partial);
-  addMovingObstacle('mv27a', 10, 5,  10, 4, 3,  18,  'horizontal', 0.65);
+  /*addMovingObstacle('mv27a', 10, 5,  10, 4, 3,  18,  'horizontal', 0.65);
   addMovingObstacle('mv27b', 10, 48, 10, 4, 46, 62,  'horizontal', 0.60);
   addMovingObstacle('mv27c', 32, 26, 10, 4, 26, 40,  'horizontal', 0.65);
   addMovingObstacle('mv27d', 54, 48, 10, 4, 46, 62,  'horizontal', 0.60);
   addMovingObstacle('mv27e', 76, 26, 10, 4, 26, 40,  'horizontal', 0.65);
   addMovingObstacle('mv27f', 76, 70, 10, 4, 68, 92,  'horizontal', 0.60);
   addMovingObstacle('mv27g', 32, 70, 4, 18, 22, 66,  'vertical',   0.60);
-  generateBall('88vw', '88vh', currentLevel);
+  generateBall('88vw', '88vh', currentLevel);*/
 }
 
 // =============================================================
@@ -2705,10 +2705,10 @@ function level30() {
 // =============================================================
 
 function level31() {
-  startTimedLevel(31, '8vh', '87vw', 20);
+  startTimedLevel(31, '8vh', '87vw', 1000);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
-    { top: 95, left: 0,  width: 100, height: 3  },
+    { top: 100, left: 0,  width: 100, height: 3  },
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     // Dense maze — basin in center, basket at center
@@ -2734,11 +2734,11 @@ function level31() {
   addMovingObstacle('mv28f', 60, 65, 10, 4, 62, 90,  'horizontal', 0.5);
   addMovingObstacle('mv28g', 82, 22, 10, 4, 22, 75,  'horizontal', 0.9);
   addMovingObstacle('mv28h', 8,  50, 4, 18, 3,  30,  'vertical',   0.55);
-  generateBall('5vw', '5vh', currentLevel);
+  generateBall('10vw', '13vh', currentLevel);
 }
 
 function level32() {
-  startTimedLevel(32, '6vh', '82vw', 5000);
+  startTimedLevel(32, '6vh', '82vw', 15);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
     { top: 95, left: 0,  width: 100, height: 3  },
