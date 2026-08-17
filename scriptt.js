@@ -2544,37 +2544,35 @@ function level26() {
   addMovingObstacle('mv23d', 40, 57, 10, 4, 57, 70,  'horizontal', 0.9);
   addMovingObstacle('mv23e', 40, 75, 10, 4, 75, 92,  'horizontal', 0.8);
   addMovingObstacle('mv23f', 8,  82, 4, 18, 5,  30,  'vertical',   0.9);
-  generateBall('5vw', '88vh', currentLevel);
+  generateBall('9vw', '88vh', currentLevel);
 }
 
 function level27() {
   startTimedLevel(27, '25vh', '23vw', 20);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
-    { top: 95, left: 0,  width: 100, height: 3  },
+    { top: 98, left: 0,  width: 100, height: 3  },
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     // Outer box (open corners)
-    { top: 18, left: 18, width: 65,  height: 4  },
+    { top: 18, left: 18, width: 55,  height: 4  },
     { top: 18, left: 18, width: 4,   height: 55 },
     { top: 73, left: 28, width: 55,  height: 4  },
     { top: 18, left: 79, width: 4,   height: 55 },
     // Inner obstacles
     { top: 35, left: 35, width: 30,  height: 4  }, // inner top — gap right
-    { top: 55, left: 33, width: 30,  height: 4  }, // inner bottom — gap right
-    { top: 35, left: 35, width: 4,   height: 22 }, // inner left
-    { top: 35, left: 62, width: 4,   height: 22 }, // inner right
+    { top: 58, left: 35, width: 30,  height: 4  }, // inner bottom — gap right
+    { top: 35, left: 35, width: 4,   height: 10 }, // inner left
+    { top: 35, left: 62, width: 4,   height: 10 }, // inner right
     // Approach corridors
    // { top: 6,  left: 40, width: 4,   height: 14 }, // top approach guide
     //{ top: 80, left: 25, width: 50,  height: 4  }, // bottom approach block
   ];
   generateObstacles(obstacles);
-  //addMovingObstacle('mv24a', 8,  22, 12, 4, 22, 75,  'horizontal', 0.9);
-  addMovingObstacle('mv24b', 44, 22, 12, 4, 22, 60,  'horizontal', 0.8);
-  addMovingObstacle('mv24c', 61, 22, 12, 4, 22, 75,  'horizontal', 0.9);
-  //addMovingObstacle('mv24d', 85, 22, 12, 4, 22, 75,  'horizontal', 0.8);
-  addMovingObstacle('mv24e', 20, 83, 4, 18, 18, 45,  'vertical',   0.9);
-  addMovingObstacle('mv24f', 55, 5,  4, 18, 50, 75,  'vertical',   0.8);
+  addMovingObstacle('mv24a', 44, 22, 12, 4, 22, 60,  'horizontal', 1.1);
+  addMovingObstacle('mv24b', 61, 22, 12, 4, 22, 75,  'horizontal', 0.9);
+  addMovingObstacle('mv24c', 20, 83, 4, 18, 18, 45,  'vertical',   0.9);
+  addMovingObstacle('mv24d', 20, 5,  4, 18, 50, 75,  'vertical',   0.8);
   generateBall('88vw', '88vh', currentLevel);
 }
 
