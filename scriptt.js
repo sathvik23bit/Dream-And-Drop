@@ -2612,39 +2612,39 @@ function level28() {
 }
 
 function level29() {
-  startTimedLevel(29, '79vh', '85vw', 15);
+  startTimedLevel(29, '79vh', '85vw', 1500);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
-    { top: 95, left: 0,  width: 100, height: 3  },
+    { top: 98, left: 0,  width: 100, height: 3  },
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     // Three-ring maze — rings each have one gap, not aligned
     { top: 15, left: 12, width: 76,  height: 4  }, // ring 1 top — gap right (88-97)
     { top: 15, left: 12, width: 4,   height: 30 }, 
-    { top: 65, left: 12, width: 4,   height: 30 },// ring 1 left — gap none
+    { top: 65, left: 12, width: 4,   height: 25 },// ring 1 left — gap none
     { top: 87, left: 12, width: 56,  height: 4  }, // ring 1 bottom — gap right (68-97)
     { top: 15, left: 84, width: 4,   height: 52 }, // ring 1 right — gap bottom (67-87)
     // Ring 2
     { top: 28, left: 25, width: 50,  height: 4  }, // ring 2 top — gap right (75-84)
-    { top: 28, left: 25, width: 4,   height: 18 },
-    { top: 57, left: 25, width: 4,   height: 19 }, // ring 2 left
+    { top: 28, left: 25, width: 4,   height: 16 },
+    { top: 57, left: 25, width: 4,   height: 17 }, // ring 2 left
     { top: 73, left: 25, width: 35,  height: 4  }, // ring 2 bottom — gap right (60-75)
     { top: 28, left: 71, width: 4,   height: 45 }, // ring 2 right
     // Ring 3 center
     { top: 40, left: 38, width: 22,  height: 4  }, // ring 3 top — gap right (60-71)
-    { top: 40, left: 38, width: 4,   height: 20 }, // ring 3 left
+    //{ top: 40, left: 38, width: 4,   height: 20 }, // ring 3 left
     { top: 60, left: 38, width: 22,  height: 4  }, // ring 3 bottom — gap right (60-71)
-    { top: 40, left: 58, width: 4,   height: 20 }, // ring 3 right
+   // { top: 40, left: 58, width: 4,   height: 20 }, // ring 3 right
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv26a', 6,  16, 12, 4, 16, 62,  'horizontal', 0.7);
+  addMovingObstacle('mv26a', 3,  16, 12, 4, 16, 62,  'horizontal', 1.0);
   addMovingObstacle('mv26b', 20, 30, 12, 4, 30, 68,  'horizontal', 0.6);
-  addMovingObstacle('mv26c', 36, 28, 10, 4, 28, 35,  'horizontal', 0.7);
-  addMovingObstacle('mv26d', 50, 42, 10, 4, 42, 55,  'horizontal', 0.6);
-  //addMovingObstacle('mv26e', 66, 28, 12, 4, 28, 68,  'horizontal', 0.7);
-  addMovingObstacle('mv26f', 82, 16, 12, 4, 16, 60,  'horizontal', 0.6);
+  //addMovingObstacle('mv26c', 36, 28, 10, 4, 28, 35,  'horizontal', 0.7);
+  addMovingObstacle('mv26d', 40, 58, 4, 20, 28, 68,  'vertical', 1.20);
+  addMovingObstacle('mv26e', 40, 38, 4, 20, 28, 68,  'vertical', 1.20);
+  //addMovingObstacle('mv26f', 82, 16, 12, 4, 16, 30,  'horizontal', 0.9);
   addMovingObstacle('mv26g', 8,  88, 4, 18, 5,  30,  'vertical',   0.6);
-  generateBall('5vw', '88vh', currentLevel);
+  generateBall('7vw', '85vh', currentLevel);
 }
 
 function level30() {
@@ -2696,7 +2696,7 @@ function level30() {
   addMovingObstacle('mv27d', 76, 26, 10, 4, 26, 40,  'horizontal', 0.65);
   addMovingObstacle('mv27e', 76, 70, 10, 4, 68, 92,  'horizontal', 0.60);
   addMovingObstacle('mv27f', 32, 70, 4, 18, 22, 66,  'vertical',   1.05);
-  addMovingObstacle('mv27g', 32, 26, 10, 4, 26, 40,  'vertical',   1.0);
+  addMovingObstacle('mv27g', 32, 26, 10, 4, 26, 40,  'vertical',   1.00);
 
   generateBall('88vw', '86vh', currentLevel);
 }
