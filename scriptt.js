@@ -2583,36 +2583,36 @@ function level27() {
 // =============================================================
 
 function level28() {
-  startTimedLevel(28, '48vh', '85vw', 15);
+  startTimedLevel(28, '48vh', '85vw', 1500);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
     { top: 95, left: 0,  width: 100, height: 3  },
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     // Lattice pattern — gaps at intersections
-    { top: 20, left: 16,  width: 84,  height: 4  }, // full top
-    { top: 45, left: 3,  width: 40,  height: 4  }, // mid left
-    { top: 45, left: 55, width: 42,  height: 4  }, // mid right — gap 43-55
-    { top: 70, left: 3,  width: 94,  height: 4  }, // full bottom
+    { top: 20, left: 16,  width: 70,  height: 4  }, // full top
+    { top: 45, left: 19,  width: 30,  height: 4  }, // mid left
+    { top: 45, left: 55, width: 32,  height: 4  }, // mid right — gap 43-55
+    { top: 70, left: 10,  width: 73,  height: 4  }, // full bottom
     //{ top: 20, left: 25, width: 4,   height: 26 }, // pillar 1
     { top: 44, left: 25, width: 4,   height: 26 }, // pillar 1 lower
     { top: 20, left: 50, width: 4,   height: 25 }, // pillar 2 — gap at 45
-    { top: 20, left: 75, width: 4,   height: 26 }, // pillar 3
+    //{ top: 20, left: 75, width: 4,   height: 26 }, // pillar 3
     //{ top: 44, left: 75, width: 4,   height: 26 }, // pillar 3 lower
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv25a', 8,  5,  12, 4, 3,  22,  'horizontal', 0.8);
-  addMovingObstacle('mv25b', 8,  28, 12, 4, 28, 48,  'horizontal', 0.7);
-  addMovingObstacle('mv25c', 8,  52, 12, 4, 52, 73,  'horizontal', 0.8);
+  //addMovingObstacle('mv25a', 8,  5,  12, 4, 3,  22,  'horizontal', 0.8);
+  addMovingObstacle('mv25b', 6,  28, 12, 4, 28, 48,  'horizontal', 0.7);
+  addMovingObstacle('mv25c', 6,  52, 12, 4, 52, 73,  'horizontal', 0.8);
   //addMovingObstacle('mv25d', 32, 5,  12, 4, 3,  22,  'horizontal', 0.7);
   addMovingObstacle('mv25e', 58, 28, 12, 4, 28, 48,  'horizontal', 0.8);
   addMovingObstacle('mv25f', 80, 52, 12, 4, 52, 73,  'horizontal', 0.7);
-  addMovingObstacle('mv25g', 32, 79, 4, 18, 22, 68,  'vertical',   0.7);
-  generateBall('5vw', '88vh', currentLevel);
+  addMovingObstacle('mv25g', 32, 79, 4, 18, 12, 68,  'vertical',   0.7);
+  generateBall('7vw', '85vh', currentLevel);
 }
 
 function level29() {
-  startTimedLevel(29, '79vh', '85vw', 1500);
+  startTimedLevel(29, '79vh', '85vw', 28);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
     { top: 98, left: 0,  width: 100, height: 3  },
