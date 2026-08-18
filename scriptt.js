@@ -2118,6 +2118,7 @@ function level15() {
 // ===========================
 
 function level16() {
+  startTimedLevel(16, '9vh', '85vw', 35);
   isGameRunning = true;
   startTracking();
   currentLevel = 16;
@@ -2153,6 +2154,7 @@ function level16() {
 }
 
 function level17() {
+  startTimedLevel(17, '10vh', '10vw', 35);
   isGameRunning = true;
   startTracking();
   currentLevel = 17;
@@ -2187,6 +2189,7 @@ function level17() {
 }
 
 function level18() {
+  startTimedLevel(18, '8vh', '45vw', 35);
   isGameRunning = true;
   startTracking();
   currentLevel = 18;
@@ -2300,7 +2303,7 @@ function startTimedLevel(lvl, basketTop, basketLeft, seconds) {
 // =============================================================
 
 function level19() {
-  //startTimedLevel(16, '6vh', '80vw', 35);
+  startTimedLevel(16, '6vh', '80vw', 35);
   isGameRunning = true;//try and check this level
   startTracking();
   currentLevel = 19;
