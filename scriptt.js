@@ -2746,7 +2746,7 @@ function level31() {
 }
 
 function level32() {
-  startTimedLevel(32, '6vh', '82vw', 5000);
+  startTimedLevel(32, '6vh', '82vw', 25);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
     { top: 95, left: 0,  width: 100, height: 3  },
