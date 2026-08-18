@@ -2268,6 +2268,7 @@ function startLevelCommon(lvl, basketTop, basketLeft) {
   clearInterval(ballCreationIntervalId);
   document.querySelectorAll('.obstacle').forEach(o => o.remove());
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
+  
 }
 
 function startTimedLevel(lvl, basketTop, basketLeft, seconds) {
