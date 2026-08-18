@@ -1311,9 +1311,11 @@ function generateBall(left, bottom, currentLevel) {
   }
 
   function Collision() {
+    // const GRACE_MS = 200; // <-- how long (ms) after grabbing the ball collisions are ignored
+   // if (Date.now() - dragStartTime < GRACE_MS) return;
     const ballRect = ball.getBoundingClientRect();
     const obstacles = document.querySelectorAll('.obstacle');
-    const buffer = Math.min(ballRect.width, ballRect.height) * 0.1088;
+    const buffer = Math.min(ballRect.width, ballRect.height) * 0.25;
 
     obstacles.forEach(obstacle => {
       const obstacleRect = obstacle.getBoundingClientRect();
@@ -1717,7 +1719,7 @@ function level5() {
   document.getElementById('time').style.display   = 'none';
   document.getElementById('basket').style.display = 'block';
   document.getElementById('basket').style.top     = '6vh';
-  document.getElementById('basket').style.left    = '80vw';  // top-right
+  document.getElementById('basket').style.left    = '20vw';  // top-right
 
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
@@ -1733,7 +1735,7 @@ function level5() {
     { top: 0,  left: 0,  width: 3,   height: 100 },
     { top: 0,  left: 97, width: 3,   height: 100 },
     { top: 50, left: 3,  width: 57,  height: 4   },  // horizontal shelf — gap on right
-    { top: 3,  left: 40, width: 4,   height: 47  },  // vertical wall — gap below shelf
+    { top: 13,  left: 40, width: 4,   height: 37  },  // vertical wall — gap below shelf
   ];
   generateObstacles(obstacles);
 
@@ -1766,13 +1768,14 @@ function level6() {
     { top: 95, left: 0,  width: 100, height: 3  },
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
+    { top: 20, left: 75,  width: 3,  height: 70  },
     { top: 20, left: 3,  width: 50,  height: 4  }, // top shelf — gap right side
     { top: 40, left: 25, width: 50,  height: 4  }, // mid shelf — gap left side
     { top: 60, left: 3,  width: 55,  height: 4  }, // lower shelf — gap right side
     { top: 78, left: 20, width: 50,  height: 4  }, // bottom shelf — gap left side
   ];
   generateObstacles(obstacles);
-  generateBall('90vw', '88vh', currentLevel);
+  generateBall('9vw', '8vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
 
@@ -1783,7 +1786,7 @@ function level7() {
   document.getElementById('score').style.display = 'none';
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '8vh';
+  document.getElementById('basket').style.top  = '80vh';
   document.getElementById('basket').style.left = '82vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
@@ -1795,6 +1798,9 @@ function level7() {
     { top: 95, left: 0,  width: 100, height: 3  },
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
+    { top: 25,  left: 30, width: 3,   height: 20},
+    { top: 25,  left: 70, width: 3,   height: 20},
+    { top: 50,  left: 60, width: 3,   height: 20},
     { top: 25, left: 3,  width: 40,  height: 4  }, // left shelf
     { top: 25, left: 60, width: 37,  height: 4  }, // right shelf — gap at 43-60
     { top: 50, left: 20, width: 25,  height: 4  }, // inner left
@@ -1804,7 +1810,7 @@ function level7() {
     { top: 50, left: 3,  width: 4,   height: 27 }, // left pillar bottom
   ];
   generateObstacles(obstacles);
-  generateBall('8vw', '88vh', currentLevel);
+  generateBall('15vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
 
@@ -1852,7 +1858,7 @@ function level9() {
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
   document.getElementById('basket').style.top  = '5vh';
-  document.getElementById('basket').style.left = '43vw';
+  document.getElementById('basket').style.left = '9vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
   document.querySelectorAll('.obstacle').forEach(o => o.remove());
@@ -1863,19 +1869,14 @@ function level9() {
     { top: 95, left: 0,  width: 100, height: 3  },
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
-    { top: 20, left: 3,  width: 70,  height: 4  }, // outer top — gap right
-    { top: 20, left: 20, width: 4,   height: 40 }, // outer left wall
-    { top: 60, left: 20, width: 60,  height: 4  }, // outer bottom — gap right edge
-    { top: 20, left: 77, width: 4,   height: 25 }, // outer right wall — gap below
-    { top: 35, left: 35, width: 30,  height: 4  }, // inner top — gap right
-    { top: 35, left: 35, width: 4,   height: 20 }, // inner left wall
-    { top: 55, left: 35, width: 25,  height: 4  }, // inner bottom — gap right
-    { top: 35, left: 62, width: 4,   height: 18 }, // inner right wall — gap below
+    { top: 0,  left: 18,  width: 3, height: 80  },
+    { top: 20,  left: 36,  width: 3, height: 77  },
+    { top: 0,  left: 56,  width: 3, height: 57  },    
   ];
   generateObstacles(obstacles);
   // One slow moving barrier across the outer entry
-  addMovingObstacle('mv9a', 45, 22, 15, 4, 22, 55, 'horizontal', 2.5);
-  generateBall('88vw', '88vh', currentLevel);
+  addMovingObstacle('mv6a', 45, 22, 15, 4, 22, 55, 'horizontal', 2.5);
+  generateBall('82vw', '82vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
 
@@ -1899,21 +1900,21 @@ function level10() {
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     // Room divider 1 — door at top (gap top:0–15)
-    { top: 15, left: 33, width: 4,   height: 60 },
+    { top: 0, left: 33, width: 4,   height: 60 },
     // Room divider 2 — door at bottom (gap top:75–95)
     { top: 0,  left: 65, width: 4,   height: 75 },
     // Obstacles inside room 1
     { top: 30, left: 10,  width: 22,  height: 4  },
-    { top: 55, left: 10,  width: 20,  height: 4  },
+    { top: 62, left: 3,  width: 20,  height: 4  },
     // Obstacles inside room 2
-    { top: 25, left: 38, width: 20,  height: 4  },
-    { top: 60, left: 38, width: 19,  height: 4  },
+    { top: 20, left: 50, width: 3,  height: 77  },
+    //{ top: 60, left: 38, width: 19,  height: 4  },
     // Obstacles inside room 3
     { top: 20, left: 70, width: 24,  height: 4  },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv10a', 42, 6,  18, 4, 6,  28, 'horizontal', 2.2);
-  addMovingObstacle('mv10b', 38, 38, 4, 20, 25, 60, 'vertical',   2.4);
+  addMovingObstacle('mv7a', 42, 6,  18, 4, 6,  18, 'horizontal', 2.8);
+  addMovingObstacle('mv7b', 50, 70, 4, 20, 50, 80, 'vertical',   2.4);
   generateBall('8vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -1925,8 +1926,8 @@ function level11() {
   document.getElementById('score').style.display = 'none';
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '5vh';
-  document.getElementById('basket').style.left = '5vw';
+  document.getElementById('basket').style.top  = '80vh';
+  document.getElementById('basket').style.left = '85vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
   document.querySelectorAll('.obstacle').forEach(o => o.remove());
@@ -1947,8 +1948,8 @@ function level11() {
     { top: 38, left: 42, width: 4,   height: 22 }, // center pillar
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv11a', 26, 5,  18, 4, 5,  45,  'horizontal', 2.0);
-  addMovingObstacle('mv11b', 66, 55, 18, 4, 45, 80,  'horizontal', 2.2);
+  //addMovingObstacle('mv8a', 26, 5,  18, 4, 5,  45,  'horizontal', 2.0);
+  addMovingObstacle('mv8b', 66, 55, 4, 18, 45, 80,  'vertical', 2.2);
   generateBall('88vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -1961,7 +1962,7 @@ function level12() {
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
   document.getElementById('basket').style.top  = '8vh';
-  document.getElementById('basket').style.left = '48vw';
+  document.getElementById('basket').style.left = '8vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
   document.querySelectorAll('.obstacle').forEach(o => o.remove());
@@ -1973,16 +1974,16 @@ function level12() {
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     // Horizontal cross bar — gap at 45-55 center
-    { top: 42, left: 3,  width: 42,  height: 4  },
-    { top: 42, left: 55, width: 42,  height: 4  },
+    { top: 42, left: 15,  width: 32,  height: 4  },
+    { top: 42, left: 58, width: 42,  height: 4  },
     // Vertical cross bar — gap at 40-52 center
-    { top: 3,  left: 45, width: 4,   height: 40 },
-    { top: 52, left: 45, width: 4,   height: 43 },
+    { top: 3,  left: 45, width: 4,   height: 80 },
+    //{ top: 52, left: 45, width: 4,   height: 43 },
     // Corner walls to force routing
-    { top: 20, left: 20, width: 22,  height: 4  },
-    { top: 65, left: 58, width: 22,  height: 4  },
-    { top: 20, left: 20, width: 4,   height: 22 },
-    { top: 58, left: 70, width: 4,   height: 25 },
+    { top: 60, left: 3, width: 22,  height: 4  },
+    //{ top: 65, left: 58, width: 22,  height: 4  },
+    { top: 70, left: 60, width: 4,   height: 22 },
+    { top: 70, left: 30, width: 4,   height: 25 },
   ];
   generateObstacles(obstacles);
   addMovingObstacle('mv12a', 22, 5,  20, 4, 5,  40,  'horizontal', 1.8);
@@ -2004,8 +2005,8 @@ function level13() {
   document.getElementById('score').style.display = 'none';
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '7vh';
-  document.getElementById('basket').style.left = '7vw';
+  document.getElementById('basket').style.top  = '80vh';
+  document.getElementById('basket').style.left = '85vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
   document.querySelectorAll('.obstacle').forEach(o => o.remove());
@@ -2017,17 +2018,17 @@ function level13() {
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     { top: 20, left: 20, width: 77,  height: 4  }, // top band — gap left
-    { top: 20, left: 20, width: 4,   height: 30 }, // left wall of top band
+    //{ top: 20, left: 20, width: 4,   height: 30 }, // left wall of top band
     { top: 50, left: 3,  width: 72,  height: 4  }, // mid band — gap right
-    { top: 50, left: 72, width: 4,   height: 30 }, // right wall of mid band
+    //{ top: 50, left: 72, width: 4,   height: 30 }, // right wall of mid band
     { top: 78, left: 20, width: 77,  height: 4  }, // bottom band — gap left
-    { top: 32, left: 50, width: 4,   height: 20 }, // inner divider top
-    { top: 60, left: 40, width: 4,   height: 20 }, // inner divider bottom
+    { top: 35, left: 50, width: 4,   height: 16 }, // inner divider top
+    { top: 65, left: 40, width: 4,   height: 16 }, // inner divider bottom
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv13a', 34, 24, 18, 4, 24, 65, 'horizontal', 1.6);
-  addMovingObstacle('mv13b', 62, 5,  18, 4, 5,  50, 'horizontal', 1.5);
-  addMovingObstacle('mv13c', 5,  30, 4, 18, 3,  40, 'vertical',   1.7);
+  //addMovingObstacle('mv10a', 34, 24, 18, 4, 24, 65, 'horizontal', 1.6);
+  addMovingObstacle('mv10b', 50, 72,  4, 18, 25,  70, 'vertical', 1.5);
+  addMovingObstacle('mv10c', 5,  30, 4, 18, 3,  40, 'vertical',   1.7);
   generateBall('88vw', '88vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
@@ -2039,7 +2040,7 @@ function level14() {
   document.getElementById('score').style.display = 'none';
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '6vh';
+  document.getElementById('basket').style.top  = '80vh';
   document.getElementById('basket').style.left = '85vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
@@ -2052,20 +2053,20 @@ function level14() {
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     { top: 22, left: 3,  width: 60,  height: 4  }, // shelf 1 — gap right
-    { top: 22, left: 60, width: 4,   height: 18 }, // right stopper 1
+    //{ top: 22, left: 60, width: 4,   height: 18 }, // right stopper 1
     { top: 42, left: 35, width: 62,  height: 4  }, // shelf 2 — gap left
-    { top: 42, left: 35, width: 4,   height: 18 }, // left stopper 2
-    { top: 60, left: 3,  width: 65,  height: 4  }, // shelf 3 — gap right
-    { top: 60, left: 65, width: 4,   height: 18 }, // right stopper 3
+    //{ top: 42, left: 35, width: 4,   height: 18 }, // left stopper 2
+    { top: 60, left: 3,  width: 75,  height: 4  }, // shelf 3 — gap right
+    //{ top: 60, left: 65, width: 4,   height: 18 }, // right stopper 3
     { top: 78, left: 30, width: 67,  height: 4  }, // shelf 4 — gap left
     { top: 78, left: 30, width: 4,   height: 4  },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv14a', 30, 5,  20, 4, 5,  50, 'horizontal', 1.4);
-  addMovingObstacle('mv14b', 50, 40, 20, 4, 40, 90, 'horizontal', 1.5);
-  addMovingObstacle('mv14c', 68, 5,  20, 4, 5,  45, 'horizontal', 1.6);
-  addMovingObstacle('mv14d', 10, 70, 4, 18, 5,  30, 'vertical',   1.5);
-  generateBall('8vw', '88vh', currentLevel);
+  addMovingObstacle('mv11a', 42, 5,  20, 4, 5,  50, 'horizontal', 1.4);
+  addMovingObstacle('mv11b', 42, 35, 4, 20, 40, 67, 'vertical', 1.5);
+  addMovingObstacle('mv11c', 60, 74,  4, 20, 25,  68, 'vertical', 1.6);
+  addMovingObstacle('mv11d', 10, 70, 4, 18, 5,  30, 'vertical',   1.5);
+  generateBall('8vw', '84vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
 
@@ -2076,8 +2077,8 @@ function level15() {
   document.getElementById('score').style.display = 'none';
   document.getElementById('time').style.display = 'none';
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '45vh';
-  document.getElementById('basket').style.left = '45vw';
+  document.getElementById('basket').style.top  = '28vh';
+  document.getElementById('basket').style.left = '48vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
   document.querySelectorAll('.obstacle').forEach(o => o.remove());
@@ -2098,14 +2099,16 @@ function level15() {
     { top: 45, left: 55, width: 18,  height: 4  },
     // Outer obstacles blocking corner approaches
     { top: 10, left: 10, width: 12,  height: 4  },
-    { top: 80, left: 78, width: 4,  height: 4  },
+    //{ top: 80, left: 78, width: 4,  height: 4  },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv15a', 12, 25, 22, 4, 25, 60, 'horizontal', 1.4);
-  addMovingObstacle('mv15b', 72, 3,  22, 4, 3,  48, 'horizontal', 1.3);
-  addMovingObstacle('mv15c', 50, 5,  4, 20, 30, 70, 'vertical',   1.5);
-  addMovingObstacle('mv15d', 42, 80, 4, 20, 30, 70, 'vertical',   1.4);
-  generateBall('88vw', '5vh', currentLevel);
+  addMovingObstacle('mv12a', 12, 25, 22, 4, 25, 60, 'horizontal', 1.4);
+  addMovingObstacle('mv12b', 72, 3,  22, 4, 3,  48, 'horizontal', 1.3);
+  addMovingObstacle('mv12e', 45, 3,  22, 4, 3,  35, 'horizontal', 1.3);
+  addMovingObstacle('mv12f', 20, 58,  22, 4, 60,  87, 'horizontal', 1.3);
+  addMovingObstacle('mv12c', 50, 5,  4, 20, 30, 70, 'vertical',   1.5);
+  addMovingObstacle('mv12d', 42, 80, 4, 20, 30, 70, 'vertical',   1.4);
+  generateBall('88vw', '15vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
 
@@ -2119,7 +2122,7 @@ function level16() {
   startTracking();
   currentLevel = 16;
   document.getElementById('basket').style.display = 'block';
-  document.getElementById('basket').style.top  = '8vh';
+  document.getElementById('basket').style.top  = '9vh';
   document.getElementById('basket').style.left = '85vw';
   clearInterval(timerInterval);
   clearInterval(ballCreationIntervalId);
@@ -2131,21 +2134,21 @@ function level16() {
     { top: 95, left: 0,  width: 100, height: 3  },
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
-    { top: 18, left: 3,  width: 62,  height: 4  }, // row 1 — gap right
-    { top: 18, left: 62, width: 4,   height: 20 }, // stopper
-    { top: 38, left: 33, width: 64,  height: 4  }, // row 2 — gap left
-    { top: 38, left: 33, width: 4,   height: 20 }, // stopper
+    { top: 18, left: 13,  width: 52,  height: 4  }, // row 1 — gap right
+    { top: 3, left: 62, width: 4,   height: 38 }, // stopper
+    { top: 38, left: 23, width: 64,  height: 4  }, // row 2 — gap left
+    //{ top: 38, left: 33, width: 4,   height: 20 }, // stopper
     { top: 58, left: 3,  width: 62,  height: 4  }, // row 3 — gap right
-    { top: 58, left: 62, width: 4,   height: 20 }, // stopper
-    { top: 78, left: 33, width: 64,  height: 4  }, // row 4 — gap left
-    { top: 78, left: 33, width: 4,   height: 4  },
+    { top: 38, left: 72, width: 4,   height: 40 }, // stopper
+    { top: 78, left: 23, width: 64,  height: 4  }, // row 4 — gap left
+    //{ top: 78, left: 33, width: 4,   height: 4  },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv16a', 26, 5,  15, 4, 5,  50,  'horizontal', 1.3);
-  addMovingObstacle('mv16b', 48, 38, 15, 4, 38, 85,  'horizontal', 1.2);
-  addMovingObstacle('mv16c', 68, 5,  15, 4, 5,  50,  'horizontal', 1.4);
-  addMovingObstacle('mv16d', 8,  70, 4, 20, 5,  35,  'vertical',   1.3);
-  generateBall('5vw', '88vh', currentLevel);
+  addMovingObstacle('mv13a', 26, 5,  15, 4, 5,  50,  'horizontal', 1.3);
+  //addMovingObstacle('mv13b', 48, 38, 15, 4, 38, 85,  'horizontal', 1.2);
+  //addMovingObstacle('mv13c', 68, 5,  15, 4, 5,  50,  'horizontal', 1.4);
+  //addMovingObstacle('mv13d', 8,  70, 4, 20, 5,  35,  'vertical',   1.3);
+  generateBall('10vw', '85vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
 
@@ -2174,12 +2177,12 @@ function level17() {
     { top: 20, left: 55, width: 4,   height: 12 }, // right guard
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv17a', 16, 5,  18, 4, 5,  55,  'horizontal', 1.2);
-  addMovingObstacle('mv17b', 44, 40, 18, 4, 40, 85,  'horizontal', 1.1);
-  addMovingObstacle('mv17c', 74, 5,  18, 4, 5,  55,  'horizontal', 1.3);
-  addMovingObstacle('mv17d', 8,  40, 4, 22, 5,  28,  'vertical',   1.2);
-  addMovingObstacle('mv17e', 65, 78, 4, 22, 60, 93,  'vertical',   1.1);
-  generateBall('88vw', '88vh', currentLevel);
+  addMovingObstacle('mv14a', 16, 5,  18, 4, 5,  55,  'horizontal', 1.2);
+  addMovingObstacle('mv14b', 44, 40, 18, 4, 40, 85,  'horizontal', 1.1);
+  addMovingObstacle('mv14c', 74, 5,  18, 4, 5,  55,  'horizontal', 1.3);
+  addMovingObstacle('mv14d', 8,  40, 4, 22, 5,  28,  'vertical',   1.2);
+  addMovingObstacle('mv14e', 65, 78, 4, 22, 60, 93,  'vertical',   1.1);
+  generateBall('88vw', '8vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
 
@@ -2216,11 +2219,13 @@ function level18() {
   ];
   generateObstacles(obstacles);
   
-  addMovingObstacle('mv18b', 38, 22, 18, 4, 22, 68, 'horizontal', 1.0);
-  addMovingObstacle('mv18c', 64, 5,  18, 4, 5,  48, 'horizontal', 1.3);
-  addMovingObstacle('mv18d', 86, 60, 18, 4, 55, 90, 'horizontal', 1.1);
-  addMovingObstacle('mv18e', 30, 85, 4, 22, 28, 52, 'vertical',   1.2);
-  generateBall('88vw', '88vh', currentLevel);
+  addMovingObstacle('mv15b', 28, 3, 18, 4, 3, 30, 'horizontal', 1.0);
+  addMovingObstacle('mv15c', 64, 5,  18, 4, 5,  48, 'horizontal', 1.3);
+  addMovingObstacle('mv15d', 86, 60, 18, 4, 55, 90, 'horizontal', 1.1);
+  addMovingObstacle('mv15e', 30, 85, 4, 22, 28, 52, 'vertical',   1.2);
+  addMovingObstacle('mv15f', 3, 18, 4, 22, 3, 30, 'vertical',   1.2);
+  addMovingObstacle('mv15g', 3, 75, 4, 22, 3, 30, 'vertical',   1.2);
+  generateBall('8vw', '8vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
 
@@ -2311,28 +2316,29 @@ function level19() {
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     // Layer 1: top band — gap right
-    { top: 20, left: 10,  width: 50,  height: 4  },
-    { top: 20, left: 60, width: 4,   height: 20 },//try to make this move
+    { top: 20, left: 3,  width: 50,  height: 4  },
+    { top: 20, left: 52, width: 4,   height: 20 },//try to make this move
     // Layer 2: mid band — gap left
     { top: 42, left: 38, width: 40,  height: 4  },
-   // { top: 42, left: 38, width: 4,   height: 20 },to mke the game good removed
+    //{ top: 42, left: 38, width: 4,   height: 20 },
     // Layer 3: lower band — gap right
     { top: 64, left: 12,  width: 45,  height: 4  },
     { top: 64, left: 55, width: 4,   height: 20 },
     // Layer 4: bottom band — gap left
     { top: 82, left: 28, width: 50,  height: 4  },
+    { top: 82, left: 78, width: 4,  height: 15  },
   ];
   generateObstacles(obstacles);
   
-  addMovingObstacle('mv19b', 30, 62, 16, 4, 62, 90,  'horizontal', 1.4);
-  addMovingObstacle('mv19c', 52, 5,  16, 4, 5,  35,  'horizontal', 1.6);
-  addMovingObstacle('mv19d', 73, 30, 4, 22, 28, 62,  'vertical',   1.5);
-  generateBall('5vw', '88vh', currentLevel);
+  addMovingObstacle('mv16b', 30, 62, 16, 4, 62, 90,  'horizontal', 1.4);
+  addMovingObstacle('mv16c', 52, 5,  16, 4, 5,  35,  'horizontal', 1.6);
+  addMovingObstacle('mv16d', 73, 30, 4, 22, 28, 62,  'vertical',   1.5);
+  generateBall('38vw', '22vh', currentLevel);
   document.addEventListener('mouseup', () => checkDrop(ball, 'basket', currentLevel));
 }
 
 function level20() {
-  startTimedLevel(20, '8vh', '8vw', 35);
+  startTimedLevel(20, '30vh', '40vw', 35);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
     { top: 95, left: 0,  width: 100, height: 3  },
@@ -2344,17 +2350,19 @@ function level20() {
     { top: 51, left: 18, width: 50,  height: 4  }, // outer bottom-left
     //{ top: 51, left: 65, width: 4,   height: 35 }, // outer right
     { top: 30, left: 32, width: 38,  height: 4  }, // inner top — gap left+right
-    { top: 30, left: 32, width: 4,   height: 20 }, // inner left
+    //{ top: 30, left: 32, width: 4,   height: 20 }, // inner left
     { top: 50, left: 32, width: 28,  height: 4  }, // inner bottom — gap right
     { top: 30, left: 58, width: 4,   height: 22 }, // inner right
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv20a', 4,  22, 16, 4, 22, 75,  'horizontal', 1.4);
-  addMovingObstacle('mv20b', 58, 22, 16, 4, 22, 60,  'horizontal', 1.3);
-  addMovingObstacle('mv20c', 78, 5,  16, 4, 5,  55,  'horizontal', 1.5);
-  addMovingObstacle('mv20d', 38, 72, 4, 20, 55, 93,  'vertical',   1.4);
-  addMovingObstacle('mv20e', 8,  82, 4, 20, 5,  30,  'vertical',   1.3);
-  generateBall('88vw', '88vh', currentLevel);
+  addMovingObstacle('mv17a', 4,  22, 16, 4, 22, 75,  'horizontal', 1.4);
+  addMovingObstacle('mv17b', 58, 22, 16, 4, 22, 60,  'horizontal', 1.3);
+  addMovingObstacle('mv17c', 78, 5,  16, 4, 5,  55,  'horizontal', 1.5);
+  addMovingObstacle('mv17d', 38, 72, 4, 20, 14, 55,  'vertical',   1.4);
+  addMovingObstacle('mv17f', 38, 40, 4, 20, 30, 75,  'vertical',   1.4);
+  addMovingObstacle('mv17g', 38, 52, 4, 20, 30, 75,  'vertical',   1.4);
+  addMovingObstacle('mv17e', 8,  82, 4, 20, 5,  30,  'vertical',   1.3);
+  generateBall('15vw', '8vh', currentLevel);
 }
 
 function level21() {
@@ -2366,27 +2374,27 @@ function level21() {
     { top: 0,  left: 97, width: 3,   height: 100},
     // Pinwheel arms radiating from center, each leaving one passage
     { top: 42, left: 10,  width: 30,  height: 4  }, // left arm — gap inner
-    { top: 42, left: 62, width: 35,  height: 4  }, // right arm — gap inner
+    { top: 42, left: 48, width: 35,  height: 4  }, // right arm — gap inner
     { top: 12,  left: 46, width: 4,   height: 28 }, // top arm — gap inner
     { top: 58, left: 46, width: 4,   height: 37 }, // bottom arm — gap inner
     // Corner diagonals (simulated with short walls)
-    { top: 18, left: 18, width: 18,  height: 4  },
+    { top: 18, left: 18, width: 25,  height: 4  },
     { top: 18, left: 18, width: 4,   height: 18 },
     { top: 18, left: 65, width: 18,  height: 4  },
     { top: 18, left: 79, width: 4,   height: 18 },
-    { top: 72, left: 18, width: 18,  height: 4  },
-    { top: 72, left: 18, width: 4,   height: 18 },
+    { top: 72, left: 18, width: 24,  height: 4  },
+    { top: 50, left: 18, width: 4,   height: 23 },
     { top: 72, left: 65, width: 18,  height: 4  },
-    { top: 72, left: 79, width: 4,   height: 18 },
+    { top: 54, left: 79, width: 4,   height: 18 },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv21a', 20, 5,  16, 4, 5,  40,  'horizontal', 1.3);
-  addMovingObstacle('mv21b', 20, 55, 16, 4, 55, 90,  'horizontal', 1.2);
-  addMovingObstacle('mv21c', 74, 5,  16, 4, 5,  40,  'horizontal', 1.4);
-  addMovingObstacle('mv21d', 74, 55, 16, 4, 55, 90,  'horizontal', 1.3);
-  addMovingObstacle('mv21e', 5,  25, 4, 20, 3,  38,  'vertical',   1.3);
-  addMovingObstacle('mv21f', 5,  70, 4, 20, 3,  38,  'vertical',   1.2);
-  generateBall('5vw', '5vh', currentLevel);
+  addMovingObstacle('mv18a', 20, 5,  16, 4, 5,  40,  'horizontal', 1.3);
+  addMovingObstacle('mv18b', 20, 55, 16, 4, 55, 90,  'horizontal', 1.2);
+  addMovingObstacle('mv18c', 74, 5,  16, 4, 5,  40,  'horizontal', 1.4);
+  addMovingObstacle('mv18d', 74, 55, 16, 4, 55, 90,  'horizontal', 1.3);
+  addMovingObstacle('mv18e', 5,  25, 4, 20, 3,  38,  'vertical',   1.3);
+  addMovingObstacle('mv18f', 5,  70, 4, 20, 3,  38,  'vertical',   1.2);
+  generateBall('15vw', '10vh', currentLevel);
 }
 
 // =============================================================
@@ -2401,31 +2409,31 @@ function level22() {
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     // Comb teeth from top — gaps between each tooth
-    { top: 3,  left: 15, width: 4,   height: 28 }, // tooth 1
-    { top: 3,  left: 30, width: 4,   height: 35 }, // tooth 2
-    { top: 3,  left: 45, width: 4,   height: 22 }, // tooth 3 — short (basket above)
-    { top: 3,  left: 62, width: 4,   height: 32 }, // tooth 4
+    { top: 13,  left: 15, width: 4,   height: 22 }, // tooth 1
+    { top: 3,  left: 30, width: 4,   height: 25 }, // tooth 2
+    { top: 13,  left: 45, width: 4,   height: 22 }, // tooth 3 — short (basket above)
+    { top: 16,  left: 62, width: 4,   height: 32 }, // tooth 4
     { top: 12,  left: 78, width: 4,   height: 15 }, // tooth 5
     // Base shelf connecting teeth
-    { top: 38, left: 3,  width: 80,  height: 4  },
+    { top: 38, left: 18,  width: 80,  height: 4  },
     // Bottom maze
     { top: 60, left: 3,  width: 45,  height: 4  },
     { top: 60, left: 58, width: 28,  height: 4  },
     { top: 78, left: 22, width: 55,  height: 4  },
-    { top: 42, left: 22, width: 4,   height: 20 },
+    //{ top: 42, left: 22, width: 4,   height: 20 },
     //{ top: 42, left: 65, width: 4,   height: 20 },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv22a', 42, 5,  14, 4, 3,  18,  'horizontal', 1.2);
-  addMovingObstacle('mv22b', 48, 30, 14, 4, 30, 58,  'horizontal', 1.1);
-  //addMovingObstacle('mv22c', 48, 68, 14, 4, 65, 90,  'horizontal', 1.3);
-  addMovingObstacle('mv22d', 64, 50, 14, 4, 45, 80,  'horizontal', 1.2);
-  addMovingObstacle('mv22e', 62, 5,  4, 18, 58, 93,  'vertical',   1.2);
+  addMovingObstacle('mv19a', 42, 5,  14, 4, 3,  18,  'horizontal', 1.2);
+  //addMovingObstacle('mv19b', 48, 30, 14, 4, 30, 58,  'horizontal', 1.1);
+  //addMovingObstacle('mv19c', 48, 68, 14, 4, 65, 90,  'horizontal', 1.3);
+  addMovingObstacle('mv19d', 64, 50, 14, 4, 45, 80,  'horizontal', 1.2);
+  addMovingObstacle('mv19e', 62, 75,  4, 18, 58, 93,  'vertical',   1.2);
   generateBall('88vw', '88vh', currentLevel);
 }
 
 function level23() {
-  startTimedLevel(23, '7vh', '7vw', 25);
+  startTimedLevel(23, '40vh', '35vw', 25);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
     { top: 95, left: 0,  width: 100, height: 3  },
@@ -2434,22 +2442,25 @@ function level23() {
     // Diamond-shaped inner obstacle ring
     { top: 22, left: 30, width: 38,  height: 4  }, // top
     { top: 22, left: 30, width: 4,   height: 35 }, // left
-    { top: 77, left: 30, width: 38,  height: 4  }, // bottom
-    { top: 22, left: 64, width: 4,   height: 35 }, // right
+    { top: 78, left: 37, width: 38,  height: 4  }, // bottom
+    { top: 42, left: 64, width: 4,   height: 35 }, // right
     // Shorter inner cross-sections (leave gaps to navigate)
     { top: 40, left: 34, width: 18,  height: 4  },
     { top: 40, left: 58, width: 10,  height: 4  },
     { top: 55, left: 38, width: 25,  height: 4  },
     // Outer corner guards
-    { top: 10, left: 78, width: 4,   height: 15 },
+    { top: 3, left: 75, width: 4,   height: 80 },
+    { top: 15, left: 20, width: 4,   height: 50 },
     { top: 78, left: 3,  width: 25,  height: 4  },
+    { top: 15, left: 20, width: 38,  height: 4  },
+    { top: 40, left: 3, width: 10,  height: 4  },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv23a', 10, 32, 14, 4, 32, 60,  'horizontal', 1.1);
-  addMovingObstacle('mv23b', 85, 32, 14, 4, 32, 60,  'horizontal', 1.0);
-  addMovingObstacle('mv23c', 30, 68, 14, 4, 68, 90,  'horizontal', 1.2);
-  addMovingObstacle('mv23d', 30, 5,  4, 20, 24, 70,  'vertical',   1.1);
-  addMovingObstacle('mv23e', 55, 80, 4, 20, 22, 70,  'vertical',   1.0);
+  //addMovingObstacle('mv20a', 10, 32, 14, 4, 32, 60,  'horizontal', 1.1);
+  addMovingObstacle('mv20b', 74, 25, 14, 4, 25, 60,  'horizontal', 1.0);
+  addMovingObstacle('mv20c', 30, 68, 14, 4, 68, 90,  'horizontal', 1.2);
+  //addMovingObstacle('mv20d', 30, 5,  4, 20, 24, 70,  'vertical',   1.1);
+  addMovingObstacle('mv20e', 55, 80, 4, 20, 22, 70,  'vertical',   1.0);
   generateBall('88vw', '88vh', currentLevel);
 }
 
@@ -2461,24 +2472,27 @@ function level24() {
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     // Triple horizontal bands alternating gaps
-    { top: 20, left: 13,  width: 50,  height: 4  }, // gap right
-   // { top: 20, left: 68, width: 4,   height: 20 },
-    { top: 42, left: 28, width: 50,  height: 4  }, // gap left
-   // { top: 42, left: 28, width: 4,   height: 20 },
-    { top: 62, left: 13,  width: 55,  height: 4  }, // gap right
+    { top: 20, left: 3,  width: 35,  height: 4  }, // gap right
+    { top: 3, left: 68, width: 4,   height: 60 },
+    { top: 42, left: 3, width: 50,  height: 4  }, // gap left
+    { top: 42, left: 28, width: 4,   height: 20 },
+    { top: 62, left: 13,  width: 25,  height: 4  }, // gap right
+    { top: 62, left: 47,  width: 20,  height: 4  },
+    { top: 56, left: 70,  width: 20,  height: 4  },
+    { top: 37, left: 80,  width: 20,  height: 4  },
     { top: 62, left: 62, width: 4,   height: 20 },
     { top: 80, left: 22, width: 60,  height: 4  }, // gap left
     // Inner cross
-    //{ top: 20, left: 45, width: 4,   height: 22 },
+    { top: 20, left: 45, width: 4,   height: 22 },
     { top: 62, left: 45, width: 4,   height: 20 },
   ];
   generateObstacles(obstacles);
   addMovingObstacle('mv24a', 10, 5,  14, 4, 5,  55,  'horizontal', 1.1);
   addMovingObstacle('mv24b', 30, 72, 14, 4, 70, 90,  'horizontal', 1.0);
-  addMovingObstacle('mv24c', 50, 5,  14, 4, 5,  25,  'horizontal', 1.2);
+  addMovingObstacle('mv24c', 48, 25,  14, 4, 25,  60,  'horizontal', 1.2);
   addMovingObstacle('mv24d', 72, 28, 14, 4, 28, 70,  'horizontal', 1.0);
   //addMovingObstacle('mv21e', 8,  85, 4, 20, 5,  30,  'vertical',   1.1);
-  generateBall('5vw', '88vh', currentLevel);
+  generateBall('15vw', '65vh', currentLevel);
 }
 
 // =============================================================
@@ -2503,52 +2517,50 @@ function level25() {
     // Outer approach walls
     { top: 10, left: 3,  width: 15,  height: 4  },
     { top: 10, left: 82, width: 12,  height: 4  },
-    { top: 78, left: 3,  width: 15,  height: 4  },
-   // { top: 78, left: 82, width: 12,  height: 4  },
+    { top: 70, left: 3,  width: 15,  height: 4  },
+    { top: 78, left: 38, width: 4,  height: 20  },
+    { top: 70, left: 58, width: 4,  height: 16  },
+    { top: 78, left: 78, width: 4,  height: 20  },
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv25a', 8,  5,  12, 4, 3,  18,  'horizontal', 1.0);
- // addMovingObstacle('mv25b', 8,  68, 12, 4, 65, 92,  'horizontal', 0.9);
-  addMovingObstacle('mv25c', 33, 24, 12, 4, 24, 72,  'horizontal', 1.0);
-  addMovingObstacle('mv25d', 56, 24, 12, 4, 24, 72,  'horizontal', 0.9);
-  addMovingObstacle('mv25e', 78, 15,  4, 16, 70, 93,  'vertical',   1.0);
-  addMovingObstacle('mv25f', 5,  60, 4, 16, 3,  28,  'vertical',   0.9);
-  generateBall('88vw', '6vh', currentLevel);
+  addMovingObstacle('mv22a', 8,  5,  12, 4, 3,  18,  'horizontal', 1.0);
+  addMovingObstacle('mv22b', 8,  68, 12, 4, 65, 92,  'horizontal', 0.9);
+  addMovingObstacle('mv22c', 33, 24, 12, 4, 24, 72,  'horizontal', 1.0);
+  addMovingObstacle('mv22d', 56, 24, 12, 4, 24, 72,  'horizontal', 0.9);
+  addMovingObstacle('mv22e', 18, 15,  4, 16, 7, 33,  'vertical',   1.0);
+  addMovingObstacle('mv22f', 5,  60, 4, 16, 3,  28,  'vertical',   0.9);
+  generateBall('16vw', '10vh', currentLevel);
 }
 
 function level26() {
-  startTimedLevel(26, '60vh', '8vw', 20);
+  startTimedLevel(26, '60vh', '90vw', 25);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
     { top: 95, left: 0,  width: 100, height: 3  },
     { top: 0,  left: 0,  width: 3,   height: 100},
     { top: 0,  left: 97, width: 3,   height: 100},
     // Comb from bottom — teeth pointing up, basket at top center
-    { top: 50, left: 3,  width: 40,  height: 4  },
-    { top: 50, left: 50,  width: 38,  height: 4  }, // base shelf
-    { top: 50, left: 15, width: 4,   height: 35 }, // tooth 1 up
-    { top: 50, left: 32, width: 4,   height: 28 }, // tooth 2 up
-    // gap at 44-54 — center passage to basket
-    { top: 50, left: 54, width: 4,   height: 32 }, // tooth 3 up
-    { top: 50, left: 72, width: 4,   height: 38 }, // tooth 4 up
-    // Upper sub-walls
-    { top: 18, left: 3,  width: 25,  height: 4  }, // left upper
-    { top: 18, left: 68, width: 29,  height: 4  }, // right upper
-    { top: 30, left: 20, width: 4,   height: 22 }, // left pillar
-    { top: 30, left: 75, width: 4,   height: 22 }, // right pillar
+    { top: 15,  left: 15,  width: 80, height: 3  },
+    { top: 90, left: 3,  width: 80, height: 3  },
+    { top: 65, left: 15,  width: 30, height: 3  },
+    { top: 78, left: 25,  width: 30, height: 3  },
+    { top: 45, left: 65,  width: 8, height: 3  },
+    { top: 65, left: 75,  width: 8, height: 3  },
+    { top: 30,  left: 15,  width: 3,   height: 60},
+    { top: 15,  left: 25,  width: 3,   height: 40},
+    { top: 29,  left: 35,  width: 3,   height: 36},
+    { top: 15,  left: 45,  width: 3,   height: 40},
+    { top: 15,  left: 55,  width: 3,   height: 63},
+    { top: 25,  left: 65,  width: 3,   height: 63},
+    { top: 15,  left: 82, width: 3,   height: 60},
   ];
   generateObstacles(obstacles);
-  addMovingObstacle('mv26a', 40, 5,  10, 4, 3,  12,  'horizontal', 0.9);
-  addMovingObstacle('mv26b', 40, 18, 10, 4, 18, 30,  'horizontal', 0.8);
-  //addMovingObstacle('mv26c', 40, 36, 10, 4, 36, 50,  'horizontal', 1.0);
-  addMovingObstacle('mv26d', 40, 57, 10, 4, 57, 70,  'horizontal', 0.9);
-  addMovingObstacle('mv26e', 40, 75, 10, 4, 75, 92,  'horizontal', 0.8);
-  addMovingObstacle('mv26f', 8,  82, 4, 18, 5,  30,  'vertical',   0.9);
-  generateBall('9vw', '88vh', currentLevel);
+  
+  generateBall('12vw', '86vh', currentLevel);
 }
 
 function level27() {
-  startTimedLevel(27, '25vh', '23vw', 20);
+  startTimedLevel(27, '25vh', '23vw', 10);
   const obstacles = [
     { top: 0,  left: 0,  width: 100, height: 3  },
     { top: 98, left: 0,  width: 100, height: 3  },
